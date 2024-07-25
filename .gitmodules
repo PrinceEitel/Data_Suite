@@ -6,8 +6,7 @@
     url = https://github.com/PrinceEitel/Template_Center.git
 [submodule "text_anonymizer"]
     path = text_anonymizer
-    url = https://github.com/PrinceEitel/Text_Anonymizer.git
-=======
+    url = https://github.com/PrinceEitel/Text_Anonymizer.git 
 [submodule "template_center"]
 	path = template_center
 	url = https://github.com/PrinceEitel/Template_Center.git
@@ -16,4 +15,4 @@
 	url = https://github.com/PrinceEitel/Text_Anonymizer.git
 [submodule "ocr_enricher"]
 	path = ocr_enricher
-	url = https://github.com/PrinceEitel/OCR_Manager_Suite.git
+	url = https://github.com/PrinceEitel/OCR_Manager_Suite.git 
