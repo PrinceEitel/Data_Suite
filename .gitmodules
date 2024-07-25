@@ -4,3 +4,6 @@
 [submodule "text_anonymizer"]
 	path = text_anonymizer
 	url = https://github.com/PrinceEitel/Text_Anonymizer.git
+[submodule "ocr_enricher"]
+	path = ocr_enricher
+	url = https://github.com/PrinceEitel/OCR_Manager_Suite.git
