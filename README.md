@@ -87,73 +87,55 @@ Dieser Leitfaden ist strukturiert, um den Anwendern eine klare und schrittweise 
 10. **Glossar**: Definition wichtiger technischer Begriffe.
 11. **Anhang**: Zusätzliche relevante Informationen und Ressourcen für das Projekt.
 
+```
 Data_Suite/
 ├── venv/                       # Virtuelle Umgebung für Python
-
 │   ├── Scripts/
 │   ├── Lib/
 │   │   ├── site-packages/
 │   │   │   ├── chardet/       # chardet Bibliothek
 │   │   │   └── ...
 │   └── ...
-
 ├── ocr_enricher/               # Submodul für OCR-Manager
 │   ├── .git/                   # Git-Verzeichnis für das Submodul
-
 │   ├── logs/
 │   │   ├── error_log.txt       # Fehler-Datei
 │   │   ├── result_log.txt      # Ergebnis-Datei
-
 │   ├── src/
 │   │   ├── OCR_Enricher.ps1    # Benötigt ocrmypdf Installation
 │   │   ├── pdf_utils.py        # Verwendet PyPDF2
-
 │   ├── requirements.txt        # Abhängigkeiten für OCR_Enricher
 │   └── ...
-
 ├── template_center/            # Submodul für Template Center
-
 │   ├── .git/                   # Git-Verzeichnis für das Submodul
 │   ├── __init__.py
-
 │   ├── template_handler.py
 │   ├── requirements.txt        # Python-Abhängigkeiten für Template_Center
 │   └── ...
-
 ├── text_anonymizer/            # Submodul für Text-Anonymisierung
 │   ├── .git/                   # Git-Verzeichnis für das Submodul
 │   ├── __init__.py 
-
 │   ├── anonymizer/
 │   │   ├── __init__.py         
-
 │   │   ├── cli.py              # Command Line Ausführung
 │   │   ├── config.py           # File-Struktur 
 │   │   ├── loader.py           # Inkl. Chardet 
 │   │   ├── processor.py        # Inkl. re  
-
 │   ├── flat_files/
-
 │   │   ├── map/                # Map Files 
 │   │   │   ├── ../             # Diverse CSV
-
 │   │   ├── rpl/                # Replacement Files 
 │   │   │   ├── ../             # Diverse CSV
-
 │   │   ├── src/                # Source Files 
 │   │   │   ├── ../             # Diverse CSV
-
 │   │   ├── trg/                # Target Files 
 │   │   │   ├── ../             # Diverse CSV
-
 │   │   ├── tests/              # Test Files 
 │   │   │   ├── test_imports.py # Test Import
-
 │   │   │   ├── ../             
 │   ├── anonymizer.log          # Anonymizer Log für text_anonymizer
 │   ├── requirements.txt        # Abhängigkeiten für text_anonymizer
 │   └── ...
-
 ├── html_b2b_form/              # Submodul für HTML B2B Form
 │   ├── .git/                   # Git-Verzeichnis für das Submodul
 │   ├── .idea/                  # IntelliJ IDEA Projektdateien
@@ -161,52 +143,43 @@ Data_Suite/
 │   │   ├── modules.xml
 │   │   ├── jsLibraryMappings.xml
 │   │   ├── workspace.xml
-
 │   ├── dist/
 │   │   ├── b2b_feed_standalone.html
-
 │   ├── css/
 │   │   ├── style.css
-
 │   ├── img/
 │   │   ├── img_logo_b64.js
 │   │   ├── img_theme_b64.js
-
 │   ├── js/
 │   │   ├── data.js
 │   │   ├── script.js
 │   │   ├── texts.js
-
 │   ├── src/
 │   │   ├── index.html
 │   │   ├── index.js
-
 │   ├── package.json
 │   ├── package-lock.json
 │   ├── webpack.config.js
 │   ├── site.webmanifest
 │   ├── requirements.txt        # Abhängigkeiten für HTML_B2B_Form
 │   └── ...
-
 ├── .git/                       # Git-Verzeichnis für das Hauptprojekt
-
 ├── .idea/                      # IntelliJ IDEA Projektdateien
 │   ├── misc.xml
 │   ├── modules.xml
 │   ├── workspace.xml
 │   └── ...
-
 ├── README.md                   # Projektbeschreibung
 ├── requirements.txt            # Python-Abhängigkeiten für das Hauptprojekt
 ├── package.json                # npm-Abhängigkeiten für das Hauptprojekt
 │   └── node_modules/
 │       ├── axios/              # Beispiel für eine npm-Bibliothek
 │       ├── ...
-
 └── zulu/                       # Zulu JDK Verzeichnis
     ├── bin/
     ├── lib/
     └── ...
+```
     
 ### Erläuterungen
 
