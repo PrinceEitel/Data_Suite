@@ -23,7 +23,7 @@ Dieser Leitfaden ist strukturiert, um den Anwendern eine klare und schrittweise 
 10. **Glossar**: Definition wichtiger technischer Begriffe.
 11. **Anhang**: Zusätzliche relevante Informationen und Ressourcen für das Projekt.
 
-```
+```plaintext
 Data_Suite/
 ├── venv/                       # Virtuelle Umgebung für Python
 │   ├── Scripts/
@@ -138,7 +138,10 @@ Data_Suite/
 1. **Windows-Betriebssystem:**
    - **Edition:** Windows 10 Enterprise Version 22H2
 2. **Git:**
-   - **Path:** C:\Program Files\Git\cmd
+   - **Path:**
+   ```plaintext  
+      C:\Program Files\Git\cmd
+   ```
    - Git wird benötigt, um die Repositorys zu klonen und Änderungen zu verwalten.
 3. **IntelliJ IDEA Ultimate 2024.1:**
    - Notwendig für die Entwicklung und Verwaltung des Projekts "Data_Suite".
@@ -190,9 +193,9 @@ Diese Systemvoraussetzungen sind essenziell, um den Installationsleitfaden Schri
 3. **Überprüfen der Installation:**
    - Öffnen Sie die Eingabeaufforderung (Cmd) oder PowerShell.
    - Geben Sie den folgenden Befehl ein, um die Installation zu überprüfen:
-bash
+```bash
      git --version
-     
+```     
 - Es sollte eine Ausgabe ähnlich wie `git version 2.x.x` erscheinen, was die erfolgreiche Installation bestätigt.
 
 #### IntelliJ IDEA Installation
@@ -219,26 +222,26 @@ bash
 1. **SSH-Schlüssel generieren:**
    - Öffnen Sie PowerShell oder die Eingabeaufforderung.
    - Geben Sie den folgenden Befehl ein, um einen neuen SSH-Schlüssel zu generieren:
-bash
+```bash
      ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-     
+```         
 - Drücken Sie Enter, um den Standardspeicherort (C:\Users\<IhrBenutzername>\.ssh\id_rsa) zu akzeptieren.
    - Geben Sie bei Aufforderung ein sicheres Passwort ein (optional).
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
    - Starten Sie den SSH-Agenten im Hintergrund:
-bash
-     Start-Service ssh-agent
-     
+```bash
+    Start-Service ssh-agent
+```         
 - Fügen Sie Ihren SSH-Schlüssel dem Agenten hinzu:
-bash
+```bash
      ssh-add C:\Users\<IhrBenutzername>\.ssh\id_rsa
-     
+ ``` 
 3. **Öffentlichen SSH-Schlüssel kopieren:**
    - Kopieren Sie den Inhalt Ihres öffentlichen Schlüssels in die Zwischenablage:
-bash
+```bash
      Get-Content C:\Users\<IhrBenutzername>\.ssh\id_rsa.pub | Set-Clipboard
-     
+ ```   
 4. **SSH-Schlüssel zu Ihrem GitHub-Konto hinzufügen:**
    - Gehen Sie zu GitHub und melden Sie sich an.
    - Navigieren Sie zu `Settings -> SSH and GPG keys -> New SSH key`.
@@ -246,45 +249,44 @@ bash
 
 5. **Verbindung zu GitHub testen:**
    - Testen Sie die Verbindung zu GitHub:
-bash
+```bash
      ssh -T git@github.com
-     
+```     
 - Sie sollten eine Willkommensnachricht von GitHub sehen, die die erfolgreiche Einrichtung bestätigt.
 
 #### Vorab-Checks
-
 **Überprüfen der Git-Konfiguration:**
 
 1. **Git-Konfigurationsdatei überprüfen:**
    - Geben Sie den folgenden Befehl ein, um die Git-Konfiguration zu überprüfen:
-bash
+```bash
      git config --global --list
-     
+```     
 - Stellen Sie sicher, dass Ihr Name und Ihre E-Mail-Adresse korrekt konfiguriert sind:
-bash
+```bash
      git config --global user.name "Ihr Name"
      git config --global user.email "youremail@example.com"
-     
+ ```    
 **Überprüfen der Proxy-Einstellungen (falls erforderlich):**
 
 1. **Proxy-Einstellungen für Git konfigurieren:**
    - Wenn Sie hinter einem Proxy arbeiten, müssen Sie möglicherweise die Proxy-Einstellungen konfigurieren:
-bash
+```bash
      git config --global http.proxy http://username:password@proxy-server:port
      git config --global https.proxy https://username:password@proxy-server:port
-     
+ ```    
 **Überprüfen der Netzwerkeinstellungen:**
 
 1. **DNS-Auflösung überprüfen:**
    - Stellen Sie sicher, dass die DNS-Auflösung für GitHub funktioniert:
-bash
+```bash
      nslookup github.com
-     
+```     
 2. **Verbindung zu GitHub überprüfen:**
    - Überprüfen Sie die Verbindung zu GitHub über das Internet:
-bash
+```bash
      Test-NetConnection -ComputerName github.com -Port 22
-     
+```     
 ### 4. Projekt-Setup
 
 #### Hauptprojekt erstellen
@@ -301,58 +303,57 @@ bash
 2. **Initialisierung des lokalen Git-Repositorys:**
    - Öffnen Sie die Eingabeaufforderung (Cmd) oder PowerShell.
    - Navigieren Sie zum gewünschten Verzeichnis, in dem das Projekt erstellt werden soll:
-powershell
+```powershell
      cd U:\data_suite
-     
+```     
 - Initialisieren Sie ein neues Git-Repository:
-powershell
+```powershell
      git init
-     
+ ```    
 3. **Verbindung zum Remote-Repository herstellen:**
    - Fügen Sie das Remote-Repository hinzu:
-powershell
+```powershell
      git remote add origin https://github.com/PrinceEitel/Data_Suite.git
-     
+```     
 - Überprüfen Sie die Verbindung zum Remote-Repository:
-powershell
+```powershell
      git remote -v
-     
+```     
 - Sie sollten die URLs für `fetch` und `push` sehen, die mit dem GitHub-Repository verbunden sind.
 
 #### README-Datei hinzufügen und committen
-
 **Erstellung und Hinzufügen der README.md:**
 
 1. **README-Datei erstellen:**
    - Erstellen Sie eine neue Datei namens `README.md` im Projektverzeichnis:
-powershell
+```powershell
      echo "# Data_Suite" > README.md
-     
+ ```    
 2. **README-Datei zum Staging-Bereich hinzufügen:**
    - Fügen Sie die README-Datei zum Staging-Bereich hinzu:
-powershell
+```powershell
      git add README.md
-     
+ ```    
 3. **Initialen Commit erstellen:**
    - Erstellen Sie den initialen Commit für die README-Datei:
-powershell
+```powershell
      git commit -m "Initial commit with README.md"
-     
+```     
 4. **Hauptbranch umbenennen und Änderungen pushen:**
    - Benennen Sie den Hauptbranch in `main` um:
-powershell
+```powershell
      git branch -M main
-     
+ ```   
 - Pushen Sie die Änderungen zum Remote-Repository:
-powershell
+```powershell
      git push -u origin main
-     
+```     
 ### 5. GIT Konfiguration und Synchronisation
 
 #### Beschreibung der Konfigurationsdateien
 - **.gitconfig Einstellungen für den Unternehmens-Account VX:**
   Die `.gitconfig`-Datei enthält die benutzerspezifischen Konfigurationen für Git. Für den Unternehmens-Account VX wird sie folgendermaßen eingerichtet:
-ini
+```plaintext
   [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -372,7 +373,7 @@ ini
     tool = meld
   [rerere]
     enabled = true
-  
+```   
 **Erklärungen:**
   - `[filter "lfs"]`: Einstellungen für Git Large File Storage (LFS), um große Dateien effizient zu verwalten.
   - `[user]`: Benutzername und E-Mail-Adresse für Git-Commits.
@@ -391,144 +392,143 @@ ini
 #### Vorab-Checks
 - **Überprüfung der Git-Installation und Konfiguration:**
   1. Überprüfen Sie, ob Git installiert ist:
-powershell
+```powershell
      git --version
-     
+```      
 2. Überprüfen Sie, ob die Git-Konfiguration korrekt gesetzt ist:
-powershell
+```powershell
      git config --global user.name
      git config --global user.email
-     
+```      
 - **Überprüfung der Verzeichnisse und bestehenden Git-Repositories:**
   1. Überprüfen Sie, ob das Verzeichnis bereits existiert:
-powershell
+```powershell
      if (Test-Path "U:\data_suite") {
          Write-Host "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
      } else {
          Write-Host "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
      }
-     
+```      
 2. Sicherstellen, dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
-powershell
+```powershell
      if (Test-Path "U:\data_suite\.git") {
          Write-Host "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
      } else {
          Write-Host "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
      }
-     
+```      
 #### Submodule hinzufügen und konfigurieren
 - **Hinzufügen der Submodule:**
-powershell
+```powershell
   git submodule add https://github.com/PrinceEitel/OCR_Manager_Suite.git ocr_enricher
   git submodule add https://github.com/PrinceEitel/Template_Center.git template_center
   git submodule add https://github.com/PrinceEitel/Text_Anonymizer.git text_anonymizer
   git submodule add https://github.com/PrinceEitel/html_b2b_form.git html_b2b_form
   git submodule init
   git submodule update
-  
+```   
 - **Stagen und committen der Submodule:**
-powershell
+```powershell
   git add .gitmodules ocr_enricher template_center text_anonymizer html_b2b_form
   git commit -m "Submodule OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form hinzugefügt"
   git push origin main
-  
+```   
 #### GIT Workflows
 **Typische Anwendungsfälle und Arbeitsabläufe mit Git:**
 
 1. **Branch erstellen und wechseln:**
-powershell
+```powershell
    git branch <branch_name>
    git checkout <branch_name>
-   
+```    
 Alternativ in einem Schritt:
-powershell
+```powershell
    git checkout -b <branch_name>
-   
+```    
 2. **Änderungen stagen und committen:**
-powershell
+```powershell
    git add <file>
    git commit -m "Commit message"
-   
+```    
 3. **Änderungen pushen:**
-powershell
+```powershell
    git push origin <branch_name>
-   
+```    
 4. **Änderungen vom Remote-Repository pullen:**
-powershell
+```powershell
    git pull origin main
-   
+```    
 Alternativ mit Rebase:
-powershell
+```powershell
    git pull --rebase origin main
-   
+```    
 5. **Merge-Konflikte lösen:**
    - Überprüfen Sie die Konfliktdateien und lösen Sie die Konflikte manuell.
    - Committen Sie die gelösten Konflikte:
-powershell
+```powershell
      git add <conflict_file>
      git commit -m "Konflikte gelöst"
-     
+ ```     
 6. **Submodule aktualisieren:**
 powershell
    git submodule update --remote
    
 7. **Verwaltung von Submodulen:**
    **Hinzufügen von Submodulen:**
-powershell
+```powershell
    git submodule add <submodule_url> <path>
-   
+```    
 **Entfernen von Submodulen:**
    1. Entfernen Sie den Submoduleintrag aus der `.gitmodules`-Datei.
    2. Entfernen Sie den Submoduleintrag aus `.git/config`:
-powershell
+```powershell
       git config -f .git/config --remove-section submodule.<path>
-      
+```       
 3. Löschen Sie das Submodulverzeichnis und entfernen Sie dessen Eintrag aus dem Index:
-powershell
+```powershell
       git rm --cached <path>
       rm -rf <path>
-      
+ ```      
 4. Committen Sie die Änderungen:
-powershell
+```powershell
       git commit -m "Removed submodule <name>"
-      
+```       
 8. **Löschen von Dateien und Verzeichnissen:**
    **Löschen einer Datei:**
-powershell
+```powershell
    git rm <file>
    git commit -m "Deleted file <file>"
    git push origin <branch_name>
-   
+```    
 **Löschen eines Verzeichnisses:**
-powershell
+```powershell
    git rm -r <directory>
    git commit -m "Deleted directory <directory>"
    git push origin <branch_name>
-   
+```    
 9. **Rückgängigmachen von Änderungen:**
    **Rückgängigmachen von Änderungen in einer Datei:**
-powershell
+```powershell
    git checkout -- <file>
-   
+```    
 **Rückgängigmachen eines Commits:**
-powershell
+``` 
    git revert <commit_id>
-   
+```    
 10. **Anzeigen des Commit-Verlaufs:**
-powershell
+```powershell
     git log --oneline --graph --decorate --all
-    
+```     
 11. **Überprüfung des Repository-Status:**
-powershell
+```powershell
     git status
-    
+ ```    
 - **Beschreibung:** Zeigt den aktuellen Status des Repositories an, einschließlich Änderungen, die gestaged, unstaged oder untracked sind.
     - **Nutzen:** Hilft dabei, den aktuellen Zustand des Arbeitsverzeichnisses zu verstehen und zu überprüfen, welche Dateien geändert, hinzugefügt oder gelöscht wurden.
 	
 ### 6. Konfiguration IntelliJ
 
 #### Vorab-Checks
-
 - **Überprüfung der IntelliJ-Installation und -Konfiguration:**
   1. **Überprüfen, ob IntelliJ installiert ist:**
      - Öffnen Sie IntelliJ IDEA und stellen Sie sicher, dass es keine Fehlermeldungen gibt.
@@ -548,31 +548,31 @@ powershell
   1. **Terminal öffnen:**
      - Öffnen Sie das Terminal in IntelliJ IDEA (View -> Tool Windows -> Terminal).
   2. **Erstellen Sie die virtuelle Umgebung:**
-powershell
+```powershell
      python -m venv venv
-     
+```     
 - Dies erstellt eine neue virtuelle Umgebung im Verzeichnis `venv`.
   3. **Aktivieren Sie die virtuelle Umgebung:**
-powershell
+```powershell
      venv\Scripts\activate
-     
+ ```   
 - Die Aktivierung der virtuellen Umgebung sorgt dafür, dass alle Python-Befehle innerhalb dieser Umgebung ausgeführt werden.
   4. **Installieren Sie die Abhängigkeiten:**
-powershell
+```powershell
      pip install -r requirements.txt
-     
+ ```    
 - Stellen Sie sicher, dass die Datei `requirements.txt` im Projektverzeichnis vorhanden ist und alle notwendigen Abhängigkeiten enthält.
 
 - **Zusätzliche Schritte zur Verwaltung der virtuellen Umgebung:**
   1. **Überprüfen Sie die installierten Pakete:**
-powershell
+```powershell
      pip list
-     
+```     
 - Dies listet alle installierten Pakete in der virtuellen Umgebung auf.
   2. **Hinzufügen von weiteren Paketen:**
-powershell
+```powershell
      pip install <package-name>
-     
+```      
 - Installieren Sie zusätzliche Pakete nach Bedarf (z.B., `chardet`).
   3. **Sicherstellen der Kompatibilität:**
      - Überprüfen Sie, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind, um Kompatibilitätsprobleme zu vermeiden.
@@ -590,14 +590,14 @@ powershell
 
 - **Chardet und andere Bibliotheken:**
   1. **Installation in der virtuellen Umgebung:**
-powershell
+```powershell
      pip install chardet
-     
+```      
 - Installieren Sie `chardet` und andere benötigte Python-Bibliotheken in der virtuellen Umgebung.
   2. **Überprüfen der Installationen:**
-powershell
+```powershell
      pip show chardet
-     
+```      
 - Überprüfen Sie die Installation und Version der Bibliotheken.
 
 #### Projekt importieren
@@ -641,54 +641,54 @@ powershell
   4. **Repository-Status überprüfen:**
      - Öffnen Sie das Terminal in IntelliJ IDEA.
      - Führen Sie die folgenden Befehle aus, um das Projekt zu synchronisieren und zu aktualisieren:
-powershell
+```powershell
        git pull
        git submodule init
        git submodule update
-       
+```        
 #### Konfiguration von npm in der virtuellen Umgebung
 
 - **Schritte zur Installation und Verwaltung von npm-Abhängigkeiten in einer zentralen virtuellen Umgebung (venv):**
 
 1. **Erstellung der virtuellen Umgebung**:
    - Erstellen Sie eine zentrale virtuelle Umgebung im `data_suite`-Verzeichnis:
-bash
+```bash
      cd U:\data_suite
      mkdir venv
-     
+```      
 2. **Initiale Installation der Abhängigkeiten**:
    - Navigieren Sie in das Projektverzeichnis und installieren Sie alle in der `package.json`-Datei aufgeführten Abhängigkeiten in der zentralen virtuellen Umgebung:
-bash
+```bash
      npm install --prefix ./venv
-     
+```      
 3. **Hinzufügen neuer Abhängigkeiten**:
    - Um eine neue Abhängigkeit zum Projekt hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, verwenden Sie den folgenden Befehl:
-bash
+```bash
      npm install <paketname> --prefix ./venv --save
-     
+ ```     
 - Beispiel:
-bash
+```bash
      npm install axios --prefix ./venv --save
-     
+```     
 4. **Hinzufügen von Entwicklungsabhängigkeiten**:
    - Um eine neue Entwicklungsabhängigkeit hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, verwenden Sie den folgenden Befehl:
-bash
+```bash
      npm install <paketname> --prefix ./venv --save-dev
-     
+```      
 - Beispiel:
-bash
+```bash
      npm install webpack --prefix ./venv --save-dev
      
 5. **Aktualisierung von Abhängigkeiten**:
    - Um alle Abhängigkeiten in der zentralen virtuellen Umgebung auf die neuesten Versionen zu aktualisieren, verwenden Sie:
-bash
+```bash
      npm update --prefix ./venv
      
 6. **Überprüfung der installierten Abhängigkeiten**:
    - Um eine Liste der in der zentralen virtuellen Umgebung installierten Abhängigkeiten anzuzeigen, verwenden Sie:
-bash
+```bash
      npm list --prefix ./venv
-     
+```      
 ### 7. Entwicklung
 
 #### Projektstruktur
@@ -720,7 +720,7 @@ bash
 
 - **Ausführliche Erläuterung des Codes mit Beispielen und Erklärungen:**
   - **OCR Enricher Beispiel:**
-python
+```python
     # ocr_main.py
     import pytesseract
     from PIL import Image
@@ -738,9 +738,9 @@ python
       - `pytesseract`: Bibliothek zur Texterkennung.
       - `PIL`: Bibliothek zur Bildverarbeitung.
       - `extract_text_from_image`: Funktion zur Extraktion von Text aus einem Bild.
-
+``` 
   - **Template Center Beispiel:**
-python
+```python
     # template_main.py
     from jinja2 import Template
 
@@ -756,9 +756,9 @@ python
 - **Erläuterung:**
       - `jinja2`: Template-Engine zur Verarbeitung von Vorlagen.
       - `render_template`: Funktion zur Verarbeitung und Ausgabe einer Vorlage mit Kontextdaten.
-
+``` 
   - **Text Anonymizer Beispiel:**
-python
+```python
     # anonymizer_main.py
     import re
 
@@ -771,7 +771,7 @@ python
         text = "My phone number is 123-456-7890."
         patterns = [r"\d{3}-\d{3}-\d{4}"]
         print(anonymize_text(text, patterns))
-    
+ ```    
 - **Erläuterung:**
       - `re`: Bibliothek zur Mustererkennung und -ersetzung.
       - `anonymize_text`: Funktion zur Anonymisierung von Texten anhand gegebener Muster.
@@ -788,9 +788,9 @@ python
   - **Integration neuer Bibliotheken:**
     - Fügen Sie neue Abhängigkeiten in die `requirements.txt` ein.
     - Installieren Sie die neuen Pakete in der virtuellen Umgebung:
-powershell
+```python
       pip install -r requirements.txt
-      
+```       
 - **Erweiterung der Tests:**
     - Erstellen Sie neue Testdateien für neue Module oder Funktionen.
     - Nutzen Sie vorhandene Testmuster und -strukturen.
@@ -808,18 +808,18 @@ powershell
 #### Beispiele für zentrale Konfigurationsdateien:
 
 - **misc.xml**
-xml
+```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <project version="4">
     <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12" project-jdk-type="Python SDK">
       <output url="file://$PROJECT_DIR$/out" />
     </component>
   </project>
-  
+ ```  
 - **Erklärung**: Diese Datei legt das Projekt-JDK auf "Python 3.12" fest und definiert das Ausgabeort für den Compiler.
 
 - **modules.xml**
-xml
+```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <project version="4">
     <component name="ProjectModuleManager">
@@ -832,11 +832,11 @@ xml
       </modules>
     </component>
   </project>
-  
+ ```  
 - **Erklärung**: Diese Datei listet alle Module des Projekts auf und definiert deren Pfade.
 
 - **compiler.xml**
-xml
+```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <project version="4">
     <component name="CompilerConfiguration">
@@ -847,11 +847,11 @@ xml
       </wildcardResourcePatterns>
     </component>
   </project>
-  
+```   
 - **Erklärung**: Diese Datei konfiguriert die Compiler-Einstellungen und gibt an, dass Javac als Standard-Compiler verwendet wird.
 
 - **workspace.xml**
-xml
+```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <project version="4">
     <component name="RunManager">
@@ -868,18 +868,18 @@ xml
       </configuration>
     </component>
   </project>
-  
+```   
 - **Erklärung**: Diese Datei speichert benutzerspezifische Einstellungen für die Ausführung von Python-Skripten, einschließlich der Arbeitsverzeichnisse und Umgebungsvariablen.
 
 - **vcs.xml**
-xml
+```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <project version="4">
     <component name="VcsDirectoryMappings">
       <mapping directory="$PROJECT_DIR$" vcs="Git" />
     </component>
   </project>
-  
+```   
 - **Erklärung**: Diese Datei definiert die Zuordnung des Projekts zu einem Versionskontrollsystem, in diesem Fall Git.
 
 #### Verwendung zentraler Konfigurationsdateien:
@@ -888,11 +888,11 @@ xml
   1. **Konfigurationsdateien in die Versionskontrolle aufnehmen**:
      - Fügen Sie das `.idea`-Verzeichnis und die relevanten Konfigurationsdateien (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`) zu Ihrem Versionskontrollsystem (z.B. Git) hinzu.
      - Beispiel:
-powershell
+```powershell
        git add .idea/misc.xml .idea/modules.xml .idea/compiler.xml .idea/workspace.xml .idea/vcs.xml
        git commit -m "Added IntelliJ IDEA configuration files"
        git push origin main
-       
+ ```      
 2. **Automatisierte Validierung**:
      - Verwenden Sie Skripte oder CI/CD-Pipelines, um die Integrität der Konfigurationsdateien zu überprüfen. Diese Skripte können sicherstellen, dass die Dateien nicht manuell geändert wurden und dass alle erforderlichen Einstellungen vorhanden sind.
 
@@ -913,68 +913,68 @@ powershell
    - **Ursache:** Der SSH-Schlüssel ist nicht korrekt eingerichtet oder GitHub akzeptiert den verwendeten Schlüssel nicht.
    - **Lösung:** 
      - Überprüfen Sie, ob der SSH-Schlüssel generiert und dem GitHub-Account hinzugefügt wurde:
-bash
+```bash
        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
        cat ~/.ssh/id_rsa.pub
-       
+``` 
 - Fügen Sie den öffentlichen Schlüssel zu GitHub hinzu unter [SSH Keys](https://github.com/settings/keys).
      - Testen Sie die SSH-Verbindung:
-bash
+```bash
        ssh -T git@github.com
-       
+ ```       
 2. **Fehler beim Pushen: `fatal: unable to access 'https://github.com/USER/REPO.git/': The requested URL returned error: 403`**
    - **Ursache:** Die Zugriffsrechte auf das Repository sind unzureichend.
    - **Lösung:** 
      - Stellen Sie sicher, dass Sie die erforderlichen Berechtigungen für das Repository haben.
      - Überprüfen Sie Ihre Git-Konfiguration:
-bash
+```bash
        git config --global user.name "your_username"
        git config --global user.email "your_email@example.com"
-       
+```        
 3. **Fehler beim Mergen: `CONFLICT (content): Merge conflict in file.txt`**
    - **Ursache:** Änderungen in der gleichen Datei widersprechen sich.
    - **Lösung:** 
      - Öffnen Sie die Datei mit Konflikten und beheben Sie die Konflikte manuell.
      - Stagen Sie die Änderungen und committen Sie sie:
-bash
+```bash
        git add file.txt
        git commit -m "Resolved merge conflict in file.txt"
-       
+ ```       
 4. **Fehler bei der Submodule-Aktualisierung: `fatal: no submodule mapping found in .gitmodules for path 'submodule_path'`**
    - **Ursache:** Die `.gitmodules`-Datei ist nicht korrekt konfiguriert oder wurde gelöscht.
    - **Lösung:** 
      - Überprüfen Sie die `.gitmodules`-Datei und stellen Sie sicher, dass alle Submodule korrekt aufgeführt sind.
      - Initialisieren und aktualisieren Sie die Submodule erneut:
-bash
+```bash
        git submodule init
        git submodule update
-       
+```        
 ##### Probleme bei der Nutzung von IntelliJ IDEA
 
 1. **Problem beim Starten von IntelliJ IDEA: `IDE hangs or crashes`**
    - **Ursache:** Möglicherweise inkompatible Plugins oder fehlerhafte Konfigurationsdateien.
    - **Lösung:** 
      - Starten Sie IntelliJ IDEA im abgesicherten Modus:
-text
+```plaintext
        Help -> Find Action -> Safe Mode
-       
+```        
 - Deaktivieren oder entfernen Sie kürzlich installierte Plugins.
 
 2. **Problem mit der virtuellen Umgebung: `Python interpreter not configured`**
    - **Ursache:** Die virtuelle Umgebung ist nicht korrekt eingerichtet oder aktiviert.
    - **Lösung:** 
      - Stellen Sie sicher, dass die virtuelle Umgebung korrekt erstellt wurde:
-bash
+```bash
        python -m venv venv
-       
+```        
 - Aktivieren Sie die virtuelle Umgebung:
-bash 
+```bash 
        venv\Scripts\activate     # On Windows
-       
+```        
 - Konfigurieren Sie den Python Interpreter in IntelliJ IDEA:
-text
+```plaintext
        File -> Settings -> Project: <project_name> -> Python Interpreter
-       
+```        
 3. **Fehlerhafte Projektstruktur: `Cannot resolve symbol`**
    - **Ursache:** Die Quellverzeichnisse sind nicht korrekt markiert.
    - **Lösung:** 
@@ -986,9 +986,9 @@ text
    - **Ursache:** Die Git-Konfiguration in IntelliJ IDEA ist fehlerhaft.
    - **Lösung:** 
      - Überprüfen Sie die Git-Einstellungen:
-text
+```plaintext
        File -> Settings -> Version Control -> Git
-       
+```        
 - Stellen Sie sicher, dass der Pfad zur Git-Installation korrekt ist.
 
 ##### Proxy und Firewall
@@ -997,18 +997,18 @@ text
    - **Ursache:** Der Proxy ist nicht korrekt konfiguriert oder blockiert den Zugriff.
    - **Lösung:** 
      - Stellen Sie sicher, dass die Proxy-Einstellungen korrekt sind:
-bash
+```bash
        git config --global http.proxy http://proxyuser:proxypassword@proxy.server.com:port
        git config --global https.proxy https://proxyuser:proxypassword@proxy.server.com:port
-       
+```        
 - Überprüfen Sie die DNS-Auflösung:
-bash
+```bash
        nslookup github.com
-       
+```        
 - Konfigurieren Sie den Proxy in IntelliJ IDEA:
-text
+```plaintext
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
-       
+```        
 ##### Zugriff auf Portale und Download-Seiten
 
 1. **Zugriffsprobleme auf Download-Seiten: `Access Denied`**
