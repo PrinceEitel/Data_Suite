@@ -138,14 +138,10 @@ Data_Suite/
 1. **Windows-Betriebssystem:**
    - **Edition:** Windows 10 Enterprise Version 22H2
 2. **Git:**
-   - **Path:**
-   ```plaintext  
-      C:\Program Files\Git\cmd
-   ```
+   - **Path:** C:\Program Files\Git\cmd
 3. **IntelliJ IDEA Ultimate 2024.1:**
-   - Notwendig für die Entwicklung und Verwaltung des Projekts "Data_Suite".
 4. **Python virtuelle Umgebungen:**
-   - Ermöglicht die Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts. Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
+   - Ermöglicht Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts. Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
 
 #### Komponenten
 1. **GitHub-Repositories (PrinceEitel, privater Account):**
