@@ -470,9 +470,9 @@ Alternativ mit Rebase:
      git commit -m "Konflikte gelöst"
  ```     
 6. **Submodule aktualisieren:**
-powershell
+```powershell
    git submodule update --remote
-   
+```    
 7. **Verwaltung von Submodulen:**
    **Hinzufügen von Submodulen:**
 ```powershell
@@ -484,12 +484,12 @@ powershell
 ```powershell
       git config -f .git/config --remove-section submodule.<path>
 ```       
-3. Löschen Sie das Submodulverzeichnis und entfernen Sie dessen Eintrag aus dem Index:
+   3. Löschen Sie das Submodulverzeichnis und entfernen Sie dessen Eintrag aus dem Index:
 ```powershell
       git rm --cached <path>
       rm -rf <path>
  ```      
-4. Committen Sie die Änderungen:
+   4. Committen Sie die Änderungen:
 ```powershell
       git commit -m "Removed submodule <name>"
 ```       
