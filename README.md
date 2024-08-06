@@ -142,7 +142,6 @@ Data_Suite/
    ```plaintext  
       C:\Program Files\Git\cmd
    ```
-   - Git wird benötigt, um die Repositorys zu klonen und Änderungen zu verwalten.
 3. **IntelliJ IDEA Ultimate 2024.1:**
    - Notwendig für die Entwicklung und Verwaltung des Projekts "Data_Suite".
 4. **Python virtuelle Umgebungen:**
@@ -168,8 +167,6 @@ Data_Suite/
 4. **Netzwerk- und Ausführungsrechte:**
    - **Administratorrechte:** Notwendig für die Installation von Software und die Konfiguration des Systems.
    - **Netzwerkzugriff:** Sicherstellen, dass keine Netzwerkrestriktionen den Zugriff auf GitHub und andere benötigte Ressourcen blockieren.
-
-Diese Systemvoraussetzungen sind essenziell, um den Installationsleitfaden Schritt für Schritt auszuführen und das Projekt "Data_Suite" erfolgreich zu konfigurieren und zu synchronisieren. 
 
 **Quellen:**
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/10772914/how-do-i-pull-from-a-git-repository-through-an-http-proxy)【201†source】
@@ -202,149 +199,138 @@ Diese Systemvoraussetzungen sind essenziell, um den Installationsleitfaden Schri
 **Schritt-für-Schritt-Anleitung zur Installation von IntelliJ IDEA Ultimate 2024.1:**
 
 1. **Download von IntelliJ IDEA:**
-   - Besuchen Sie die JetBrains-Website: [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download/).
-   - Wählen Sie die Ultimate Edition und laden Sie die Installationsdatei für Windows herunter.
+   - via JetBrains-Website: [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download/).
+   - Ultimate Edition wählen und Installationsdatei für Windows herunterladen.
 
 2. **Installation von IntelliJ IDEA:**
-   - Führen Sie die heruntergeladene Installationsdatei (`.exe`) aus.
-   - Folgen Sie den Anweisungen im Setup-Assistenten:
-     - Wählen Sie das Installationsverzeichnis.
-     - Wählen Sie die gewünschten Optionen (z.B. Verknüpfungen erstellen, Kontextmenüoptionen hinzufügen).
-   - Bestätigen Sie alle Schritte und warten Sie, bis die Installation abgeschlossen ist.
-
-3. **Überprüfen der Installation:**
-   - Starten Sie IntelliJ IDEA über das Startmenü oder die erstellte Verknüpfung.
-   - Stellen Sie sicher, dass die Anwendung korrekt startet und keine Fehler angezeigt werden.
+   - heruntergeladene Installationsdatei (`.exe`) ausführen.
+   - Anweisungen im Setup-Assistenten folgen:
+     - Installationsverzeichnis auswählen.
+     - Optionen (z.B. Verknüpfungen erstellen, Kontextmenüoptionen hinzufügen) wählen.
 
 #### SSH-Schlüssel erstellen und konfigurieren
 **Schritt-für-Schritt-Anleitung zur Erstellung und Konfiguration eines SSH-Schlüssels für GitHub:**
 
 1. **SSH-Schlüssel generieren:**
-   - Öffnen Sie PowerShell oder die Eingabeaufforderung.
-   - Geben Sie den folgenden Befehl ein, um einen neuen SSH-Schlüssel zu generieren:
+   - PowerShell oder Eingabeaufforderung öffnen.
+   - neuen SSH-Schlüssel generieren:
 ```bash
      ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```         
-- Drücken Sie Enter, um den Standardspeicherort (C:\Users\<IhrBenutzername>\.ssh\id_rsa) zu akzeptieren.
-   - Geben Sie bei Aufforderung ein sicheres Passwort ein (optional).
+- Enter drücken, um den Standardspeicherort (C:\Users\<IhrBenutzername>\.ssh\id_rsa) zu akzeptieren.
+   - bei Aufforderung ein sicheres Passwort eingeben (optional).
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
    - Starten Sie den SSH-Agenten im Hintergrund:
 ```bash
     Start-Service ssh-agent
 ```         
-- Fügen Sie Ihren SSH-Schlüssel dem Agenten hinzu:
+- SSH-Schlüssel dem Agenten hinzufügen:
 ```bash
      ssh-add C:\Users\<IhrBenutzername>\.ssh\id_rsa
  ``` 
 3. **Öffentlichen SSH-Schlüssel kopieren:**
-   - Kopieren Sie den Inhalt Ihres öffentlichen Schlüssels in die Zwischenablage:
+   - Inhalt des öffentlichen Schlüssels in die Zwischenablage kopieren:
 ```bash
      Get-Content C:\Users\<IhrBenutzername>\.ssh\id_rsa.pub | Set-Clipboard
  ```   
 4. **SSH-Schlüssel zu Ihrem GitHub-Konto hinzufügen:**
-   - Gehen Sie zu GitHub und melden Sie sich an.
-   - Navigieren Sie zu `Settings -> SSH and GPG keys -> New SSH key`.
-   - Fügen Sie den kopierten Schlüssel ein und speichern Sie ihn.
+   - bei GitHub anmelden.
+   - zu `Settings navigieren -> SSH and GPG keys -> New SSH key`.
+   - kopierten Schlüssel einfügen und speichern.
 
 5. **Verbindung zu GitHub testen:**
-   - Testen Sie die Verbindung zu GitHub:
+   - Verbindung zu GitHub testen:
 ```bash
      ssh -T git@github.com
 ```     
-- Sie sollten eine Willkommensnachricht von GitHub sehen, die die erfolgreiche Einrichtung bestätigt.
-
 #### Vorab-Checks
 **Überprüfen der Git-Konfiguration:**
 
 1. **Git-Konfigurationsdatei überprüfen:**
-   - Geben Sie den folgenden Befehl ein, um die Git-Konfiguration zu überprüfen:
+   - Git-Konfiguration überprüfen:
 ```bash
      git config --global --list
 ```     
-- Stellen Sie sicher, dass Ihr Name und Ihre E-Mail-Adresse korrekt konfiguriert sind:
+- sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
 ```bash
      git config --global user.name "Ihr Name"
      git config --global user.email "youremail@example.com"
  ```    
 **Überprüfen der Proxy-Einstellungen (falls erforderlich):**
-
 1. **Proxy-Einstellungen für Git konfigurieren:**
-   - Wenn Sie hinter einem Proxy arbeiten, müssen Sie möglicherweise die Proxy-Einstellungen konfigurieren:
+   - bei Arbeiten hinter einem Proxy, müssen möglicherweise die Proxy-Einstellungen konfiguriert werden:
 ```bash
      git config --global http.proxy http://username:password@proxy-server:port
      git config --global https.proxy https://username:password@proxy-server:port
  ```    
 **Überprüfen der Netzwerkeinstellungen:**
-
-1. **DNS-Auflösung überprüfen:**
-   - Stellen Sie sicher, dass die DNS-Auflösung für GitHub funktioniert:
+1. **DNS-Auflösung für GitHub überprüfen:**
 ```bash
      nslookup github.com
 ```     
 2. **Verbindung zu GitHub überprüfen:**
-   - Überprüfen Sie die Verbindung zu GitHub über das Internet:
+   - Verbindung zu GitHub über das Internet überprüfen:
 ```bash
      Test-NetConnection -ComputerName github.com -Port 22
 ```     
 ### 4. Projekt-Setup
 
 #### Hauptprojekt erstellen
-
 **Erstellen des GitHub-Repositorys für `Data_Suite`:**
 
 1. **Erstellen Sie das GitHub-Repository:**
-   - Gehen Sie zu [GitHub](https://github.com) und melden Sie sich mit Ihrem privaten Account (PrinceEitel) an.
-   - Klicken Sie auf das Plus-Symbol (+) in der oberen rechten Ecke und wählen Sie "New repository".
-   - Geben Sie den Namen `Data_Suite` ein.
-   - Wählen Sie die gewünschte Sichtbarkeit (Public oder Private).
-   - Klicken Sie auf "Create repository".
+   - zu [GitHub](https://github.com) gehen und sich mit privaten Account (PrinceEitel) anmelden.
+   - Plus-Symbol (+) in der oberen rechten Ecke anklicken und "New repository" wählen.
+   - Namen `Data_Suite` eingeben.
+   - gewünschte Sichtbarkeit (Public oder Private) wählen.
+   - auf "Create repository" klicken.
 
 2. **Initialisierung des lokalen Git-Repositorys:**
-   - Öffnen Sie die Eingabeaufforderung (Cmd) oder PowerShell.
-   - Navigieren Sie zum gewünschten Verzeichnis, in dem das Projekt erstellt werden soll:
+   - Eingabeaufforderung (Cmd) oder PowerShell öffnen.
+   - zum gewünschten Verzeichnis navigieren, in dem das Projekt erstellt werden soll:
 ```powershell
      cd U:\data_suite
 ```     
-- Initialisieren Sie ein neues Git-Repository:
+- neues Git-Repository initialisieren:
 ```powershell
      git init
  ```    
 3. **Verbindung zum Remote-Repository herstellen:**
-   - Fügen Sie das Remote-Repository hinzu:
+   - Remote-Repository hinzufügen:
 ```powershell
      git remote add origin https://github.com/PrinceEitel/Data_Suite.git
 ```     
-- Überprüfen Sie die Verbindung zum Remote-Repository:
+- Verbindung zum Remote-Repository überprüfen:
 ```powershell
      git remote -v
 ```     
-- Sie sollten die URLs für `fetch` und `push` sehen, die mit dem GitHub-Repository verbunden sind.
+- URLs für `fetch` und `push` sollten jetzt erscheinen, die mit dem GitHub-Repository verbunden sind.
 
 #### README-Datei hinzufügen und committen
 **Erstellung und Hinzufügen der README.md:**
 
 1. **README-Datei erstellen:**
-   - Erstellen Sie eine neue Datei namens `README.md` im Projektverzeichnis:
+   - neue Datei namens `README.md` im Projektverzeichnis erstellen:
 ```powershell
      echo "# Data_Suite" > README.md
  ```    
 2. **README-Datei zum Staging-Bereich hinzufügen:**
-   - Fügen Sie die README-Datei zum Staging-Bereich hinzu:
+   - README-Datei zum Staging-Bereich hinzufügen:
 ```powershell
      git add README.md
  ```    
 3. **Initialen Commit erstellen:**
-   - Erstellen Sie den initialen Commit für die README-Datei:
+   - initialen Commit für die README-Datei erstellen:
 ```powershell
      git commit -m "Initial commit with README.md"
 ```     
 4. **Hauptbranch umbenennen und Änderungen pushen:**
-   - Benennen Sie den Hauptbranch in `main` um:
+   - Hauptbranch in `main` umbenennen:
 ```powershell
      git branch -M main
  ```   
-- Pushen Sie die Änderungen zum Remote-Repository:
+- Änderungen zum Remote-Repository pushen:
 ```powershell
      git push -u origin main
 ```     
@@ -352,7 +338,7 @@ Diese Systemvoraussetzungen sind essenziell, um den Installationsleitfaden Schri
 
 #### Beschreibung der Konfigurationsdateien
 - **.gitconfig Einstellungen für den Unternehmens-Account VX:**
-  Die `.gitconfig`-Datei enthält die benutzerspezifischen Konfigurationen für Git. Für den Unternehmens-Account VX wird sie folgendermaßen eingerichtet:
+   `.gitconfig`-Datei enthält die benutzerspezifischen Konfigurationen für Git. Für den Unternehmens-Account VX wird sie folgendermaßen eingerichtet:
 ```plaintext
   [filter "lfs"]
     clean = git-lfs clean -- %f
@@ -391,17 +377,17 @@ Diese Systemvoraussetzungen sind essenziell, um den Installationsleitfaden Schri
 
 #### Vorab-Checks
 - **Überprüfung der Git-Installation und Konfiguration:**
-  1. Überprüfen Sie, ob Git installiert ist:
+  1. Git Installation überprüfen:
 ```powershell
      git --version
 ```      
-2. Überprüfen Sie, ob die Git-Konfiguration korrekt gesetzt ist:
+2. überprüfen der Git-Konfiguration:
 ```powershell
      git config --global user.name
      git config --global user.email
 ```      
 - **Überprüfung der Verzeichnisse und bestehenden Git-Repositories:**
-  1. Überprüfen Sie, ob das Verzeichnis bereits existiert:
+  1. Überprüfen, ob das Verzeichnis bereits existiert:
 ```powershell
      if (Test-Path "U:\data_suite") {
          Write-Host "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
@@ -463,8 +449,8 @@ Alternativ mit Rebase:
    git pull --rebase origin main
 ```    
 5. **Merge-Konflikte lösen:**
-   - Überprüfen Sie die Konfliktdateien und lösen Sie die Konflikte manuell.
-   - Committen Sie die gelösten Konflikte:
+   - Überprüfen der Konfliktdateien und Konflikte manuell lösen.
+   - Committen der gelösten Konflikte:
 ```powershell
      git add <conflict_file>
      git commit -m "Konflikte gelöst"
@@ -479,17 +465,17 @@ Alternativ mit Rebase:
    git submodule add <submodule_url> <path>
 ```    
 **Entfernen von Submodulen:**
-   1. Entfernen Sie den Submoduleintrag aus der `.gitmodules`-Datei.
-   2. Entfernen Sie den Submoduleintrag aus `.git/config`:
+   1. Submoduleintrag aus der `.gitmodules`-Datei entfernen.
+   2. Submoduleintrag aus `.git/config` entfernen:
 ```powershell
       git config -f .git/config --remove-section submodule.<path>
 ```       
-   3. Löschen Sie das Submodulverzeichnis und entfernen Sie dessen Eintrag aus dem Index:
+   3. Submodulverzeichnis löschen und Eintrag aus dem Index entfernen:
 ```powershell
       git rm --cached <path>
       rm -rf <path>
  ```      
-   4. Committen Sie die Änderungen:
+   4. Änderungen committen:
 ```powershell
       git commit -m "Removed submodule <name>"
 ```       
@@ -527,61 +513,60 @@ Alternativ mit Rebase:
     - **Nutzen:** Hilft dabei, den aktuellen Zustand des Arbeitsverzeichnisses zu verstehen und zu überprüfen, welche Dateien geändert, hinzugefügt oder gelöscht wurden.
 	
 ### 6. Konfiguration IntelliJ
-
 #### Vorab-Checks
 - **Überprüfung der IntelliJ-Installation und -Konfiguration:**
   1. **Überprüfen, ob IntelliJ installiert ist:**
      - Öffnen Sie IntelliJ IDEA und stellen Sie sicher, dass es keine Fehlermeldungen gibt.
      - Gehen Sie zu `Help -> About` und überprüfen Sie die Version (sollte `Ultimate 2024.1` sein).
-  2. **Vergewissern Sie sich, dass alle benötigten Plugins installiert sind:**
+  2. **Vergewissern, dass alle benötigten Plugins installiert sind:**
      - Gehen Sie zu `File -> Settings -> Plugins`.
      - Stellen Sie sicher, dass die Plugins für `Python`, `Git`, und andere benötigte Tools installiert und aktiviert sind.
 
 - **Überprüfung der Konfigurationsdateien:**
-  1. **Stellen Sie sicher, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind:**
-     - Überprüfen Sie die Dateien `misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, und `vcs.xml`.
-     - Stellen Sie sicher, dass die Dateipfade und -inhalte den erwarteten Konfigurationen entsprechen.
+  1. **sicherstellen, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind:**
+     - Überprüfen der Dateien `misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, und `vcs.xml`.
+     - sicherstellen, dass die Dateipfade und -inhalte den erwarteten Konfigurationen entsprechen.
 
 #### Virtuelle Umgebung einrichten
 
 - **Erstellung und Aktivierung der virtuellen Umgebung:**
   1. **Terminal öffnen:**
-     - Öffnen Sie das Terminal in IntelliJ IDEA (View -> Tool Windows -> Terminal).
+     - Terminal öffnen in IntelliJ IDEA (View -> Tool Windows -> Terminal).
   2. **Erstellen Sie die virtuelle Umgebung:**
 ```powershell
      python -m venv venv
 ```     
-- Dies erstellt eine neue virtuelle Umgebung im Verzeichnis `venv`.
+- neue virtuelle Umgebung im Verzeichnis `venv` erstellen.
   3. **Aktivieren Sie die virtuelle Umgebung:**
 ```powershell
      venv\Scripts\activate
  ```   
-- Die Aktivierung der virtuellen Umgebung sorgt dafür, dass alle Python-Befehle innerhalb dieser Umgebung ausgeführt werden.
+- Aktivierung der virtuellen Umgebung sorgt dafür, dass alle Python-Befehle innerhalb dieser Umgebung ausgeführt werden.
   4. **Installieren Sie die Abhängigkeiten:**
 ```powershell
      pip install -r requirements.txt
  ```    
-- Stellen Sie sicher, dass die Datei `requirements.txt` im Projektverzeichnis vorhanden ist und alle notwendigen Abhängigkeiten enthält.
+- sicherstellen, dass die Datei `requirements.txt` im Projektverzeichnis vorhanden ist und alle notwendigen Abhängigkeiten enthält.
 
 - **Zusätzliche Schritte zur Verwaltung der virtuellen Umgebung:**
   1. **Überprüfen Sie die installierten Pakete:**
 ```powershell
      pip list
 ```     
-- Dies listet alle installierten Pakete in der virtuellen Umgebung auf.
+- listet alle installierten Pakete in der virtuellen Umgebung auf.
   2. **Hinzufügen von weiteren Paketen:**
 ```powershell
      pip install <package-name>
 ```      
 - Installieren Sie zusätzliche Pakete nach Bedarf (z.B., `chardet`).
   3. **Sicherstellen der Kompatibilität:**
-     - Überprüfen Sie, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind, um Kompatibilitätsprobleme zu vermeiden.
+     - Überprüfen, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind, um Kompatibilitätsprobleme zu vermeiden.
 
 #### Zulu JDK und andere notwendige Komponenten
 
 - **Zulu JDK:**
   1. **Installation des Zulu JDK:**
-     - Laden Sie das Zulu JDK von der offiziellen Webseite herunter und installieren Sie es.
+     - Laden des Zulu JDK von der offiziellen Webseite und installieren.
   2. **Konfiguration in IntelliJ:**
      - Gehen Sie zu `File -> Project Structure -> Project Settings -> Project`.
      - Wählen Sie das Zulu JDK als SDK aus und stellen Sie sicher, dass der Pfad korrekt ist.
@@ -593,15 +578,12 @@ Alternativ mit Rebase:
 ```powershell
      pip install chardet
 ```      
-- Installieren Sie `chardet` und andere benötigte Python-Bibliotheken in der virtuellen Umgebung.
+- `chardet` installieren und andere benötigte Python-Bibliotheken in der virtuellen Umgebung.
   2. **Überprüfen der Installationen:**
 ```powershell
      pip show chardet
 ```      
-- Überprüfen Sie die Installation und Version der Bibliotheken.
-
 #### Projekt importieren
-
 - **Importieren des Projekts `Data_Suite` in IntelliJ IDEA:**
   1. **Projekt aus bestehenden Quellen importieren:**
      - Öffnen Sie IntelliJ IDEA.
@@ -678,12 +660,12 @@ Alternativ mit Rebase:
 - Beispiel:
 ```bash
      npm install webpack --prefix ./venv --save-dev
-     
+```   
 5. **Aktualisierung von Abhängigkeiten**:
    - Um alle Abhängigkeiten in der zentralen virtuellen Umgebung auf die neuesten Versionen zu aktualisieren, verwenden Sie:
 ```bash
      npm update --prefix ./venv
-     
+```
 6. **Überprüfung der installierten Abhängigkeiten**:
    - Um eine Liste der in der zentralen virtuellen Umgebung installierten Abhängigkeiten anzuzeigen, verwenden Sie:
 ```bash
@@ -692,7 +674,6 @@ Alternativ mit Rebase:
 ### 7. Entwicklung
 
 #### Projektstruktur
-
 - **Beschreibung der Projektstruktur und der einzelnen Dateien und Verzeichnisse:**
   - **Hauptverzeichnis (`data_suite`):** Enthält das gesamte Projekt und die grundlegenden Konfigurationsdateien wie `.gitignore`, `README.md`, und `requirements.txt`.
   - **Verzeichnis `src`**: Hauptverzeichnis für den Quellcode.
@@ -717,7 +698,6 @@ Alternativ mit Rebase:
   - **Virtuelle Umgebung (`venv`)**: Enthält die Python-Umgebung und installierten Pakete.
 
 #### Code-Beispiele
-
 - **Ausführliche Erläuterung des Codes mit Beispielen und Erklärungen:**
   - **OCR Enricher Beispiel:**
 ```python
@@ -752,11 +732,11 @@ Alternativ mit Rebase:
         template_str = "Hello, {{ name }}!"
         context = {"name": "World"}
         print(render_template(template_str, context))
-    
+```     
 - **Erläuterung:**
       - `jinja2`: Template-Engine zur Verarbeitung von Vorlagen.
       - `render_template`: Funktion zur Verarbeitung und Ausgabe einer Vorlage mit Kontextdaten.
-``` 
+
   - **Text Anonymizer Beispiel:**
 ```python
     # anonymizer_main.py
@@ -792,13 +772,12 @@ Alternativ mit Rebase:
       pip install -r requirements.txt
 ```       
 - **Erweiterung der Tests:**
-    - Erstellen Sie neue Testdateien für neue Module oder Funktionen.
-    - Nutzen Sie vorhandene Testmuster und -strukturen.
+    - Erstellen neuer Testdateien für neue Module oder Funktionen.
+    - vorhandene Testmuster und -strukturen nutzen.
 
 ### 8. Integration zentraler Konfigurationsdateien
 
 #### Wichtige Konfigurationsdateien im .idea-Verzeichnis:
-
 - **misc.xml**: Enthält allgemeine Projekteinstellungen wie das verwendete JDK, das Projektverzeichnis und den Compiler-Ausgabeort.
 - **modules.xml**: Speichert Informationen über die Module des Projekts, deren Pfade und die zugehörigen Konfigurationsdateien.
 - **compiler.xml**: Konfiguriert die Compiler-Einstellungen für das Projekt, einschließlich Compiler-Optionen und Ausgabeverzeichnisse.
@@ -848,7 +827,7 @@ Alternativ mit Rebase:
     </component>
   </project>
 ```   
-- **Erklärung**: Diese Datei konfiguriert die Compiler-Einstellungen und gibt an, dass Javac als Standard-Compiler verwendet wird.
+- **Erklärung**: Datei konfiguriert die Compiler-Einstellungen und gibt an, dass Javac als Standard-Compiler verwendet wird.
 
 - **workspace.xml**
 ```xml
@@ -869,7 +848,7 @@ Alternativ mit Rebase:
     </component>
   </project>
 ```   
-- **Erklärung**: Diese Datei speichert benutzerspezifische Einstellungen für die Ausführung von Python-Skripten, einschließlich der Arbeitsverzeichnisse und Umgebungsvariablen.
+- **Erklärung**: Datei speichert benutzerspezifische Einstellungen für die Ausführung von Python-Skripten, einschließlich der Arbeitsverzeichnisse und Umgebungsvariablen.
 
 - **vcs.xml**
 ```xml
@@ -886,7 +865,7 @@ Alternativ mit Rebase:
 
 - **Vorgehensweise zur Einbindung und Nutzung zentraler Konfigurationsdateien in der Versionskontrolle**:
   1. **Konfigurationsdateien in die Versionskontrolle aufnehmen**:
-     - Fügen Sie das `.idea`-Verzeichnis und die relevanten Konfigurationsdateien (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`) zu Ihrem Versionskontrollsystem (z.B. Git) hinzu.
+     -  `.idea`-Verzeichnis und die relevanten Konfigurationsdateien (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`) zu Ihrem Versionskontrollsystem (z.B. Git) hinzufügen.
      - Beispiel:
 ```powershell
        git add .idea/misc.xml .idea/modules.xml .idea/compiler.xml .idea/workspace.xml .idea/vcs.xml
@@ -895,13 +874,6 @@ Alternativ mit Rebase:
  ```      
 2. **Automatisierte Validierung**:
      - Verwenden Sie Skripte oder CI/CD-Pipelines, um die Integrität der Konfigurationsdateien zu überprüfen. Diese Skripte können sicherstellen, dass die Dateien nicht manuell geändert wurden und dass alle erforderlichen Einstellungen vorhanden sind.
-
-  3. **Dokumentation**:
-     - Erstellen Sie eine Dokumentation, die erklärt, wie die IntelliJ-Einstellungen konfiguriert sind und wie sie in den Konfigurationsdateien repräsentiert werden. Diese Dokumentation kann helfen, Missverständnisse zu vermeiden und sicherzustellen, dass alle Teammitglieder die Einstellungen verstehen und korrekt anwenden.
-
-  4. **Backup und Wiederherstellung**:
-     - Erstellen Sie regelmäßige Backups der IntelliJ-Konfigurationsdateien. Im Falle von fehlerhaften Änderungen können Sie die Dateien schnell wiederherstellen und das Projekt in einen funktionsfähigen Zustand zurückversetzen.
-	 
 	 
 ### 9. Fehlerbehebung und Support
 
@@ -917,16 +889,16 @@ Alternativ mit Rebase:
        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
        cat ~/.ssh/id_rsa.pub
 ``` 
-- Fügen Sie den öffentlichen Schlüssel zu GitHub hinzu unter [SSH Keys](https://github.com/settings/keys).
-     - Testen Sie die SSH-Verbindung:
+- öffentlichen Schlüssel zu GitHub hinzufügen unter [SSH Keys](https://github.com/settings/keys).
+     - SSH-Verbindung testen:
 ```bash
        ssh -T git@github.com
  ```       
 2. **Fehler beim Pushen: `fatal: unable to access 'https://github.com/USER/REPO.git/': The requested URL returned error: 403`**
-   - **Ursache:** Die Zugriffsrechte auf das Repository sind unzureichend.
+   - **Ursache:** Zugriffsrechte auf das Repository sind unzureichend.
    - **Lösung:** 
-     - Stellen Sie sicher, dass Sie die erforderlichen Berechtigungen für das Repository haben.
-     - Überprüfen Sie Ihre Git-Konfiguration:
+     - sicherstellen, dass die erforderlichen Berechtigungen für das Repository vorhanden sind.
+     - Git-Konfiguration überprüfen:
 ```bash
        git config --global user.name "your_username"
        git config --global user.email "your_email@example.com"
@@ -954,58 +926,58 @@ Alternativ mit Rebase:
 1. **Problem beim Starten von IntelliJ IDEA: `IDE hangs or crashes`**
    - **Ursache:** Möglicherweise inkompatible Plugins oder fehlerhafte Konfigurationsdateien.
    - **Lösung:** 
-     - Starten Sie IntelliJ IDEA im abgesicherten Modus:
+     - IntelliJ IDEA im abgesicherten Modus starten:
 ```plaintext
        Help -> Find Action -> Safe Mode
 ```        
-- Deaktivieren oder entfernen Sie kürzlich installierte Plugins.
+- Deaktivieren oder entfernen kürzlich installierter Plugins.
 
 2. **Problem mit der virtuellen Umgebung: `Python interpreter not configured`**
    - **Ursache:** Die virtuelle Umgebung ist nicht korrekt eingerichtet oder aktiviert.
    - **Lösung:** 
-     - Stellen Sie sicher, dass die virtuelle Umgebung korrekt erstellt wurde:
+     - sicherstellen, dass die virtuelle Umgebung korrekt erstellt wurde:
 ```bash
        python -m venv venv
 ```        
-- Aktivieren Sie die virtuelle Umgebung:
+- virtuelle Umgebung aktivieren:
 ```bash 
        venv\Scripts\activate     # On Windows
 ```        
-- Konfigurieren Sie den Python Interpreter in IntelliJ IDEA:
+- Python Interpreter in IntelliJ IDEA konfigurieren:
 ```plaintext
        File -> Settings -> Project: <project_name> -> Python Interpreter
 ```        
 3. **Fehlerhafte Projektstruktur: `Cannot resolve symbol`**
-   - **Ursache:** Die Quellverzeichnisse sind nicht korrekt markiert.
+   - **Ursache:** Quellverzeichnisse sind nicht korrekt markiert.
    - **Lösung:** 
-     - Markieren Sie die relevanten Verzeichnisse als Quellverzeichnisse:
-text
+     - Markieren der relevanten Verzeichnisse als Quellverzeichnisse:
+```plaintext
        Rechtsklick auf das Verzeichnis -> Mark Directory as -> Sources Root
-       
+```        
 4. **Fehlerhafte Git-Integration: `Unable to fetch changes`**
-   - **Ursache:** Die Git-Konfiguration in IntelliJ IDEA ist fehlerhaft.
+   - **Ursache:** Git-Konfiguration in IntelliJ IDEA ist fehlerhaft.
    - **Lösung:** 
      - Überprüfen Sie die Git-Einstellungen:
 ```plaintext
        File -> Settings -> Version Control -> Git
 ```        
-- Stellen Sie sicher, dass der Pfad zur Git-Installation korrekt ist.
+- sicherstellen, dass der Pfad zur Git-Installation korrekt ist.
 
 ##### Proxy und Firewall
 
 1. **Problem beim Zugriff auf GitHub hinter einem Proxy: `Could not resolve host: github.com`**
    - **Ursache:** Der Proxy ist nicht korrekt konfiguriert oder blockiert den Zugriff.
    - **Lösung:** 
-     - Stellen Sie sicher, dass die Proxy-Einstellungen korrekt sind:
+     - sicherstellen, dass die Proxy-Einstellungen korrekt sind:
 ```bash
        git config --global http.proxy http://proxyuser:proxypassword@proxy.server.com:port
        git config --global https.proxy https://proxyuser:proxypassword@proxy.server.com:port
 ```        
-- Überprüfen Sie die DNS-Auflösung:
+- Überprüfen der DNS-Auflösung:
 ```bash
        nslookup github.com
 ```        
-- Konfigurieren Sie den Proxy in IntelliJ IDEA:
+- Konfigurieren des Proxy in IntelliJ IDEA:
 ```plaintext
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
 ```        
@@ -1014,14 +986,9 @@ text
 1. **Zugriffsprobleme auf Download-Seiten: `Access Denied`**
    - **Ursache:** Firewall oder Netzwerkbeschränkungen blockieren den Zugriff.
    - **Lösung:** 
-     - Beantragen Sie bei Ihrem Netzwerkadministrator die Freigabe der benötigten URLs.
-     - Verwenden Sie einen sicheren VPN-Dienst, um die Netzwerkbeschränkungen zu umgehen.
-
+     - beim Netzwerkadministrator die Freigabe der benötigten URLs beantragen
 
 ### 10. Glossar
-
-#### Erklärung wichtiger Begriffe
-
 **Repository (Repo)**
 - **Definition:** Ein Speicherort, in dem der gesamte Code, die Historie und die Konfigurationsdateien eines Projekts gespeichert werden.
 - **Verwendung im Leitfaden:** Das Data_Suite-Projekt und seine Submodule werden als Repositories auf GitHub gehostet.
@@ -1077,7 +1044,7 @@ text
 - **Nachteile:** Lernkurve für neue Benutzer, Performance-Overhead bei komplexen Templates.
 
 **HTTP_PROXY**
-- **Definition:** Eine Umgebungsvariable, die den HTTP-Proxy-Server spezifiziert, der für HTTP-Anfragen verwendet werden soll.
+- **Definition:** Umgebungsvariable, die den HTTP-Proxy-Server spezifiziert, der für HTTP-Anfragen verwendet werden soll.
 - **Verwendung im Leitfaden:** HTTP_PROXY wird konfiguriert, um Netzwerkverkehr durch einen Proxy zu leiten, insbesondere in einer Unternehmensumgebung mit Firewall-Beschränkungen.
 - **Besonderheiten:** Notwendig für den Zugriff auf das Internet hinter einem Unternehmensproxy.
 - **Vorteile:** Ermöglicht die Verbindung zu externen Ressourcen trotz Netzwerkbeschränkungen. 
