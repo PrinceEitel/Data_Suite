@@ -170,7 +170,7 @@ Data_Suite/
      - www.npmjs.com => node.js (JavaScript package manager)  
      - www.azul.com/downloads/#zulu => Azul Zulu JDK (certified build of OpenJDK)
      - www.github.com => github  
-     - webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
+     - https://webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
      - https://pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
      - https://pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
 
