@@ -562,28 +562,34 @@ Alternativ mit Rebase:
 - **Zulu JDK:**
   1. **Installation des Zulu JDK:**
      - Laden des Zulu JDK von der offiziellen Webseite und installieren.
+     - 
   2. **Konfiguration in IntelliJ:**
      - Gehen Sie zu `File -> Project Structure -> Project Settings -> Project`.
      - Wählen Sie das Zulu JDK als SDK aus und stellen Sie sicher, dass der Pfad korrekt ist.
+     - 
   3. **Überprüfen der Installation:**
      - Stellen Sie sicher, dass das Zulu JDK korrekt installiert ist und keine Fehlermeldungen auftreten.
 
 - **Chardet und andere Bibliotheken:**
+- 
   1. **Installation in der virtuellen Umgebung:**
 ```powershell
      pip install chardet
 ```      
 - `chardet` installieren und andere benötigte Python-Bibliotheken in der virtuellen Umgebung.
+- 
   2. **Überprüfen der Installationen:**
 ```powershell
      pip show chardet
 ```      
 #### Projekt importieren
 - **Importieren des Projekts `Data_Suite` in IntelliJ IDEA:**
+- 
   1. **Projekt aus bestehenden Quellen importieren:**
      - Öffnen von IntelliJ IDEA.
      - zu `File -> New -> Project from Existing Sources...` navigieren.
      - Verzeichnis `U:\data_suite` auswählen und den Anweisungen folgen, um das Projekt zu importieren.
+       
   2. **Konfiguration der Submodule:**
      - zu `File -> Settings -> Version Control -> Git` navigieren.
      - sicherstellen, dass alle Submodule korrekt erkannt und konfiguriert sind.
@@ -593,6 +599,7 @@ Alternativ mit Rebase:
 - **Konfiguration des Python Interpreters in IntelliJ IDEA:**
   1. **zu den Einstellungen navigieren:**
      - zu `File -> Settings -> Project: <Projektname> -> Python Interpreter` navigieren.
+       
   2. **Interpreter hinzufügen:**
      - auf das Zahnrad-Symbol klicken und `Add...` wählen.
      - Option `Existing environment` wählen und zum Python-Interpreter in der virtuellen Umgebung (`U:\data_suite\venv\Scripts\python.exe`) navigieren
