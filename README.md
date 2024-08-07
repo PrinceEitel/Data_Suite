@@ -1160,3 +1160,204 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 
 - **IntelliJ IDEA Community:** Ein Forum für IntelliJ IDEA-Benutzer, um Fragen zu stellen, Tipps auszutauschen und Hilfe von anderen Benutzern und JetBrains-Mitarbeitern zu erhalten.
   - [IntelliJ IDEA Community](https://intellij-support.jetbrains.com/hc/en-us/community/topics)
+ 
+#### Hilfs- und Prüfungs-Scripts
+
+**1. Konfigurationsprüfung:**
+
+- **System-Check mit Parameter des Home-Pfads:**  
+```powershell
+# Beispiele für das Ausführungskommando des PowerShell-Skripts:
+
+# Beispiel 1: Home-Verzeichnis ist `U:\`
+# Das Skript wird mit dem Home-Verzeichnis `U:\` ausgeführt.
+# Dies wird das `data_suite` Verzeichnis unter `U:\` annehmen.
+.\system_check_script.ps1 -homeDir "U:\"
+
+# Beispiel 2: Home-Verzeichnis ist `C:\`
+# Das Skript wird mit dem Home-Verzeichnis `C:\` ausgeführt.
+# Dies wird das `data_suite` Verzeichnis unter `C:\` annehmen.
+.\system_check_script.ps1 -homeDir "C:\"
+
+# Beispiel 3: Home-Verzeichnis ist `C:\users\test\`
+# Das Skript wird mit dem Home-Verzeichnis `C:\users\test\` ausgeführt.
+# Dies wird das `data_suite` Verzeichnis unter `C:\users\test\` annehmen.
+.\system_check_script.ps1 -homeDir "C:\users\test\"
+
+param (
+    [string]$homeDir = "U:\"
+)
+
+$outputFile = "${homeDir}data_suite\system_check_results.txt"
+
+function Write-Result {
+    param ($message)
+    $message | Out-File -FilePath $outputFile -Append
+    Write-Host $message
+}
+
+# Überprüfung der Git-Installation und Konfiguration
+Write-Result "Überprüfung der Git-Installation und Konfiguration:"
+Write-Result "-------------------------------------------"
+Write-Result "Git Version:"
+git --version | Out-File -FilePath $outputFile -Append
+Write-Result "Git Benutzername:"
+git config --global user.name | Out-File -FilePath $outputFile -Append
+Write-Result "Git Benutzer E-Mail:"
+git config --global user.email | Out-File -FilePath $outputFile -Append
+
+# Überprüfung der Verzeichnisse und bestehenden Git-Repositories
+Write-Result "`nÜberprüfung der Verzeichnisse und bestehenden Git-Repositories:"
+Write-Result "-------------------------------------------"
+if (Test-Path "${homeDir}data_suite") {
+    Write-Result "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
+} else {
+    Write-Result "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
+}
+if (Test-Path "${homeDir}data_suite\.git") {
+    Write-Result "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
+} else {
+    Write-Result "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
+}
+
+# Überprüfung relevanter Applikationen und Verzeichnisse
+Write-Result "`nÜberprüfung relevanter Applikationen und Verzeichnisse:"
+Write-Result "-------------------------------------------"
+if (Test-Path "${homeDir}data_suite\venv") {
+    Write-Result "Das Verzeichnis 'venv' existiert bereits."
+} else {
+    Write-Result "Das Verzeichnis 'venv' existiert nicht. Es muss erstellt werden."
+}
+
+if (Get-Module -ListAvailable -Name chardet) {
+    Write-Result "Die 'chardet' Bibliothek ist installiert."
+} else {
+    Write-Result "Die 'chardet' Bibliothek ist nicht installiert. Bitte installieren."
+}
+
+$ocrDir = "${homeDir}data_suite\ocr_enricher\src"
+if (Test-Path $ocrDir) {
+    Write-Result "Das Verzeichnis '$ocrDir' existiert."
+    if (Test-Path "$ocrDir\OCR_Enricher.ps1" -and Test-Path "$ocrDir\pdf_utils.py") {
+        Write-Result "Die erforderlichen Dateien im OCR-Manager-Verzeichnis sind vorhanden."
+    } else {
+        Write-Result "Eine oder mehrere erforderliche Dateien im OCR-Manager-Verzeichnis fehlen."
+    }
+} else {
+    Write-Result "Das Verzeichnis '$ocrDir' existiert nicht."
+}
+
+$submodules = @("ocr_enricher", "template_center", "text_anonymizer", "html_b2b_form")
+foreach ($module in $submodules) {
+    $filePath = "${homeDir}data_suite\$module\requirements.txt"
+    if (Test-Path $filePath) {
+        Write-Result "Die Datei 'requirements.txt' ist im Submodul '$module' vorhanden."
+    } else {
+        Write-Result "Die Datei 'requirements.txt' fehlt im Submodul '$module'."
+    }
+}
+
+$zuluDir = "${homeDir}data_suite\zulu"
+if (Test-Path $zuluDir) {
+    Write-Result "Das Verzeichnis '$zuluDir' existiert."
+} else {
+    Write-Result "Das Verzeichnis '$zuluDir' existiert nicht. Das Zulu JDK muss installiert werden."
+}
+
+$npmDir = "${homeDir}data_suite\venv\node_modules"
+if (Test-Path $npmDir) {
+    Write-Result "Die npm-Abhängigkeiten sind in der virtuellen Umgebung installiert."
+} else {
+    Write-Result "Die npm-Abhängigkeiten sind nicht installiert. Bitte npm-Abhängigkeiten installieren."
+}
+
+# Zusätzliche Überprüfungen
+Write-Result "`nZusätzliche Systemüberprüfungen:"
+Write-Result "-------------------------------------------"
+
+# Überprüfung des Windows-Betriebssystems
+Write-Result "Windows-Betriebssystem:"
+$osVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductName
+Write-Result $osVersion
+
+# Überprüfung der IntelliJ IDEA Installation
+Write-Result "IntelliJ IDEA Version:"
+$intelliJVersion = Get-ItemProperty "HKLM:\SOFTWARE\JetBrains\IntelliJ IDEA"
+Write-Result $intelliJVersion.DisplayName
+
+# Unternehmens-Proxy Zertifikat
+Write-Result "Unternehmens-Proxy Zertifikat:"
+if (Test-Path "Cert:\LocalMachine\Root\<ProxyCertThumbprint>") {
+    Write-Result "Das Unternehmens-Proxy Zertifikat ist installiert."
+} else {
+    Write-Result "Das Unternehmens-Proxy Zertifikat fehlt."
+}
+
+# Überprüfung der SSH-Schlüssel für GitHub
+Write-Result "SSH-Schlüssel für GitHub:"
+if (Test-Path "$env:USERPROFILE\.ssh\id_rsa.pub") {
+    Write-Result "SSH-Schlüssel ist vorhanden."
+} else {
+    Write-Result "SSH-Schlüssel fehlt."
+}
+
+# Überprüfung, ob SSH-Agent läuft
+Write-Result "SSH-Agent Status:"
+$sshAgentStatus = Get-Service -Name ssh-agent -ErrorAction SilentlyContinue
+if ($sshAgentStatus.Status -eq "Running") {
+    Write-Result "SSH-Agent ist gestartet."
+} else {
+    Write-Result "SSH-Agent läuft nicht."
+}
+
+# Überprüfung der .gitconfig-Einträge
+Write-Result "Überprüfung der .gitconfig-Einträge:"
+if (Test-Path "$env:USERPROFILE\.gitconfig") {
+    Get-Content "$env:USERPROFILE\.gitconfig" | Out-File -FilePath $outputFile -Append
+} else {
+    Write-Result ".gitconfig Datei fehlt."
+}
+
+# Überprüfung der Konfigurationsdateien im .idea-Verzeichnis
+Write-Result "Überprüfung der Konfigurationsdateien im .idea-Verzeichnis:"
+$ideaFiles = @("misc.xml", "modules.xml", "workspace.xml")
+foreach ($file in $ideaFiles) {
+    if (Test-Path "${homeDir}data_suite\.idea\$file") {
+        Write-Result "$file ist vorhanden."
+    } else {
+        Write-Result "$file fehlt."
+    }
+}
+
+# Netzzugriff überprüfen
+Write-Result "Überprüfung des Netzzugriffs:"
+$urls = @(
+    "https://www.npmjs.com",
+    "https://www.azul.com/downloads/#zulu",
+    "https://www.github.com",
+    "https://webpack.js.org",
+    "https://pypi.org/project/pdf-utils",
+    "https://pypi.org/project/chardet"
+)
+
+foreach ($url in $urls) {
+    try {
+        $request = Invoke-WebRequest -Uri $url -UseBasicParsing
+        if ($request.StatusCode -eq 200) {
+            Write-Result "$url ist erreichbar."
+        }
+    } catch {
+        Write-Result "$url ist nicht erreichbar."
+    }
+}
+
+# DNS-Auflösung für GitHub überprüfen
+Write-Result "Überprüfung der DNS-Auflösung für GitHub:"
+try {
+    [System.Net.Dns]::GetHostAddresses("www.github.com") | Out-Null
+    Write-Result "DNS-Auflösung für GitHub erfolgreich."
+} catch {
+    Write-Result "DNS-Auflösung für GitHub fehlgeschlagen."
+}
+``` 
+
