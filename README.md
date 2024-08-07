@@ -137,12 +137,13 @@ Data_Suite/
 #### Software
 1. **Windows-Betriebssystem:**
    - **Edition:** Windows 10 Enterprise Version 22H2
-2. **Git:**
+2. **Git for Windows:**
    - **Path:** C:\Program Files\Git\cmd
-3. **IntelliJ IDEA Ultimate 2024.1:**
-4. **Python virtuelle Umgebungen:**
-   - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts. Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
-5. **Unternehmens-Proxy Zertifikat:**
+3. **IntelliJ IDEA:**
+   - **Edition:** Ultimate 2024.1
+5. **Python virtuelle Umgebungen:**
+   - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts (Details im Abschnitt 6 Konfiguration IntelliJ).
+6. **Unternehmens-Proxy Zertifikat:**
    - Zertifikat wird aus dem Intranet (Dokumentationen IT Developer-Gilden) heruntergeladen
    - Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
 
