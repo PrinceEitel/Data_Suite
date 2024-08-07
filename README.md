@@ -141,7 +141,10 @@ Data_Suite/
    - **Path:** C:\Program Files\Git\cmd
 3. **IntelliJ IDEA Ultimate 2024.1:**
 4. **Python virtuelle Umgebungen:**
-   - Ermöglicht Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts. Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
+   - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts. Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
+5. **Unternehmens-Proxy Zertifikat:**
+   - Zertifikat wird aus dem Intranet (Dokumentationen IT Developer-Gilden) heruntergeladen
+   - Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
 
 #### Komponenten
 1. **GitHub-Repositories (PrinceEitel, privater Account):**
@@ -504,17 +507,15 @@ Alternativ mit Rebase:
     git status
  ```    
 - **Beschreibung:** Zeigt den aktuellen Status des Repositories an, einschließlich Änderungen, die gestaged, unstaged oder untracked sind.
-    - **Nutzen:** Hilft dabei, den aktuellen Zustand des Arbeitsverzeichnisses zu verstehen und zu überprüfen, welche Dateien geändert, hinzugefügt oder gelöscht wurden.
 	
 ### 6. Konfiguration IntelliJ
 #### Vorab-Checks
 - **Überprüfung der IntelliJ-Installation und -Konfiguration:**
-  1. **Überprüfen, ob IntelliJ installiert ist:**
-     - Öffnen Sie IntelliJ IDEA und stellen Sie sicher, dass es keine Fehlermeldungen gibt.
-     - Gehen Sie zu `Help -> About` und überprüfen Sie die Version (sollte `Ultimate 2024.1` sein).
+  1. **Überprüfen, ob IntelliJ installiert ist:** 
+     - unter `Help -> About` die aktuelle und richtige Version (sollte `Ultimate 2024.1` sein) prüfen.
   2. **Vergewissern, dass alle benötigten Plugins installiert sind:**
-     - Gehen Sie zu `File -> Settings -> Plugins`.
-     - Stellen Sie sicher, dass die Plugins für `Python`, `Git`, und andere benötigte Tools installiert und aktiviert sind.
+     - zu `File -> Settings -> Plugins` navigieren
+     - sicherstellen, dass die Plugins für `Python`, `Git`, und andere benötigte Tools installiert und aktiviert sind.
 
 - **Überprüfung der Konfigurationsdateien:**
   1. **sicherstellen, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind:**
@@ -531,12 +532,12 @@ Alternativ mit Rebase:
      python -m venv venv
 ```     
 - neue virtuelle Umgebung im Verzeichnis `venv` erstellen.
-  3. **Aktivieren Sie die virtuelle Umgebung:**
+  3. **Aktivieren der virtuellen Umgebung:**
 ```powershell
      venv\Scripts\activate
  ```   
 - Aktivierung der virtuellen Umgebung sorgt dafür, dass alle Python-Befehle innerhalb dieser Umgebung ausgeführt werden.
-  4. **Installieren Sie die Abhängigkeiten:**
+  4. **Installieren der Abhängigkeiten:**
 ```powershell
      pip install -r requirements.txt
  ```    
@@ -552,7 +553,7 @@ Alternativ mit Rebase:
 ```powershell
      pip install <package-name>
 ```      
-- Installieren Sie zusätzliche Pakete nach Bedarf (z.B., `chardet`).
+- Installieren zusätzlicher Pakete nach Bedarf (z.B., `chardet`).
   3. **Sicherstellen der Kompatibilität:**
      - Überprüfen, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind, um Kompatibilitätsprobleme zu vermeiden.
 
@@ -580,43 +581,40 @@ Alternativ mit Rebase:
 #### Projekt importieren
 - **Importieren des Projekts `Data_Suite` in IntelliJ IDEA:**
   1. **Projekt aus bestehenden Quellen importieren:**
-     - Öffnen Sie IntelliJ IDEA.
-     - Gehen Sie zu `File -> New -> Project from Existing Sources...`.
-     - Wählen Sie das Verzeichnis `U:\data_suite` aus und folgen Sie den Anweisungen, um das Projekt zu importieren.
+     - Öffnen von IntelliJ IDEA.
+     - zu `File -> New -> Project from Existing Sources...` navigieren.
+     - Verzeichnis `U:\data_suite` auswählen und den Anweisungen folgen, um das Projekt zu importieren.
   2. **Konfiguration der Submodule:**
-     - Navigieren Sie zu `File -> Settings -> Version Control -> Git`.
-     - Stellen Sie sicher, dass alle Submodule korrekt erkannt und konfiguriert sind.
-     - Falls notwendig, fügen Sie die Submodule manuell hinzu: `File -> New -> Module from Existing Sources...`.
+     - zu `File -> Settings -> Version Control -> Git` navigieren.
+     - sicherstellen, dass alle Submodule korrekt erkannt und konfiguriert sind.
+     - Falls notwendig, Submodule manuell hinzufügen: `File -> New -> Module from Existing Sources...`.
 
 #### Python Interpreter konfigurieren
-
 - **Konfiguration des Python Interpreters in IntelliJ IDEA:**
-  1. **Gehen Sie zu den Einstellungen:**
-     - Gehen Sie zu `File -> Settings -> Project: <Projektname> -> Python Interpreter`.
+  1. **zu den Einstellungen navigieren:**
+     - zu `File -> Settings -> Project: <Projektname> -> Python Interpreter` navigieren.
   2. **Interpreter hinzufügen:**
-     - Klicken Sie auf das Zahnrad-Symbol und wählen Sie `Add...`.
-     - Wählen Sie die Option `Existing environment` und navigieren Sie zum Python-Interpreter in der virtuellen Umgebung (`U:\data_suite\venv\Scripts\python.exe`).
+     - auf das Zahnrad-Symbol klicken und `Add...` wählen.
+     - Option `Existing environment` wählen und zum Python-Interpreter in der virtuellen Umgebung (`U:\data_suite\venv\Scripts\python.exe`) navigieren
 
 #### Quellverzeichnisse konfigurieren
-
 - **Markieren der relevanten Verzeichnisse als Quellverzeichnisse:**
   1. **Projektstruktur öffnen:**
-     - Gehen Sie zu `File -> Project Structure`.
+     - zu `File -> Project Structure` navigieren.
   2. **Verzeichnisse markieren:**
-     - Rechtsklicken Sie auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
+     - Rechtsklicken auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
 
 #### Git-Integration konfigurieren
-
 - **Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:**
   1. **Einstellungen öffnen:**
-     - Gehen Sie zu `File -> Settings -> Version Control -> Git`.
+     - zu `File -> Settings -> Version Control -> Git` navigieren.
   2. **Pfad zur Git-Installation überprüfen:**
-     - Stellen Sie sicher, dass der Pfad zur Git-Installation korrekt gesetzt ist (z. B., `C:\Program Files\Git\cmd\git.exe`).
+     - sicherstellen, dass der Pfad zur Git-Installation korrekt gesetzt ist (z. B., `C:\Program Files\Git\cmd\git.exe`).
   3. **Git-Integration aktivieren:**
-     - Prüfen Sie, ob die Git-Integration aktiviert ist und das Hauptprojekt sowie alle Submodule erkannt werden.
+     - überprüfen, ob die Git-Integration aktiviert ist und das Hauptprojekt sowie alle Submodule erkannt werden.
   4. **Repository-Status überprüfen:**
-     - Öffnen Sie das Terminal in IntelliJ IDEA.
-     - Führen Sie die folgenden Befehle aus, um das Projekt zu synchronisieren und zu aktualisieren:
+     - das Terminal in IntelliJ IDEA öffnen.
+     - die folgenden Befehle ausführen, um das Projekt zu synchronisieren und zu aktualisieren:
 ```powershell
        git pull
        git submodule init
@@ -625,20 +623,19 @@ Alternativ mit Rebase:
 #### Konfiguration von npm in der virtuellen Umgebung
 
 - **Schritte zur Installation und Verwaltung von npm-Abhängigkeiten in einer zentralen virtuellen Umgebung (venv):**
-
 1. **Erstellung der virtuellen Umgebung**:
-   - Erstellen Sie eine zentrale virtuelle Umgebung im `data_suite`-Verzeichnis:
+   - eine zentrale virtuelle Umgebung im `data_suite`-Verzeichnis erstellen:
 ```bash
      cd U:\data_suite
      mkdir venv
 ```      
 2. **Initiale Installation der Abhängigkeiten**:
-   - Navigieren Sie in das Projektverzeichnis und installieren Sie alle in der `package.json`-Datei aufgeführten Abhängigkeiten in der zentralen virtuellen Umgebung:
+   - ins Projektverzeichnis navigieren und alle in der `package.json`-Datei aufgeführten Abhängigkeiten in der zentralen virtuellen Umgebung installieren:
 ```bash
      npm install --prefix ./venv
 ```      
 3. **Hinzufügen neuer Abhängigkeiten**:
-   - Um eine neue Abhängigkeit zum Projekt hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, verwenden Sie den folgenden Befehl:
+   - Um eine neue Abhängigkeit zum Projekt hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, den folgenden Befehl verwenden:
 ```bash
      npm install <paketname> --prefix ./venv --save
  ```     
@@ -647,7 +644,7 @@ Alternativ mit Rebase:
      npm install axios --prefix ./venv --save
 ```     
 4. **Hinzufügen von Entwicklungsabhängigkeiten**:
-   - Um eine neue Entwicklungsabhängigkeit hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, verwenden Sie den folgenden Befehl:
+   - Um eine neue Entwicklungsabhängigkeit hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, den folgenden Befehl verwenden:
 ```bash
      npm install <paketname> --prefix ./venv --save-dev
 ```      
@@ -656,12 +653,12 @@ Alternativ mit Rebase:
      npm install webpack --prefix ./venv --save-dev
 ```   
 5. **Aktualisierung von Abhängigkeiten**:
-   - Um alle Abhängigkeiten in der zentralen virtuellen Umgebung auf die neuesten Versionen zu aktualisieren, verwenden Sie:
+   - Um alle Abhängigkeiten in der zentralen virtuellen Umgebung auf die neuesten Versionen zu aktualisieren, verwenden von:
 ```bash
      npm update --prefix ./venv
 ```
 6. **Überprüfung der installierten Abhängigkeiten**:
-   - Um eine Liste der in der zentralen virtuellen Umgebung installierten Abhängigkeiten anzuzeigen, verwenden Sie:
+   - Um eine Liste der in der zentralen virtuellen Umgebung installierten Abhängigkeiten anzuzeigen, verwenden von:
 ```bash
      npm list --prefix ./venv
 ```      
