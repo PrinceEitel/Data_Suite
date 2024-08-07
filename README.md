@@ -119,16 +119,16 @@ Data_Suite/
     
 ### Erläuterungen
 
-- **venv/**: Enthält die virtuelle Umgebung für das gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.
-- **ocr_enricher/**: Enthält das Submodul für den OCR-Manager mit Logs und Quellcode. Die `requirements.txt` listet die spezifischen Python-Abhängigkeiten auf.
-- **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul des Projekts, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten.
+- **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.
+- **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten.
+  - **ocr_enricher/** mit Unterverzeichnissen für Logs und Quellcode.
   - **text_anonymizer/** hat eine detaillierte Struktur mit Unterverzeichnissen für Logs, Quellcode und Testdateien.
   - **html_b2b_form/** enthält Verzeichnisse für `.idea`, `dist`, `css`, `img`, `js`, und `src` sowie Konfigurationsdateien wie `package.json`, `package-lock.json` und `webpack.config.js`.
-- **.git/**: Das Git-Verzeichnis des Hauptprojekts.
+- **.git/**: Git-Verzeichnis des Hauptprojekts.
 - **.idea/**: Konfigurationsdateien für IntelliJ IDEA, die projektübergreifende Einstellungen speichern.
-- **README.md**: Eine Beschreibung des Projekts.
-- **requirements.txt**: Eine Liste der Python-Abhängigkeiten für das Hauptprojekt.
-- **package.json**: Eine Liste der npm-Abhängigkeiten für das Hauptprojekt.
+- **README.md**: Beschreibung des Projekts.
+- **requirements.txt**: Liste der Python-Abhängigkeiten für das Hauptprojekt.
+- **package.json**: Liste der npm-Abhängigkeiten für das Hauptprojekt.
 - **node_modules/**: Enthält installierte npm-Bibliotheken.
 - **zulu/**: Verzeichnis für das Zulu JDK, das als Java SDK verwendet wird.
  
@@ -167,6 +167,12 @@ Data_Suite/
 4. **Netzwerk- und Ausführungsrechte:**
    - **Administratorrechte:** Notwendig für die Installation von Software und die Konfiguration des Systems.
    - **Netzwerkzugriff:** Sicherstellen, dass keine Netzwerkrestriktionen den Zugriff auf GitHub und andere benötigte Ressourcen blockieren.
+     - www.npmjs.com => node.js (JavaScript package manager)  
+     - www.azul.com/downloads/#zulu => Azul Zulu JDK (certified build of OpenJDK)
+     - www.github.com => github  
+     - webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
+     - pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
+     - pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
 
 **Quellen:**
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
@@ -183,7 +189,7 @@ Data_Suite/
 
 2. **Installation von Git:**
    - heruntergeladene Installationsdatei (`.exe`) ausführen.
-   - Installationsanweisungen im Setup-Assistenten befolgen. Die Standardeinstellungen sind in den meisten Fällen ausreichend.
+   - Installationsanweisungen im Setup-Assistenten befolgen (Standardeinstellungen sind in den meisten Fällen ausreichend).
 
 3. **Überprüfen der Installation:**
    - Öffnen der Eingabeaufforderung (Cmd) oder PowerShell.
