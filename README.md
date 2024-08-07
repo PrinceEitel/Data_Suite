@@ -516,7 +516,12 @@ Alternativ mit Rebase:
 - **Beschreibung:** Zeigt den aktuellen Status des Repositories an, einschließlich Änderungen, die gestaged, unstaged oder untracked sind.
 	
 ### 6. Konfiguration IntelliJ
-#### Vorab-Checks
+#### Vorab-Checks als Script
+
+**Überprüfung der IntelliJ-Installation und -Konfiguration als Script:**
+-Überprüfung der Konfigurationsdateien im Anhang unter  Hilfs- und Prüfungs-Scripts/"System-Check mit Angabe des variablen Home-Pfads"
+
+#### Vorab-Checks (selektiv)
 - **Überprüfung der IntelliJ-Installation und -Konfiguration:**
   
   1. **Überprüfen, ob IntelliJ installiert ist:** 
@@ -1165,7 +1170,7 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 
 **1. Konfigurationsprüfung:**
 
-- **System-Check mit Parameter des Home-Pfads:**  
+- **System-Check mit Angabe des variablen Home-Pfads:**  
 ```powershell
 # Beispiele für das Ausführungskommando des PowerShell-Skripts:
 
