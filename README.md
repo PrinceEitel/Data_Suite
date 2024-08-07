@@ -9,7 +9,7 @@ Ziel des Projekts ist es, eine modulare und flexible Lösung bereitzustellen, di
 Dieser Leitfaden richtet sich an Business Analysts und Entwickler, die das "Data_Suite"-Projekt in ihrer Arbeitsumgebung installieren, konfigurieren und verwenden möchten. Die Anleitung bietet detaillierte Schritte zur Einrichtung und Synchronisation des Projekts auf mehreren Windows-Clients und unterstützt die Zielgruppe dabei, das Projekt effizient zu nutzen und zu erweitern.
 
 #### Überblick über den Leitfaden
-Dieser Leitfaden ist strukturiert, um den Anwendern eine klare und schrittweise Anleitung zur Einrichtung und Nutzung des "Data_Suite"-Projekts zu bieten. Die Inhalte sind in folgende Hauptabschnitte gegliedert:
+Schrittweise Anleitung zur Einrichtung und Nutzung des "Data_Suite"-Projekts. Die Inhalte sind in folgende Hauptabschnitte gegliedert:
 
 1. **Einleitung**: Einführung in das Projekt, die Zielgruppe und den Aufbau des Leitfadens.
 2. **Systemvoraussetzungen**: Auflistung der benötigten Software und Komponenten.
