@@ -518,8 +518,10 @@ Alternativ mit Rebase:
 ### 6. Konfiguration IntelliJ
 #### Vorab-Checks
 - **Überprüfung der IntelliJ-Installation und -Konfiguration:**
+  
   1. **Überprüfen, ob IntelliJ installiert ist:** 
      - unter `Help -> About` die aktuelle und richtige Version (sollte `Ultimate 2024.1` sein) prüfen.
+       
   2. **Vergewissern, dass alle benötigten Plugins installiert sind:**
      - zu `File -> Settings -> Plugins` navigieren
      - sicherstellen, dass die Plugins für `Python`, `Git`, und andere benötigte Tools installiert und aktiviert sind.
@@ -532,18 +534,22 @@ Alternativ mit Rebase:
 #### Virtuelle Umgebung einrichten
 
 - **Erstellung und Aktivierung der virtuellen Umgebung:**
+  
   1. **Terminal öffnen:**
      - Terminal öffnen in IntelliJ IDEA (View -> Tool Windows -> Terminal).
-  2. **Erstellen Sie die virtuelle Umgebung:**
+       
+  2. **Erstellen der virtuellen Umgebung:**
 ```powershell
      python -m venv venv
 ```     
 - neue virtuelle Umgebung im Verzeichnis `venv` erstellen.
+  
   3. **Aktivieren der virtuellen Umgebung:**
 ```powershell
      venv\Scripts\activate
  ```   
 - Aktivierung der virtuellen Umgebung sorgt dafür, dass alle Python-Befehle innerhalb dieser Umgebung ausgeführt werden.
+  
   4. **Installieren der Abhängigkeiten:**
 ```powershell
      pip install -r requirements.txt
@@ -551,6 +557,7 @@ Alternativ mit Rebase:
 - sicherstellen, dass die Datei `requirements.txt` im Projektverzeichnis vorhanden ist und alle notwendigen Abhängigkeiten enthält.
 
 - **Zusätzliche Schritte zur Verwaltung der virtuellen Umgebung:**
+  
   1. **Überprüfen Sie die installierten Pakete:**
 ```powershell
      pip list
@@ -561,6 +568,7 @@ Alternativ mit Rebase:
      pip install <package-name>
 ```      
 - Installieren zusätzlicher Pakete nach Bedarf (z.B., `chardet`).
+  
   3. **Sicherstellen der Kompatibilität:**
      - Überprüfen, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind, um Kompatibilitätsprobleme zu vermeiden.
 
@@ -569,11 +577,11 @@ Alternativ mit Rebase:
 - **Zulu JDK:**
   1. **Installation des Zulu JDK:**
      - Laden des Zulu JDK von der offiziellen Webseite und installieren.
-     - 
+       
   2. **Konfiguration in IntelliJ:**
      - Gehen Sie zu `File -> Project Structure -> Project Settings -> Project`.
      - Wählen Sie das Zulu JDK als SDK aus und stellen Sie sicher, dass der Pfad korrekt ist.
-     - 
+       
   3. **Überprüfen der Installation:**
      - Stellen Sie sicher, dass das Zulu JDK korrekt installiert ist und keine Fehlermeldungen auftreten.
 
@@ -584,7 +592,7 @@ Alternativ mit Rebase:
      pip install chardet
 ```      
 - `chardet` installieren und andere benötigte Python-Bibliotheken in der virtuellen Umgebung.
-- 
+  
   2. **Überprüfen der Installationen:**
 ```powershell
      pip show chardet
@@ -615,6 +623,7 @@ Alternativ mit Rebase:
 - **Markieren der relevanten Verzeichnisse als Quellverzeichnisse:**
   1. **Projektstruktur öffnen:**
      - zu `File -> Project Structure` navigieren.
+       
   2. **Verzeichnisse markieren:**
      - Rechtsklicken auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
 
@@ -622,13 +631,17 @@ Alternativ mit Rebase:
 - **Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:**
   1. **Einstellungen öffnen:**
      - zu `File -> Settings -> Version Control -> Git` navigieren.
+       
   2. **Pfad zur Git-Installation überprüfen:**
      - sicherstellen, dass der Pfad zur Git-Installation korrekt gesetzt ist (z. B., `C:\Program Files\Git\cmd\git.exe`).
+       
   3. **Git-Integration aktivieren:**
      - überprüfen, ob die Git-Integration aktiviert ist und das Hauptprojekt sowie alle Submodule erkannt werden.
+       
   4. **Repository-Status überprüfen:**
      - das Terminal in IntelliJ IDEA öffnen.
      - die folgenden Befehle ausführen, um das Projekt zu synchronisieren und zu aktualisieren:
+       
 ```powershell
        git pull
        git submodule init
@@ -637,6 +650,7 @@ Alternativ mit Rebase:
 #### Konfiguration von npm in der virtuellen Umgebung
 
 - **Schritte zur Installation und Verwaltung von npm-Abhängigkeiten in einer zentralen virtuellen Umgebung (venv):**
+  
 1. **Erstellung der virtuellen Umgebung**:
    - eine zentrale virtuelle Umgebung im `data_suite`-Verzeichnis erstellen:
 ```bash
