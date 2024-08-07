@@ -171,8 +171,8 @@ Data_Suite/
      - www.azul.com/downloads/#zulu => Azul Zulu JDK (certified build of OpenJDK)
      - www.github.com => github  
      - webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
-     - pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
-     - pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
+     - https://pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
+     - https://pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
 
 **Quellen:**
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
