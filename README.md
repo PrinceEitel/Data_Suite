@@ -165,9 +165,8 @@ Data_Suite/
    - **Netzwerkzugriff:** Sicherstellen, dass keine Netzwerkrestriktionen den Zugriff auf GitHub und andere benötigte Ressourcen blockieren.
 
 **Quellen:**
-- [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/10772914/how-do-i-pull-from-a-git-repository-through-an-http-proxy)【201†source】
-- [Cloning GitHub Repository Behind Corporate Proxy](https://stackoverflow.com/questions/12213528/windows-how-to-clone-from-github-from-behind-corporate-proxy)【202†source】
-
+- [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
+- [Cloning GitHub Repository Behind Corporate Proxy](https://stackoverflow.com/questions/34988038/git-clone-behind-corporate-proxy)
 
 ### 3. Vorbereitung
 
@@ -175,16 +174,15 @@ Data_Suite/
 **Schritt-für-Schritt-Anleitung zur Installation von Git:**
 
 1. **Download von Git:**
-   - Besuchen Sie die offizielle Git-Website: [git-scm.com](https://git-scm.com/).
-   - Klicken Sie auf "Download" und wählen Sie die Version für Windows.
+   - via Git-Website: [git-scm.com](https://git-scm.com/).
+   - Auswahl der relevanten Windows Version.
 
 2. **Installation von Git:**
-   - Führen Sie die heruntergeladene Installationsdatei (`.exe`) aus.
-   - Folgen Sie den Installationsanweisungen im Setup-Assistenten. Die Standardeinstellungen sind in den meisten Fällen ausreichend.
-   - Bestätigen Sie alle Schritte und warten Sie, bis die Installation abgeschlossen ist.
+   - heruntergeladene Installationsdatei (`.exe`) ausführen.
+   - Installationsanweisungen im Setup-Assistenten befolgen. Die Standardeinstellungen sind in den meisten Fällen ausreichend.
 
 3. **Überprüfen der Installation:**
-   - Öffnen Sie die Eingabeaufforderung (Cmd) oder PowerShell.
+   - Öffnen der Eingabeaufforderung (Cmd) oder PowerShell.
    - Geben Sie den folgenden Befehl ein, um die Installation zu überprüfen:
 ```bash
      git --version
