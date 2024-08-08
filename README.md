@@ -13,7 +13,7 @@ Inhalte sind in folgende Hauptabschnitte gegliedert:
 
 1. **Einleitung**: Einführung in das Projekt, die Zielgruppe und den Aufbau des Leitfadens.
 2. **Systemvoraussetzungen**: Auflistung der benötigten Software und Komponenten.
-3. **Vorbereitung**: Schritte zur Installation von Git und IntelliJ IDEA, sowie zur Erstellung und Konfiguration von SSH-Schlüsseln.
+3. **Vorbereitung Installation**: Schritte zur Installation von Git und IntelliJ IDEA, sowie zur Erstellung und Konfiguration von SSH-Schlüsseln.
 4. **Projekt-Setup**: Anleitung zur Erstellung des Hauptprojekts und der README-Datei.
 5. **GIT Konfiguration und Synchronisation**: Detaillierte Anweisungen zur Konfiguration von Git, Erteilung von Zugriffsrechten, Hinzufügen von Submodulen und typischen Git-Workflows.
 6. **Konfiguration IntelliJ**: Schritte zur Importierung des Projekts in IntelliJ IDEA, Einrichtung virtueller Umgebungen und Konfiguration der Git-Integration.
@@ -117,13 +117,10 @@ Data_Suite/
     └── ...
 ```
     
-### Erläuterungen
+### Erläuterungen zu den Projekt-Folder/Dateien
 
 - **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.
 - **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten.
-  - **ocr_enricher/** mit Unterverzeichnissen für Logs und Quellcode.
-  - **text_anonymizer/** hat eine detaillierte Struktur mit Unterverzeichnissen für Logs, Quellcode und Testdateien.
-  - **html_b2b_form/** enthält Verzeichnisse für `.idea`, `dist`, `css`, `img`, `js`, und `src` sowie Konfigurationsdateien wie `package.json`, `package-lock.json` und `webpack.config.js`.
 - **.git/**: Git-Verzeichnis des Hauptprojekts.
 - **.idea/**: Konfigurationsdateien für IntelliJ IDEA, die projektübergreifende Einstellungen speichern.
 - **README.md**: Beschreibung des Projekts.
@@ -147,8 +144,11 @@ Data_Suite/
    - Zertifikat wird aus dem Intranet (Dokumentationen IT Developer-Gilden) heruntergeladen
    - Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
 
-#### Komponenten
-1. **GitHub-Repositories (PrinceEitel, privater Account):**
+#### Komponenten und Berechtigungen
+1. **Lokale Administratorrechte:**
+   - **Installation:**  lokale Software und die Konfiguration des lokalen Systems.
+
+2. **GitHub-Repositories (PrinceEitel, privater Account):**
    - **Main:** https://github.com/PrinceEitel/Data_Suite (alias data_suite) - Sichtbarkeit: Public
    - **Submodule:**
      - OCR_Manager_Suite: https://github.com/PrinceEitel/OCR_Manager_Suite - Sichtbarkeit: Public
@@ -156,20 +156,18 @@ Data_Suite/
      - Text_Anonymizer: https://github.com/PrinceEitel/Text_Anonymizer - Sichtbarkeit: Private
      - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
 
-2. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
+3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
    - **Einstellung der Proxy-Umgebungsvariablen:**
      - HTTP_PROXY und HTTPS_PROXY müssen für den Zugriff auf GitHub und andere externe Ressourcen konfiguriert werden. Dies kann in der `.gitconfig` oder in den Umgebungsvariablen erfolgen.
 
-3. **Zugriff auf bestimmte Portale:**
-   - **GitHub:** Für den Download und die Synchronisation der Repositorys muss der Zugriff auf GitHub gewährleistet sein.
-   - **Downloads:** Zugriff auf Download-Portale für Git und IntelliJ IDEA.
+#### Netzwerk- und Ausführungsrechte
 
-4. **Netzwerk- und Ausführungsrechte:**
-   - **Administratorrechte:** Notwendig für die Installation von Software und die Konfiguration des Systems.
-   - **Netzwerkzugriff:** Sicherstellen, dass keine Netzwerkrestriktionen den Zugriff auf GitHub und andere benötigte Ressourcen blockieren.
+1. **Netzwerk- und Ausführungsrechte zum unregelmässigen und regelmässigen Austausch:**
+   - **Netzwerkzugriff:** Sicherstellen, dass keine Netzwerkrestriktionen den Zugriff auf GitHub und andere benötigte Ressourcen blockieren. 
+     - https://www.jetbrains.com/idea/download/ => JetBrains-Website für IntelliJ IDEA Ultimate
      - www.npmjs.com => node.js (JavaScript package manager)  
      - www.azul.com/downloads/#zulu => Azul Zulu JDK (certified build of OpenJDK)
-     - www.github.com => github  
+     - www.github.com => GitHub (für Download und die Synchronisation der Repositorys muss der Zugriff auf GitHub gewährleistet sein.)
      - https://webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
      - https://pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
      - https://pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
@@ -178,36 +176,26 @@ Data_Suite/
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
 - [Cloning GitHub Repository Behind Corporate Proxy](https://stackoverflow.com/questions/34988038/git-clone-behind-corporate-proxy)
 
-### 3. Vorbereitung
+### 3. Basis Vorbereitung
 
 #### Git Installation
-**Schritt-für-Schritt-Anleitung zur Installation von Git:**
+**Schritt-für-Schritt-Anleitung zur Installation von GIT for Windows:**
 
-1. **Download von Git:**
-   - via Git-Website: [git-scm.com](https://git-scm.com/).
-   - Auswahl der relevanten Windows Version.
+1. **Download und Installation von GIT for Windows:** via Git-Website: [git-scm.com](https://git-scm.com/) mit Standardeinstellungen
 
-2. **Installation von Git:**
-   - heruntergeladene Installationsdatei (`.exe`) ausführen.
-   - Installationsanweisungen im Setup-Assistenten befolgen (Standardeinstellungen sind in den meisten Fällen ausreichend).
-
-3. **Überprüfen der Installation:**
-   - Öffnen der Eingabeaufforderung (Cmd) oder PowerShell.
-   - Geben Sie den folgenden Befehl ein, um die Installation zu überprüfen:
+2. **Überprüfen der GIT Installation:**
 ```bash
      git --version
 ```     
-- Es sollte eine Ausgabe ähnlich wie `git version 2.x.x` erscheinen, was die erfolgreiche Installation bestätigt.
+  - Ergebnis sollte eine Ausgabe ähnlich wie `git version 2.x.x` sein.
 
 #### IntelliJ IDEA Installation
 **Schritt-für-Schritt-Anleitung zur Installation von IntelliJ IDEA Ultimate 2024.1:**
 
-1. **Download von IntelliJ IDEA:**
-   - via JetBrains-Website: [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download/).
+1. **Download von IntelliJ IDEA:** via JetBrains-Website: [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download/).
    - Ultimate Edition wählen und Installationsdatei für Windows herunterladen.
 
 2. **Installation von IntelliJ IDEA:**
-   - heruntergeladene Installationsdatei (`.exe`) ausführen.
    - Anweisungen im Setup-Assistenten folgen:
      - Installationsverzeichnis auswählen.
      - Optionen (z.B. Verknüpfungen erstellen, Kontextmenüoptionen hinzufügen) wählen.
@@ -225,7 +213,7 @@ Data_Suite/
    - bei Aufforderung ein sicheres Passwort eingeben (optional).
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
-   - Starten Sie den SSH-Agenten im Hintergrund:
+   - Starten des SSH-Agenten im Hintergrund:
 ```bash
     Start-Service ssh-agent
 ```         
@@ -238,7 +226,7 @@ Data_Suite/
 ```bash
      Get-Content C:\Users\<IhrBenutzername>\.ssh\id_rsa.pub | Set-Clipboard
  ```   
-4. **SSH-Schlüssel zu Ihrem GitHub-Konto hinzufügen:**
+4. **SSH-Schlüssel zum GitHub-Konto hinzufügen:**
    - bei GitHub anmelden.
    - zu `Settings navigieren -> SSH and GPG keys -> New SSH key`.
    - kopierten Schlüssel einfügen und speichern.
@@ -248,7 +236,7 @@ Data_Suite/
 ```bash
      ssh -T git@github.com
 ```     
-#### Vorab-Checks
+#### Vorab-Check der GIT Konfigurationen (global)
 **Überprüfen der Git-Konfiguration:**
 
 1. **Git-Konfigurationsdatei überprüfen:**
@@ -278,7 +266,7 @@ Data_Suite/
 ```bash
      Test-NetConnection -ComputerName github.com -Port 22
 ```     
-### 4. Projekt-Setup
+### 4. Projekt-Setup (GIT)
 
 #### Hauptprojekt erstellen
 **Erstellen des GitHub-Repositorys für `Data_Suite`:**
@@ -310,35 +298,8 @@ Data_Suite/
      git remote -v
 ```     
 - URLs für `fetch` und `push` sollten jetzt erscheinen, die mit dem GitHub-Repository verbunden sind.
-
-#### README-Datei hinzufügen und committen
-**Erstellung und Hinzufügen der README.md:**
-
-1. **README-Datei erstellen:**
-   - neue Datei namens `README.md` im Projektverzeichnis erstellen:
-```powershell
-     echo "# Data_Suite" > README.md
- ```    
-2. **README-Datei zum Staging-Bereich hinzufügen:**
-   - README-Datei zum Staging-Bereich hinzufügen:
-```powershell
-     git add README.md
- ```    
-3. **Initialen Commit erstellen:**
-   - initialen Commit für die README-Datei erstellen:
-```powershell
-     git commit -m "Initial commit with README.md"
-```     
-4. **Hauptbranch umbenennen und Änderungen pushen:**
-   - Hauptbranch in `main` umbenennen:
-```powershell
-     git branch -M main
- ```   
-- Änderungen zum Remote-Repository pushen:
-```powershell
-     git push -u origin main
-```     
-### 5. GIT Konfiguration und Synchronisation
+ 
+### 5. GIT Konfiguration und Synchronisation (Projekt/Submodule)
 
 #### Beschreibung der Konfigurationsdateien
 - **.gitconfig Einstellungen für den Unternehmens-Account VX:**
@@ -379,7 +340,7 @@ Data_Suite/
   3. Klicken Sie auf `Invite a collaborator` und geben Sie den VX-Account (z.B. `vx@company.com`) ein.
   4. Weisen Sie den entsprechenden Zugriff zu (z.B. `Write` oder `Admin`).
 
-#### Vorab-Checks
+#### Vorab-Check der GIT Konfigurationen (Projekt-Ebene)
 - **Überprüfung der Git-Installation und Konfiguration:**
   1. Git Installation überprüfen:
 ```powershell
@@ -422,98 +383,7 @@ Data_Suite/
   git add .gitmodules ocr_enricher template_center text_anonymizer html_b2b_form
   git commit -m "Submodule OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form hinzugefügt"
   git push origin main
-```   
-#### GIT Workflows
-**Typische Anwendungsfälle und Arbeitsabläufe mit Git:**
 
-1. **Branch erstellen und wechseln:**
-```powershell
-   git branch <branch_name>
-   git checkout <branch_name>
-```    
-Alternativ in einem Schritt:
-```powershell
-   git checkout -b <branch_name>
-```    
-2. **Änderungen stagen und committen:**
-```powershell
-   git add <file>
-   git commit -m "Commit message"
-```    
-3. **Änderungen pushen:**
-```powershell
-   git push origin <branch_name>
-```    
-4. **Änderungen vom Remote-Repository pullen:**
-```powershell
-   git pull origin main
-```    
-Alternativ mit Rebase:
-```powershell
-   git pull --rebase origin main
-```    
-5. **Merge-Konflikte lösen:**
-   - Überprüfen der Konfliktdateien und Konflikte manuell lösen.
-   - Committen der gelösten Konflikte:
-```powershell
-     git add <conflict_file>
-     git commit -m "Konflikte gelöst"
- ```     
-6. **Submodule aktualisieren:**
-```powershell
-   git submodule update --remote
-```    
-7. **Verwaltung von Submodulen:**
-   **Hinzufügen von Submodulen:**
-```powershell
-   git submodule add <submodule_url> <path>
-```    
-**Entfernen von Submodulen:**
-   1. Submoduleintrag aus der `.gitmodules`-Datei entfernen.
-   2. Submoduleintrag aus `.git/config` entfernen:
-```powershell
-      git config -f .git/config --remove-section submodule.<path>
-```       
-   3. Submodulverzeichnis löschen und Eintrag aus dem Index entfernen:
-```powershell
-      git rm --cached <path>
-      rm -rf <path>
- ```      
-   4. Änderungen committen:
-```powershell
-      git commit -m "Removed submodule <name>"
-```       
-8. **Löschen von Dateien und Verzeichnissen:**
-   **Löschen einer Datei:**
-```powershell
-   git rm <file>
-   git commit -m "Deleted file <file>"
-   git push origin <branch_name>
-```    
-**Löschen eines Verzeichnisses:**
-```powershell
-   git rm -r <directory>
-   git commit -m "Deleted directory <directory>"
-   git push origin <branch_name>
-```    
-9. **Rückgängigmachen von Änderungen:**
-   **Rückgängigmachen von Änderungen in einer Datei:**
-```powershell
-   git checkout -- <file>
-```    
-**Rückgängigmachen eines Commits:**
-``` 
-   git revert <commit_id>
-```    
-10. **Anzeigen des Commit-Verlaufs:**
-```powershell
-    git log --oneline --graph --decorate --all
-```     
-11. **Überprüfung des Repository-Status:**
-```powershell
-    git status
- ```    
-- **Beschreibung:** aktueller Status des Repositories, einschließlich Änderungen, die gestaged, unstaged oder untracked sind.
 	
 ### 6. Konfiguration IntelliJ
 
@@ -676,7 +546,7 @@ Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schrit
 2. **Verzeichnisse markieren:**
    - Rechtsklick auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
 
-#### 9. Git-Integration konfigurieren
+#### 9. Git-Integration im IntelliJ konfigurieren
 
 **Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:**
 1. **Einstellungen öffnen:**
@@ -929,7 +799,7 @@ Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schrit
 
 #### Häufige Probleme und Lösungen
 
-##### Probleme bei der Nutzung von Git
+##### Probleme bei der Nutzung von GIT
 
 1. **Fehler beim Klonen eines Repositories: `Permission denied (publickey)`**
    - **Ursache:** Der SSH-Schlüssel ist nicht korrekt eingerichtet oder GitHub akzeptiert den verwendeten Schlüssel nicht.
@@ -1012,6 +882,76 @@ Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schrit
        File -> Settings -> Version Control -> Git
 ```        
 - sicherstellen, dass der Pfad zur Git-Installation korrekt ist.
+
+
+#### Probleme bei der Nutzung von IntelliJ IDEA und Terminals
+
+**Problem 1: AuthorizationManager check failed**
+
+**Ursache:**
+Das System führt das signierte Skript nicht aus, da der Publisher nicht als vertrauenswürdig eingestuft wird.
+
+**Lösung:**
+
+1. **Verifizierung des Zertifikats im vertrauenswürdigen Stammzertifikatspeicher:**
+   ```powershell
+   Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"}
+   ```
+
+2. **Hinzufügen des Zertifikats zu den vertrauenswürdigen Herausgebern:**
+   ```powershell
+   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+   ```
+
+3. **Überprüfen, ob das Zertifikat für die Code-Signatur geeignet ist:**
+   ```powershell
+   $cert = Get-ChildItem -Path Cert:\CurrentUser\My\<Thumbprint>
+   $cert.Extensions | Format-List
+   ```
+
+4. **Skripte erneut signieren und das Vertrauen bestätigen:**
+   ```powershell
+   Set-AuthenticodeSignature -FilePath "C:\path\to\script.ps1" -Certificate $cert
+   ```
+
+5. **Aktualisieren der PowerShell-Ausführungsrichtlinie:**
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+   ```
+
+6. **Neustart der PowerShell-Sitzung und IntelliJ IDEA:**
+
+**Problem 2: UnknownError beim Signieren eines Skripts**
+
+**Ursache:**
+Das Zertifikat ist möglicherweise nicht richtig konfiguriert oder nicht für die Codesignatur geeignet.
+
+**Lösung:**
+
+1. **Erstellen eines Codesignaturzertifikats:**
+   ```powershell
+   $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
+   ```
+
+2. **Exportieren und Importieren des Zertifikats:**
+   ```powershell
+   Export-Certificate -Cert $cert -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer"
+   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+   ```
+
+3. **Signieren des Skripts:**
+   ```powershell
+   Set-AuthenticodeSignature -FilePath "C:\path\to\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
+   ```
+
+**Problem 3: Fehler bei der Ausführung des Skripts im IntelliJ Terminal**
+
+**Ursache:**
+Das Skript wird möglicherweise als "Remote" betrachtet und muss daher signiert sein, um den `AllSigned` Richtlinien zu entsprechen.
+
+**Lösung:**
+sicherstellen, dass alle Skripte, die im IntelliJ Terminal ausgeführt werden, korrekt signiert und die Zertifikate im vertrauenswürdigen Stammzertifikatspeicher und TrustedPublisher-Store importiert sind.
 
 ##### Proxy und Firewall
 
@@ -1396,4 +1336,93 @@ try {
     Write-Result "DNS-Auflösung für GitHub fehlgeschlagen."
 }
 ``` 
+#### GIT Workflows
+**Typische Anwendungsfälle und Arbeitsabläufe mit Git:**
 
+1. **Branch erstellen und wechseln:**
+```powershell
+   git branch <branch_name>
+   git checkout <branch_name>
+```    
+Alternativ in einem Schritt:
+```powershell
+   git checkout -b <branch_name>
+```    
+2. **Änderungen stagen und committen:**
+```powershell
+   git add <file>
+   git commit -m "Commit message"
+```    
+3. **Änderungen pushen:**
+```powershell
+   git push origin <branch_name>
+```    
+4. **Änderungen vom Remote-Repository pullen:**
+```powershell
+   git pull origin main
+```    
+Alternativ mit Rebase:
+```powershell
+   git pull --rebase origin main
+```    
+5. **Merge-Konflikte lösen:**
+   - Überprüfen der Konfliktdateien und Konflikte manuell lösen.
+   - Committen der gelösten Konflikte:
+```powershell
+     git add <conflict_file>
+     git commit -m "Konflikte gelöst"
+ ```     
+6. **Submodule aktualisieren:**
+```powershell
+   git submodule update --remote
+```    
+7. **Verwaltung von Submodulen:**
+   **Hinzufügen von Submodulen:**
+```powershell
+   git submodule add <submodule_url> <path>
+```    
+**Entfernen von Submodulen:**
+   1. Submoduleintrag aus der `.gitmodules`-Datei entfernen.
+   2. Submoduleintrag aus `.git/config` entfernen:
+```powershell
+      git config -f .git/config --remove-section submodule.<path>
+```       
+   3. Submodulverzeichnis löschen und Eintrag aus dem Index entfernen:
+```powershell
+      git rm --cached <path>
+      rm -rf <path>
+ ```      
+   4. Änderungen committen:
+```powershell
+      git commit -m "Removed submodule <name>"
+```       
+8. **Löschen von Dateien und Verzeichnissen:**
+   **Löschen einer Datei:**
+```powershell
+   git rm <file>
+   git commit -m "Deleted file <file>"
+   git push origin <branch_name>
+```    
+**Löschen eines Verzeichnisses:**
+```powershell
+   git rm -r <directory>
+   git commit -m "Deleted directory <directory>"
+   git push origin <branch_name>
+```    
+9. **Rückgängigmachen von Änderungen:**
+   **Rückgängigmachen von Änderungen in einer Datei:**
+```powershell
+   git checkout -- <file>
+```    
+**Rückgängigmachen eines Commits:**
+``` 
+   git revert <commit_id>
+```    
+10. **Anzeigen des Commit-Verlaufs:**
+```powershell
+    git log --oneline --graph --decorate --all
+```     
+11. **Überprüfung des Repository-Status:**
+```powershell
+    git status
+ ```    
