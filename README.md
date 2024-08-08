@@ -513,188 +513,212 @@ Alternativ mit Rebase:
 ```powershell
     git status
  ```    
-- **Beschreibung:** Zeigt den aktuellen Status des Repositories an, einschließlich Änderungen, die gestaged, unstaged oder untracked sind.
+- **Beschreibung:** aktueller Status des Repositories, einschließlich Änderungen, die gestaged, unstaged oder untracked sind.
 	
 ### 6. Konfiguration IntelliJ
-#### Vorab-Checks als Script
 
-**Überprüfung der IntelliJ-Installation und -Konfiguration als Script:**
--Überprüfung der Konfigurationsdateien im Anhang unter  Hilfs- und Prüfungs-Scripts/"System-Check mit Angabe des variablen Home-Pfads"
+#### Übersicht
+Dieser Abschnitt beschreibt die Schritte zur Konfiguration von IntelliJ IDEA für die Arbeit mit dem Projekt. Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schritten eines Entwicklers bei einer Erstinstallation auf einem neuen Windows-System.
 
-#### Vorab-Checks (selektiv)
-- **Überprüfung der IntelliJ-Installation und -Konfiguration:**
-  
-  1. **Überprüfen, ob IntelliJ installiert ist:** 
-     - unter `Help -> About` die aktuelle und richtige Version (sollte `Ultimate 2024.1` sein) prüfen.
-       
-  2. **Vergewissern, dass alle benötigten Plugins installiert sind:**
-     - zu `File -> Settings -> Plugins` navigieren
-     - sicherstellen, dass die Plugins für `Python`, `Git`, und andere benötigte Tools installiert und aktiviert sind.
+#### 1a. Vorab-Checks als Script
 
-- **Überprüfung der Konfigurationsdateien:**
-  1. **sicherstellen, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind:**
-     - Überprüfen der Dateien `misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, und `vcs.xml`.
-     - sicherstellen, dass die Dateipfade und -inhalte den erwarteten Konfigurationen entsprechen.
+1. **Ausführung des IntelliJ System-Check Powershell Script:**
+   - zu finden im Anhang unter Hilfs- und Prüfungs-Scripts/"IntelliJ System-Check Powershell Script".
+   - PS-Script vorab signieren: siehe 6.3. "Signieren von PowerShell-Skripten im IntelliJ Terminal"
+   - ausführen im Terminal (Powershell) oder direkt im Windows
+      ```Powershell
+     .\intelliJ_system_check.ps1 -homeDir "U:\" 
+ 
+#### 1b. Vorab-Checks (selektiv)
 
-#### Virtuelle Umgebung einrichten
+**Überprüfung der Installation und Konfiguration von IntelliJ:**
+1. **Installation überprüfen:**
+   - Gehe zu `Help` -> `About` und stelle sicher, dass `IntelliJ IDEA Ultimate 2024.1` installiert ist.
+2. **Plugins überprüfen:**
+   - Navigiere zu `File` -> `Settings` -> `Plugins`.
+   - Sicherstellen, dass Plugins für `Python`, `Git` und andere benötigte Tools installiert und aktiviert sind.
+3. **Konfigurationsdateien prüfen:**
+   - Sicherstellen, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`).
 
-- **Erstellung und Aktivierung der virtuellen Umgebung:**
-  
-  1. **Terminal öffnen:**
-     - Terminal öffnen in IntelliJ IDEA (View -> Tool Windows -> Terminal).
-       
-  2. **Erstellen der virtuellen Umgebung:**
-```powershell
-     python -m venv venv
-```     
-- neue virtuelle Umgebung im Verzeichnis `venv` erstellen.
-  
-  3. **Aktivieren der virtuellen Umgebung:**
-```powershell
-     venv\Scripts\activate
- ```   
-- Aktivierung der virtuellen Umgebung sorgt dafür, dass alle Python-Befehle innerhalb dieser Umgebung ausgeführt werden.
-  
-  4. **Installieren der Abhängigkeiten:**
-```powershell
-     pip install -r requirements.txt
- ```    
-- sicherstellen, dass die Datei `requirements.txt` im Projektverzeichnis vorhanden ist und alle notwendigen Abhängigkeiten enthält.
+#### 2. IntelliJ Terminal konfigurieren
 
-- **Zusätzliche Schritte zur Verwaltung der virtuellen Umgebung:**
-  
-  1. **Überprüfen Sie die installierten Pakete:**
-```powershell
-     pip list
-```     
-- listet alle installierten Pakete in der virtuellen Umgebung auf.
-  2. **Hinzufügen von weiteren Paketen:**
-```powershell
-     pip install <package-name>
-```      
-- Installieren zusätzlicher Pakete nach Bedarf (z.B., `chardet`).
-  
-  3. **Sicherstellen der Kompatibilität:**
-     - Überprüfen, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind, um Kompatibilitätsprobleme zu vermeiden.
+**Einstellungen für das Terminal:**
+1. **Einstellungen öffnen:**
+   - Navigiere zu `File` -> `Settings` (oder `Ctrl+Alt+S`).
+2. **Terminal-Einstellungen:**
+   - Gehe zu `Tools` -> `Terminal`.
+3. **Shell Path festlegen:**
+   - Für PowerShell: 
+     ```plaintext
+     Shell Path: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+     Shell Options: -NoLogo
+     ```
+   - Für Eingabeaufforderung (cmd):
+     ```plaintext
+     Shell Path: C:\Windows\System32\cmd.exe
+     Shell Options: /K
+     ```
+4. **Schriftgröße und Farben anpassen:**
+   - Passe Schriftgröße und Farben nach Vorliebe an, um die Lesbarkeit zu verbessern.
+5. **Konfiguration testen:**
+   - Öffne das Terminal innerhalb von IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`) und überprüfe die Einstellungen.
 
-#### Zulu JDK und andere notwendige Komponenten
+#### 3. Signieren von PowerShell-Skripten im IntelliJ Terminal
 
-- **Zulu JDK:**
-  1. **Installation des Zulu JDK:**
-     - Laden des Zulu JDK von der offiziellen Webseite und installieren.
-       
-  2. **Konfiguration in IntelliJ:**
-     - Gehen Sie zu `File -> Project Structure -> Project Settings -> Project`.
-     - Wählen Sie das Zulu JDK als SDK aus und stellen Sie sicher, dass der Pfad korrekt ist.
-       
-  3. **Überprüfen der Installation:**
-     - Stellen Sie sicher, dass das Zulu JDK korrekt installiert ist und keine Fehlermeldungen auftreten.
+**Voraussetzungen:**
+- PowerShell befindet sich im Verzeichnis `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`.
+- Administratorrechte sind erforderlich.
 
-- **Chardet und andere Bibliotheken:**
-- 
-  1. **Installation in der virtuellen Umgebung:**
-```powershell
-     pip install chardet
-```      
-- `chardet` installieren und andere benötigte Python-Bibliotheken in der virtuellen Umgebung.
-  
-  2. **Überprüfen der Installationen:**
-```powershell
-     pip show chardet
-```      
-#### Projekt importieren
-- **Importieren des Projekts `Data_Suite` in IntelliJ IDEA:**
-- 
-  1. **Projekt aus bestehenden Quellen importieren:**
-     - Öffnen von IntelliJ IDEA.
-     - zu `File -> New -> Project from Existing Sources...` navigieren.
-     - Verzeichnis `U:\data_suite` auswählen und den Anweisungen folgen, um das Projekt zu importieren.
-       
-  2. **Konfiguration der Submodule:**
-     - zu `File -> Settings -> Version Control -> Git` navigieren.
-     - sicherstellen, dass alle Submodule korrekt erkannt und konfiguriert sind.
-     - Falls notwendig, Submodule manuell hinzufügen: `File -> New -> Module from Existing Sources...`.
+**Erstellung eines selbstsignierten Zertifikats:**
+1. **Zertifikat erstellen:**
+   ```powershell
+   $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
+   ```
+2. **Zertifikat exportieren:**
+   ```powershell
+   Export-Certificate -Cert $cert -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer"
+   ```
+3. **Zertifikat importieren:**
+   ```powershell
+   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+   ```
+4. **Thumbprint ermitteln:**
+   ```powershell
+   $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint)
+   ```
+5. **Skript signieren:**
+   ```powershell
+   Set-AuthenticodeSignature -FilePath "C:\path\to\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+   ```
+6. **Ausführungsrichtlinie setzen:**
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+   ```
 
-#### Python Interpreter konfigurieren
-- **Konfiguration des Python Interpreters in IntelliJ IDEA:**
-  1. **zu den Einstellungen navigieren:**
-     - zu `File -> Settings -> Project: <Projektname> -> Python Interpreter` navigieren.
-       
-  2. **Interpreter hinzufügen:**
-     - auf das Zahnrad-Symbol klicken und `Add...` wählen.
-     - Option `Existing environment` wählen und zum Python-Interpreter in der virtuellen Umgebung (`U:\data_suite\venv\Scripts\python.exe`) navigieren
+#### 4. Virtuelle Umgebung einrichten
 
-#### Quellverzeichnisse konfigurieren
-- **Markieren der relevanten Verzeichnisse als Quellverzeichnisse:**
-  1. **Projektstruktur öffnen:**
-     - zu `File -> Project Structure` navigieren.
-       
-  2. **Verzeichnisse markieren:**
-     - Rechtsklicken auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
+**Schritte zur Erstellung und Aktivierung einer virtuellen Umgebung:**
+1. **Terminal öffnen:**
+   - Öffne das Terminal in IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`).
+2. **Virtuelle Umgebung erstellen:**
+   ```powershell
+   python -m venv venv
+   ```
+3. **Virtuelle Umgebung aktivieren:**
+   ```powershell
+   venv\Scripts\activate
+   ```
+4. **Abhängigkeiten installieren:**
+   ```powershell
+   pip install -r requirements.txt
+   ```
 
-#### Git-Integration konfigurieren
-- **Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:**
-  1. **Einstellungen öffnen:**
-     - zu `File -> Settings -> Version Control -> Git` navigieren.
-       
-  2. **Pfad zur Git-Installation überprüfen:**
-     - sicherstellen, dass der Pfad zur Git-Installation korrekt gesetzt ist (z. B., `C:\Program Files\Git\cmd\git.exe`).
-       
-  3. **Git-Integration aktivieren:**
-     - überprüfen, ob die Git-Integration aktiviert ist und das Hauptprojekt sowie alle Submodule erkannt werden.
-       
-  4. **Repository-Status überprüfen:**
-     - das Terminal in IntelliJ IDEA öffnen.
-     - die folgenden Befehle ausführen, um das Projekt zu synchronisieren und zu aktualisieren:
-       
-```powershell
-       git pull
-       git submodule init
-       git submodule update
-```        
-#### Konfiguration von npm in der virtuellen Umgebung
+**Zusätzliche Schritte:**
+1. **Installierte Pakete überprüfen:**
+   ```powershell
+   pip list
+   ```
+2. **Weitere Pakete hinzufügen:**
+   ```powershell
+   pip install <package-name>
+   ```
+3. **Kompatibilität sicherstellen:**
+   - Überprüfen, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind.
 
-- **Schritte zur Installation und Verwaltung von npm-Abhängigkeiten in einer zentralen virtuellen Umgebung (venv):**
-  
-1. **Erstellung der virtuellen Umgebung**:
-   - eine zentrale virtuelle Umgebung im `data_suite`-Verzeichnis erstellen:
-```bash
-     cd U:\data_suite
-     mkdir venv
-```      
-2. **Initiale Installation der Abhängigkeiten**:
-   - ins Projektverzeichnis navigieren und alle in der `package.json`-Datei aufgeführten Abhängigkeiten in der zentralen virtuellen Umgebung installieren:
-```bash
-     npm install --prefix ./venv
-```      
-3. **Hinzufügen neuer Abhängigkeiten**:
-   - Um eine neue Abhängigkeit zum Projekt hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, den folgenden Befehl verwenden:
-```bash
-     npm install <paketname> --prefix ./venv --save
- ```     
-- Beispiel:
-```bash
-     npm install axios --prefix ./venv --save
-```     
-4. **Hinzufügen von Entwicklungsabhängigkeiten**:
-   - Um eine neue Entwicklungsabhängigkeit hinzuzufügen und diese in der zentralen virtuellen Umgebung zu installieren, den folgenden Befehl verwenden:
-```bash
-     npm install <paketname> --prefix ./venv --save-dev
-```      
-- Beispiel:
-```bash
-     npm install webpack --prefix ./venv --save-dev
-```   
-5. **Aktualisierung von Abhängigkeiten**:
-   - Um alle Abhängigkeiten in der zentralen virtuellen Umgebung auf die neuesten Versionen zu aktualisieren, verwenden von:
-```bash
-     npm update --prefix ./venv
-```
-6. **Überprüfung der installierten Abhängigkeiten**:
-   - Um eine Liste der in der zentralen virtuellen Umgebung installierten Abhängigkeiten anzuzeigen, verwenden von:
-```bash
-     npm list --prefix ./venv
-```      
+#### 5. Zulu JDK und andere notwendige Komponenten
+
+**Installation und Konfiguration:**
+1. **Zulu JDK installieren:**
+   - Lade das Zulu JDK von der offiziellen Webseite herunter und installiere es.
+2. **In IntelliJ konfigurieren:**
+   - Gehe zu `File` -> `Project Structure` -> `Project Settings` -> `Project`.
+   - Wähle das Zulu JDK als SDK aus und überprüfe den Pfad.
+3. **Installation überprüfen:**
+   - Sicherstellen, dass das Zulu JDK korrekt installiert ist und keine Fehlermeldungen auftreten.
+
+**Installation von `chardet` und anderen Bibliotheken:**
+1. **Bibliothek in der virtuellen Umgebung installieren:**
+   ```powershell
+   pip install chardet
+   ```
+2. **Installation überprüfen:**
+   ```powershell
+   pip show chardet
+   ```
+
+#### 6. Projekt importieren
+
+**Schritte zum Importieren des Projekts `Data_Suite` in IntelliJ IDEA:**
+1. **Projekt importieren:**
+   - Öffne IntelliJ IDEA und navigiere zu `File` -> `New` -> `Project from Existing Sources...`.
+   - Wähle das Verzeichnis `U:\data_suite` und folge den Anweisungen.
+2. **Submodule konfigurieren:**
+   - Gehe zu `File` -> `Settings` -> `Version Control` -> `Git`.
+   - Sicherstellen, dass alle Submodule korrekt erkannt und konfiguriert sind.
+
+#### 7. Python Interpreter konfigurieren
+
+**Schritte zur Konfiguration des Python Interpreters:**
+1. **Einstellungen öffnen:**
+   - Gehe zu `File` -> `Settings` -> `Project: <Projektname>` -> `Python Interpreter`.
+2. **Interpreter hinzufügen:**
+   - Klicke auf das Zahnrad-Symbol und wähle `Add...`.
+   - Wähle `Existing environment` und navigiere zum Python-Interpreter in der virtuellen Umgebung (`U:\data_suite\venv\Scripts\python.exe`).
+
+#### 8. Quellverzeichnisse konfigurieren
+
+**Relevante Verzeichnisse als Quellverzeichnisse markieren:**
+1. **Projektstruktur öffnen:**
+   - Gehe zu `File` -> `Project Structure`.
+2. **Verzeichnisse markieren:**
+   - Rechtsklick auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
+
+#### 9. Git-Integration konfigurieren
+
+**Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:**
+1. **Einstellungen öffnen:**
+   - Gehe zu `File` -> `Settings` -> `Version Control` -> `Git`.
+2. **Pfad zur Git-Installation überprüfen:**
+   - Sicherstellen, dass der Pfad zur Git-Installation korrekt gesetzt ist (z.B., `C:\Program Files\Git\cmd\git.exe`).
+3. **Git-Integration aktivieren:**
+   - Überprüfen, ob die Git-Integration aktiviert ist und das Hauptprojekt sowie alle Submodule erkannt werden.
+4. **Repository-Status überprüfen:**
+   - Öffne das Terminal in IntelliJ IDEA und führe folgende Befehle aus:
+   ```powershell
+   git pull
+   git submodule init
+   git submodule update
+   ```
+
+#### 10. Konfiguration von npm in der virtuellen Umgebung
+
+**Installation und Verwaltung von npm-Abhängigkeiten in einer zentralen virtuellen Umgebung:**
+1. **Virtuelle Umgebung erstellen:**
+   ```bash
+   cd U:\data_suite
+   mkdir venv
+   ```
+2. **Initiale Installation der Abhängigkeiten:**
+   ```bash
+   npm install --prefix ./venv
+   ```
+3. **Neue Abhängigkeiten hinzufügen:**
+   ```bash
+   npm install <paketname> --prefix ./venv --save
+   ```
+4. **Entwicklungsabhängigkeiten hinzufügen:**
+   ```bash
+   npm install <paketname> --prefix ./venv --save-dev
+   ```
+5. **Abhängigkeiten aktualisieren:**
+   ```bash
+   npm update --prefix ./venv
+   ```
+6. **Installierte Abhängigkeiten überprüfen:**
+   ```bash
+   npm list --prefix ./venv
+   ```     
 ### 7. Entwicklung
 
 #### Projektstruktur
@@ -1170,24 +1194,29 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 
 **1. Konfigurationsprüfung:**
 
-- **System-Check mit Angabe des variablen Home-Pfads:**  
+- **IntelliJ System-Check Powershell Script:**  
 ```powershell
-# Beispiele für das Ausführungskommando des PowerShell-Skripts:
+# intelliJ_system_check.ps1
+# Beispiele für das Ausführungskommando des PowerShell-Skripts mit einem dynamischen Home-Verzeichnis-Pfad:
 
 # Beispiel 1: Home-Verzeichnis ist `U:\`
 # Das Skript wird mit dem Home-Verzeichnis `U:\` ausgeführt.
 # Dies wird das `data_suite` Verzeichnis unter `U:\` annehmen.
-.\system_check_script.ps1 -homeDir "U:\"
+
+#.\intelliJ_system_check.ps1 -homeDir "U:\"
+
 
 # Beispiel 2: Home-Verzeichnis ist `C:\`
 # Das Skript wird mit dem Home-Verzeichnis `C:\` ausgeführt.
 # Dies wird das `data_suite` Verzeichnis unter `C:\` annehmen.
-.\system_check_script.ps1 -homeDir "C:\"
+
+#.\intelliJ_system_check.ps1 -homeDir "C:\"
 
 # Beispiel 3: Home-Verzeichnis ist `C:\users\test\`
 # Das Skript wird mit dem Home-Verzeichnis `C:\users\test\` ausgeführt.
 # Dies wird das `data_suite` Verzeichnis unter `C:\users\test\` annehmen.
-.\system_check_script.ps1 -homeDir "C:\users\test\"
+
+#.\intelliJ_system_check.ps1 -homeDir "C:\users\test\"
 
 param (
     [string]$homeDir = "U:\"
