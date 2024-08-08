@@ -518,10 +518,12 @@ Alternativ mit Rebase:
 ### 6. Konfiguration IntelliJ
 
 #### Übersicht
-Dieser Abschnitt beschreibt die Schritte zur Konfiguration von IntelliJ IDEA für die Arbeit mit dem Projekt. Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schritten eines Entwicklers bei einer Erstinstallation auf einem neuen Windows-System.
+Schritte zur Konfiguration von IntelliJ IDEA für die Arbeit mit dem Projekt. 
+Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schritten eines Entwicklers bei einer Erstinstallation auf einem neuen Windows-System.
 
 #### 1a. Vorab-Checks als Script
 
+**Überprüfung der Installation und Konfiguration von IntelliJ via Script:**
 1. **Ausführung des IntelliJ System-Check Powershell Script:**
    - zu finden im Anhang unter Hilfs- und Prüfungs-Scripts/"IntelliJ System-Check Powershell Script".
    - PS-Script vorab signieren: siehe 6.3. "Signieren von PowerShell-Skripten im IntelliJ Terminal"
@@ -531,7 +533,7 @@ Dieser Abschnitt beschreibt die Schritte zur Konfiguration von IntelliJ IDEA fü
  
 #### 1b. Vorab-Checks (selektiv)
 
-**Überprüfung der Installation und Konfiguration von IntelliJ:**
+**selektive Überprüfung der Installation und Konfiguration von IntelliJ:**
 1. **Installation überprüfen:**
    - Gehe zu `Help` -> `About` und stelle sicher, dass `IntelliJ IDEA Ultimate 2024.1` installiert ist.
 2. **Plugins überprüfen:**
