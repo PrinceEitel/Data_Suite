@@ -346,7 +346,7 @@ Data_Suite/
 ```powershell
      git --version
 ```      
-2. überprüfen der Git-Konfiguration:
+  2. überprüfen der Git-Konfiguration:
 ```powershell
      git config --global user.name
      git config --global user.email
@@ -360,7 +360,7 @@ Data_Suite/
          Write-Host "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
      }
 ```      
-2. Sicherstellen, dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
+   2. Sicherstellen, dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
 ```powershell
      if (Test-Path "U:\data_suite\.git") {
          Write-Host "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
@@ -377,19 +377,14 @@ Data_Suite/
   git submodule add https://github.com/PrinceEitel/html_b2b_form.git html_b2b_form
   git submodule init
   git submodule update
-```   
+```     
 - **Stagen und committen der Submodule:**
 ```powershell
   git add .gitmodules ocr_enricher template_center text_anonymizer html_b2b_form
   git commit -m "Submodule OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form hinzugefügt"
   git push origin main
-
-	
+```     
 ### 6. Konfiguration IntelliJ
-
-#### Übersicht
-Schritte zur Konfiguration von IntelliJ IDEA für die Arbeit mit dem Projekt. 
-Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schritten eines Entwicklers bei einer Erstinstallation auf einem neuen Windows-System.
 
 #### 1a. Vorab-Checks als Script
 
@@ -421,7 +416,7 @@ Die Reihenfolge und Struktur der Punkte orientieren sich an den logischen Schrit
    - Gehe zu `Tools` -> `Terminal`.
 3. **Shell Path festlegen:**
    - Für PowerShell: 
-     ```plaintext
+     ```Powershell
      Shell Path: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
      Shell Options: -NoLogo
      ```
