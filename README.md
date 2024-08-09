@@ -6,17 +6,17 @@ Das Projekt "Data_Suite" ist ein umfassendes Softwarepaket, das aus mehreren Sub
 Ziel des Projekts ist es, eine modulare und flexible Lösung bereitzustellen, die Unternehmen dabei unterstützt, ihre Datenverarbeitungs- und Anonymisierungsprozesse effizient zu gestalten. Durch die Nutzung dieser Suite können Unternehmen ihre Arbeitsabläufe automatisieren, die Datenqualität verbessern und sicherstellen, dass vertrauliche Informationen geschützt bleiben.
 
 #### Zielgruppe
-Dieser Leitfaden richtet sich an Business Analysts und Entwickler, die das "Data_Suite"-Projekt in ihrer Arbeitsumgebung installieren, konfigurieren und verwenden möchten. Die Anleitung bietet detaillierte Schritte zur Einrichtung und Synchronisation des Projekts auf mehreren Windows-Clients und unterstützt die Zielgruppe dabei, das Projekt effizient zu nutzen und zu erweitern.
+Dieser Leitfaden richtet sich an Business Analysten und Entwickler, die das "Data_Suite"-Projekt in ihre Windows Arbeitsumgebung installieren, konfigurieren und verwenden möchten. Die Anleitung bietet detaillierte Schritte zur Einrichtung und Synchronisation des Projekts auf mehreren Windows-Clients und unterstützt die Zielgruppe dabei, das Projekt effizient zu nutzen und zu erweitern.
 
 #### Überblick über den Leitfaden
 Inhalte sind in folgende Hauptabschnitte gegliedert:
 
 1. **Einleitung**: Einführung in das Projekt, die Zielgruppe und den Aufbau des Leitfadens.
 2. **Systemvoraussetzungen**: Auflistung der benötigten Software und Komponenten.
-3. **Vorbereitung Installation**: Schritte zur Installation von Git und IntelliJ IDEA, sowie zur Erstellung und Konfiguration von SSH-Schlüsseln.
-4. **Projekt-Setup**: Anleitung zur Erstellung des Hauptprojekts und der README-Datei.
-5. **GIT Konfiguration und Synchronisation**: Detaillierte Anweisungen zur Konfiguration von Git, Erteilung von Zugriffsrechten, Hinzufügen von Submodulen und typischen Git-Workflows.
-6. **Konfiguration IntelliJ**: Schritte zur Importierung des Projekts in IntelliJ IDEA, Einrichtung virtueller Umgebungen und Konfiguration der Git-Integration.
+3. **Installation und Basiskonfigurationen**: Installation von Git und IntelliJ IDEA, sowie zur Erstellung und Konfiguration von SSH-Schlüsseln.
+4. **GIT Setup Main**: Anleitung zur Erstellung des Hauptprojekts.
+5. **GIT Setup Submodule**: Konfiguration von Git, Erteilung von Zugriffsrechten, Hinzufügen von Submodulen.
+6. **IntelliJ Setup**: Schritte zur Importierung des Projekts in IntelliJ IDEA, Einrichtung virtueller Umgebungen und Konfiguration der Git-Integration.
 7. **Entwicklung**: Beschreibung der Projektstruktur, Erläuterung von Code-Beispielen und Hinweise zur Erweiterung des Projekts.
 8. **Integration zentraler Konfigurationsdateien**: Erklärungen zu wichtigen Konfigurationsdateien im .idea-Verzeichnis und deren Nutzung.
 9. **Fehlerbehebung und Support**: Auflistung häufiger Probleme und deren Lösungen.
@@ -176,10 +176,10 @@ Data_Suite/
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
 - [Cloning GitHub Repository Behind Corporate Proxy](https://stackoverflow.com/questions/34988038/git-clone-behind-corporate-proxy)
 
-### 3. Basis Vorbereitung
+### 3. Installation und Basiskonfigurationen
 
 #### Git Installation
-**Schritt-für-Schritt-Anleitung zur Installation von GIT for Windows:**
+**Installation von GIT for Windows:**
 
 1. **Download und Installation von GIT for Windows:** via Git-Website: [git-scm.com](https://git-scm.com/) mit Standardeinstellungen
 
@@ -190,15 +190,10 @@ Data_Suite/
   - Ergebnis sollte eine Ausgabe ähnlich wie `git version 2.x.x` sein.
 
 #### IntelliJ IDEA Installation
-**Schritt-für-Schritt-Anleitung zur Installation von IntelliJ IDEA Ultimate 2024.1:**
+**Installation von IntelliJ IDEA Ultimate 2024.1:**
 
-1. **Download von IntelliJ IDEA:** via JetBrains-Website: [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download/).
+1. **Download und Installation von IntelliJ IDEA:** via JetBrains-Website: [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download/) mit Standardeinstellungen.
    - Ultimate Edition wählen und Installationsdatei für Windows herunterladen.
-
-2. **Installation von IntelliJ IDEA:**
-   - Anweisungen im Setup-Assistenten folgen:
-     - Installationsverzeichnis auswählen.
-     - Optionen (z.B. Verknüpfungen erstellen, Kontextmenüoptionen hinzufügen) wählen.
 
 #### SSH-Schlüssel erstellen und konfigurieren
 **Schritt-für-Schritt-Anleitung zur Erstellung und Konfiguration eines SSH-Schlüssels für GitHub:**
@@ -237,7 +232,7 @@ Data_Suite/
      ssh -T git@github.com
 ```     
 #### Vorab-Check der GIT Konfigurationen (global)
-**Überprüfen der Git-Konfiguration:**
+**Überprüfen der GIT-Konfiguration:**
 
 1. **Git-Konfigurationsdatei überprüfen:**
    - Git-Konfiguration überprüfen:
@@ -266,29 +261,38 @@ Data_Suite/
 ```bash
      Test-NetConnection -ComputerName github.com -Port 22
 ```     
-### 4. Projekt-Setup (GIT)
+### 4.GIT Setup Main
 
-#### Hauptprojekt erstellen
+#### Hauptprojekt aus GitHub erstellen
 **Erstellen des GitHub-Repositorys für `Data_Suite`:**
 
-1. **Erstellen Sie das GitHub-Repository:**
+1. **Erstellen des GitHub-Repositorys:**
    - zu [GitHub](https://github.com) gehen und sich mit privaten Account (PrinceEitel) anmelden.
    - Plus-Symbol (+) in der oberen rechten Ecke anklicken und "New repository" wählen.
    - Namen `Data_Suite` eingeben.
    - gewünschte Sichtbarkeit (Public oder Private) wählen.
    - auf "Create repository" klicken.
 
-2. **Initialisierung des lokalen Git-Repositorys:**
+2. **Initialisierung des lokalen GIT-Repositorys:**
    - Eingabeaufforderung (Cmd) oder PowerShell öffnen.
    - zum gewünschten Verzeichnis navigieren, in dem das Projekt erstellt werden soll:
 ```powershell
      cd U:\data_suite
 ```     
-- neues Git-Repository initialisieren:
+- neues GIT-Repository initialisieren:
 ```powershell
      git init
- ```    
-3. **Verbindung zum Remote-Repository herstellen:**
+ ```
+3. **Hauptbranch umbenennen und Änderungen pushen:**
+   - Hauptbranch in `main` umbenennen:
+```powershell
+     git branch -M main
+ ```   
+- Änderungen zum Remote-Repository pushen:
+```powershell
+     git push -u origin main
+```
+4. **Verbindung zum Remote-Repository herstellen:**
    - Remote-Repository hinzufügen:
 ```powershell
      git remote add origin https://github.com/PrinceEitel/Data_Suite.git
@@ -298,8 +302,25 @@ Data_Suite/
      git remote -v
 ```     
 - URLs für `fetch` und `push` sollten jetzt erscheinen, die mit dem GitHub-Repository verbunden sind.
- 
-### 5. GIT Konfiguration und Synchronisation (Projekt/Submodule)
+
+5. **Überprüfung der Verzeichnisse und bestehenden GIT-Repositories Main:**
+   -  Überprüfen, ob das data_suite Verzeichnis bereits existiert: 
+```powershell
+     if (Test-Path "U:\data_suite") {
+         Write-Host "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
+     } else {
+         Write-Host "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
+     }
+```
+   -  sicherstellen,  dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
+```powershell
+     if (Test-Path "U:\data_suite\.git") {
+         Write-Host "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
+     } else {
+         Write-Host "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
+     }
+```  
+### 5. GIT Setup Submodule
 
 #### Beschreibung der Konfigurationsdateien
 - **.gitconfig Einstellungen für den Unternehmens-Account VX:**
@@ -340,8 +361,8 @@ Data_Suite/
   3. Klicken Sie auf `Invite a collaborator` und geben Sie den VX-Account (z.B. `vx@company.com`) ein.
   4. Weisen Sie den entsprechenden Zugriff zu (z.B. `Write` oder `Admin`).
 
-#### Vorab-Check der GIT Konfigurationen (Projekt-Ebene)
-- **Überprüfung der Git-Installation und Konfiguration:**
+#### Vorab-Check der GIT Konfigurationen (Submodule-Ebene)
+- **Überprüfung der GIT-Installation und Konfiguration:**
   1. Git Installation überprüfen:
 ```powershell
      git --version
@@ -351,23 +372,7 @@ Data_Suite/
      git config --global user.name
      git config --global user.email
 ```      
-- **Überprüfung der Verzeichnisse und bestehenden Git-Repositories:**
-  1. Überprüfen, ob das Verzeichnis bereits existiert:
-```powershell
-     if (Test-Path "U:\data_suite") {
-         Write-Host "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
-     } else {
-         Write-Host "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
-     }
-```      
-   2. Sicherstellen, dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
-```powershell
-     if (Test-Path "U:\data_suite\.git") {
-         Write-Host "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
-     } else {
-         Write-Host "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
-     }
-```      
+     
 #### Submodule hinzufügen und konfigurieren
 - **Hinzufügen der Submodule:**
 ```powershell
@@ -384,7 +389,7 @@ Data_Suite/
   git commit -m "Submodule OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form hinzugefügt"
   git push origin main
 ```     
-### 6. Konfiguration IntelliJ
+### 6. IntelliJ Setup
 
 #### 1a. Vorab-Checks als Script
 
@@ -425,9 +430,7 @@ Data_Suite/
      Shell Path: C:\Windows\System32\cmd.exe
      Shell Options: /K
      ```
-4. **Schriftgröße und Farben anpassen:**
-   - Passe Schriftgröße und Farben nach Vorliebe an, um die Lesbarkeit zu verbessern.
-5. **Konfiguration testen:**
+4. **Konfiguration testen:**
    - Öffne das Terminal innerhalb von IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`) und überprüfe die Einstellungen.
 
 #### 3. Signieren von PowerShell-Skripten im IntelliJ Terminal
@@ -541,7 +544,7 @@ Data_Suite/
 2. **Verzeichnisse markieren:**
    - Rechtsklick auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
 
-#### 9. Git-Integration im IntelliJ konfigurieren
+#### 9. GIT-Integration im IntelliJ konfigurieren
 
 **Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:**
 1. **Einstellungen öffnen:**
