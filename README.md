@@ -145,8 +145,7 @@ Data_Suite/
    - Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
 
 #### Komponenten und Berechtigungen
-1. **Lokale Administratorrechte:**
-   - **Installation:**  lokale Software und die Konfiguration des lokalen Systems.
+1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
 
 2. **GitHub-Repositories (PrinceEitel, privater Account):**
    - **Main:** https://github.com/PrinceEitel/Data_Suite (alias data_suite) - Sichtbarkeit: Public
