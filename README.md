@@ -414,57 +414,94 @@ Data_Suite/
 #### 2. IntelliJ Terminal konfigurieren
 
 **Einstellungen für das Terminal:**
+
 1. **Einstellungen öffnen:**
-   - Navigiere zu `File` -> `Settings` (oder `Ctrl+Alt+S`).
+   - Navigiere zu `File` -> `Settings` (oder drücke `Ctrl+Alt+S`).
+
 2. **Terminal-Einstellungen:**
    - Gehe zu `Tools` -> `Terminal`.
+
 3. **Shell Path festlegen:**
-   - Für PowerShell: 
-     ```Powershell
-     Shell Path: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+   - **Für PowerShell 7 (empfohlen):**
+     ```plaintext
+     Shell Path: C:\Program Files\PowerShell\7\pwsh.exe
      Shell Options: -NoLogo
      ```
-   - Für Eingabeaufforderung (cmd):
+   - **Für Eingabeaufforderung (cmd):**
      ```plaintext
      Shell Path: C:\Windows\System32\cmd.exe
      Shell Options: /K
      ```
+
 4. **Konfiguration testen:**
-   - Öffne das Terminal innerhalb von IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`) und überprüfe die Einstellungen.
+   - Öffne das Terminal innerhalb von IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`) und überprüfe, ob die Einstellungen korrekt übernommen wurden. Stelle sicher, dass PowerShell 7 verwendet wird.
 
 #### 3. Signieren von PowerShell-Skripten im IntelliJ Terminal
 
 **Voraussetzungen:**
-- PowerShell befindet sich im Verzeichnis `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`.
-- Administratorrechte sind erforderlich.
 
-**Erstellung eines selbstsignierten Zertifikats:**
-1. **Zertifikat erstellen:**
-   ```powershell
-   $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
-   ```
-2. **Zertifikat exportieren:**
-   ```powershell
-   Export-Certificate -Cert $cert -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer"
-   ```
-3. **Zertifikat importieren:**
-   ```powershell
-   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-   ```
-4. **Thumbprint ermitteln:**
-   ```powershell
-   $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint)
-   ```
-5. **Skript signieren:**
-   ```powershell
-   Set-AuthenticodeSignature -FilePath "C:\path\to\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
-   ```
-6. **Ausführungsrichtlinie setzen:**
-   ```powershell
-   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-   ```
+- **Für PowerShell 7 (`C:\Program Files\PowerShell\7\pwsh.exe`):**
+  - Administratorrechte sind erforderlich.
+  - Selbstsignierte Zertifikate können verwendet werden.
 
+- **Für die reguläre Windows PowerShell (`C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`):**
+  - Es muss ein Zertifikat verwendet werden, das von der IT-Abteilung bereitgestellt wurde. Selbstsignierte Zertifikate sind in dieser Umgebung nicht zulässig.
+
+**Vorgehen zum Signieren eines PowerShell-Skripts:**
+
+1. **PowerShell 7:**
+
+   - **Selbstsigniertes Zertifikat erstellen:**
+     ```powershell
+     $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
+     ```
+
+   - **Zertifikat exportieren:**
+     ```powershell
+     Export-Certificate -Cert $cert -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer"
+     ```
+
+   - **Zertifikat importieren:**
+     ```powershell
+     Import-Certificate -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+     Import-Certificate -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     ```
+
+   - **Thumbprint ermitteln:**
+     ```powershell
+     $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint).Trim()
+     ```
+
+   - **Skript signieren:**
+     ```powershell
+     Set-AuthenticodeSignature -FilePath "C:\Pfad\zum\Skript\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+     ```
+
+   - **Ausführungsrichtlinie setzen (optional):**
+     ```powershell
+     Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+     ```
+
+2. **Reguläre Windows PowerShell:**
+
+   - **Erforderliches Zertifikat von der IT-Abteilung:**
+     - Das Zertifikat muss von der IT-Abteilung bereitgestellt werden und darf nicht selbstsigniert sein.
+
+   - **Zertifikat importieren:**
+     ```powershell
+     Import-Certificate -FilePath "C:\Pfad\zum\erhaltenen\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\Root
+     Import-Certificate -FilePath "C:\Pfad\zum\erhaltenen\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     ```
+
+   - **Thumbprint ermitteln:**
+     ```powershell
+     $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=ErhaltenesZertifikat"} | Select-Object -ExpandProperty Thumbprint).Trim()
+     ```
+
+   - **Skript signieren:**
+     ```powershell
+     Set-AuthenticodeSignature -FilePath "C:\Pfad\zum\Skript\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+     ```
 #### 4. Virtuelle Umgebung einrichten
 
 **Schritte zur Erstellung und Aktivierung einer virtuellen Umgebung:**
