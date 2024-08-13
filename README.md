@@ -123,11 +123,11 @@ Data_Suite/
 - **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten.
 - **.git/**: Git-Verzeichnis des Hauptprojekts.
 - **.idea/**: Konfigurationsdateien für IntelliJ IDEA, die projektübergreifende Einstellungen speichern.
-- **README.md**: Beschreibung des Projekts.
+- **README.md**: Beschreibung des des jeweiligen Projekts.
 - **requirements.txt**: Liste der Python-Abhängigkeiten für das Hauptprojekt.
 - **package.json**: Liste der npm-Abhängigkeiten für das Hauptprojekt.
 - **node_modules/**: Enthält installierte npm-Bibliotheken.
-- **zulu/**: Verzeichnis für das Zulu JDK, das als Java SDK verwendet wird.
+- **zulu/**: Verzeichnis fürs Zulu JDK, das als Java SDK verwendet wird.
  
 ### 2. Systemvoraussetzungen
 
@@ -157,7 +157,7 @@ Data_Suite/
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
    - **Einstellung der Proxy-Umgebungsvariablen:**
-     - HTTP_PROXY und HTTPS_PROXY müssen für den Zugriff auf GitHub und andere externe Ressourcen konfiguriert werden. Dies kann in der `.gitconfig` oder in den Umgebungsvariablen erfolgen.
+     - HTTP_PROXY und HTTPS_PROXY müssen für Zugriff auf GitHub und andere externe Ressourcen konfiguriert werden. Dies kann in der `.gitconfig` oder in den Umgebungsvariablen erfolgen.
 
 #### Netzwerk- und Ausführungsrechte
 
@@ -166,7 +166,7 @@ Data_Suite/
      - https://www.jetbrains.com/idea/download/ => JetBrains-Website für IntelliJ IDEA Ultimate
      - www.npmjs.com => node.js (JavaScript package manager)  
      - www.azul.com/downloads/#zulu => Azul Zulu JDK (certified build of OpenJDK)
-     - www.github.com => GitHub (für Download und die Synchronisation der Repositorys muss der Zugriff auf GitHub gewährleistet sein.)
+     - www.github.com => GitHub (für Download und Sync der Repositorys muss Zugriff auf GitHub gewährleistet sein)
      - https://webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
      - https://pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
      - https://pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
@@ -213,12 +213,12 @@ Data_Suite/
 ```         
 - SSH-Schlüssel dem Agenten hinzufügen:
 ```bash
-     ssh-add C:\Users\<IhrBenutzername>\.ssh\id_rsa
+     ssh-add C:\Users\VX\.ssh\id_rsa
  ``` 
 3. **Öffentlichen SSH-Schlüssel kopieren:**
    - Inhalt des öffentlichen Schlüssels in die Zwischenablage kopieren:
 ```bash
-     Get-Content C:\Users\<IhrBenutzername>\.ssh\id_rsa.pub | Set-Clipboard
+     Get-Content C:\Users\VX\.ssh\id_rsa.pub | Set-Clipboard
  ```   
 4. **SSH-Schlüssel zum GitHub-Konto hinzufügen:**
    - bei GitHub anmelden.
@@ -233,7 +233,7 @@ Data_Suite/
 #### Vorab-Check der GIT Konfigurationen (global)
 **Überprüfen der GIT-Konfiguration:**
 
-1. **Git-Konfigurationsdatei überprüfen:**
+1. **GIT-Konfigurationsdatei überprüfen:**
    - Git-Konfiguration überprüfen:
 ```bash
      git config --global --list
@@ -244,7 +244,7 @@ Data_Suite/
      git config --global user.email "youremail@example.com"
  ```    
 **Überprüfen der Proxy-Einstellungen (falls erforderlich):**
-1. **Proxy-Einstellungen für Git konfigurieren:**
+1. **Proxy-Einstellungen für GIT konfigurieren:**
    - bei Arbeiten hinter einem Proxy, müssen möglicherweise die Proxy-Einstellungen konfiguriert werden:
 ```bash
      git config --global http.proxy http://username:password@proxy-server:port
@@ -434,7 +434,7 @@ Data_Suite/
      ```
 
 4. **Konfiguration testen:**
-   - Öffne das Terminal innerhalb von IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`) und überprüfe, ob die Einstellungen korrekt übernommen wurden. Stelle sicher, dass PowerShell 7 verwendet wird.
+   - Öffne Terminal innerhalb von IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`) und überprüfe, ob Einstellungen korrekt übernommen wurden. Stelle sicher, dass PowerShell 7 verwendet wird.
 
 #### 3. Signieren von PowerShell-Skripten im IntelliJ Terminal
 
@@ -463,8 +463,8 @@ Data_Suite/
 
    - **Zertifikat importieren:**
      ```powershell
-     Import-Certificate -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-     Import-Certificate -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+     Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
      ```
 
    - **Thumbprint ermitteln:**
@@ -474,7 +474,7 @@ Data_Suite/
 
    - **Skript signieren:**
      ```powershell
-     Set-AuthenticodeSignature -FilePath "C:\Pfad\zum\Skript\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+     Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
      ```
 
    - **Ausführungsrichtlinie setzen (optional):**
@@ -489,8 +489,8 @@ Data_Suite/
 
    - **Zertifikat importieren:**
      ```powershell
-     Import-Certificate -FilePath "C:\Pfad\zum\erhaltenen\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\Root
-     Import-Certificate -FilePath "C:\Pfad\zum\erhaltenen\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\Root
+     Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
      ```
 
    - **Thumbprint ermitteln:**
@@ -500,7 +500,7 @@ Data_Suite/
 
    - **Skript signieren:**
      ```powershell
-     Set-AuthenticodeSignature -FilePath "C:\Pfad\zum\Skript\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+     Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
      ```
 #### 4. Virtuelle Umgebung einrichten
 
