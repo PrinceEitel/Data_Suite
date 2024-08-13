@@ -624,7 +624,51 @@ Data_Suite/
 6. **Installierte Abhängigkeiten überprüfen:**
    ```bash
    npm list --prefix ./venv
-   ```     
+   ```
+#### 11. Proxy-Dienst einrichten
+
+**Bestellung, Installation und Konfiguration des Proxy-Dienstes:**
+
+1. **Bestellung des Proxy-Dienstes**  
+   - Der Proxy-Dienst (px-pxy) muss über das Service-Center des Unternehmens bestellt werden. Dazu wird der entsprechende Service über das interne Jira-Portal angefordert.
+
+2. **Installation des Proxy-Dienstes**  
+   - **Installationsort**: Der Proxy-Dienst wird in das Verzeichnis `C:\Program Files\px-pxy` installiert.
+   - **Installation ausführen**: Nach dem Download und Entpacken des Dienstes wird das Skript `px.exe --install` im Installationsverzeichnis ausgeführt, um den Dienst zu installieren.
+
+3. **Konfiguration der Umgebungsvariablen**  
+   - Die folgenden Umgebungsvariablen müssen in den Systemeinstellungen hinzugefügt werden:
+     - `HTTP_PROXY=http://xxx.xxx.xxx.xxx:xxxx`
+     - `HTTPS_PROXY=http://xxx.xxx.xxx.xxx:xxxx`
+     - `NO_PROXY=localhost,*.xxx.uk,.xxx.uk,xxx.uk`
+
+4. **Testen der Proxy-Konfiguration**  
+   - **Überprüfung mit cURL**: Führe den folgenden Befehl aus, um zu prüfen, ob der Proxy korrekt konfiguriert ist:
+     ```bash
+     curl -x http://xxx.xxx.xxx.xxx:xxxx -i -k -L https://copilot-proxy.githubusercontent.com/_ping
+     ```
+   - **Test mit Python**: Um sicherzustellen, dass keine Passwortabfragen erfolgen, kann dieser Python-Code verwendet werden:
+     ```python
+     from pytpd.tca.liquidmetrix import LiquidMetrix
+     lm_client = LiquidMetrix()
+     print(lm_client.version)
+     ```
+
+5. **Einbindung des Unternehmens-Proxy-Zertifikats**  
+   - **Import des Zertifikats**: Das Unternehmens-Proxy-Zertifikat muss zunächst in die Zertifikatsverwaltung importiert werden:
+     ```powershell
+     $certPath = "C:\Users\VX\cert\proxy.pem"
+     Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\LocalMachine\Root
+     ```
+   - **Dynamische Ermittlung des Zertifikats-Thumbprints**: Der Thumbprint des Zertifikats kann nach der Installation dynamisch ermittelt werden:
+     ```powershell
+     $proxyCert = Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object { $_.Subject -like "*Proxy*" }
+     if ($proxyCert) {
+         $proxyCertThumbprint = $proxyCert.Thumbprint
+     } else {
+         Write-Host "Proxy-Zertifikat nicht gefunden."
+     }
+       
 ### 7. Entwicklung
 
 #### Projektstruktur
