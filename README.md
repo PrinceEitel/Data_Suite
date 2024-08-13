@@ -203,7 +203,7 @@ Data_Suite/
 ```bash
      ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```         
-- Enter drücken, um den Standardspeicherort (C:\Users\<IhrBenutzername>\.ssh\id_rsa) zu akzeptieren.
+- Enter drücken, um den Standardspeicherort (C:\Users\VX\.ssh\id_rsa) zu akzeptieren.
    - bei Aufforderung ein sicheres Passwort eingeben (optional).
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
@@ -969,14 +969,14 @@ Das Zertifikat ist möglicherweise nicht richtig konfiguriert oder nicht für di
 
 2. **Exportieren und Importieren des Zertifikats:**
    ```powershell
-   Export-Certificate -Cert $cert -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer"
-   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+   Export-Certificate -Cert $cert -FilePath "C:\Users\VX\MyScriptSigningCert.cer"
+   Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+   Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
    ```
 
 3. **Signieren des Skripts:**
    ```powershell
-   Set-AuthenticodeSignature -FilePath "C:\path\to\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
+   Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
    ```
 
 **Problem 3: Fehler bei der Ausführung des Skripts im IntelliJ Terminal**
