@@ -181,110 +181,116 @@ Data_Suite/
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
 - [Cloning GitHub Repository Behind Corporate Proxy](https://stackoverflow.com/questions/34988038/git-clone-behind-corporate-proxy)
 
-### 3. Installation und Basiskonfigurationen
+## 3. Installation und Basiskonfigurationen
 
-#### 3.1 Git Installation und Konfiguration
+### 3.1 Git-Installation und Konfiguration
 
-1. **Git for Windows installieren:**
-   - Git for Windows kann über die offizielle Git-Website [git-scm.com](https://git-scm.com) heruntergeladen und mit den Standardeinstellungen installiert werden.
+1. **Installation von Git for Windows:**
+   - Git for Windows kann von der offiziellen Git-Website [git-scm.com](https://git-scm.com) heruntergeladen werden.
+   - Installiere Git mit den Standardeinstellungen.
 
 2. **Überprüfung der Git-Installation:**
-   - Die erfolgreiche Installation von Git kann durch Ausführen des folgenden Befehls überprüft werden:
-   ```powershell
+   - Nach der Installation kann die erfolgreiche Einrichtung von Git mit folgendem Befehl überprüft werden:
+   ```console
    git --version
    ```
-   - Die Ausgabe sollte in etwa so aussehen: `git version 2.x.x`.
+   - Beispielausgabe: `git version 2.x.x`.
 
-3. **Git-Konfiguration einrichten:**
-   - Nach der Installation sollte Git direkt konfiguriert werden, um die Arbeit mit den Repositories zu ermöglichen.
-
-4. **Git-Konfigurationsdatei überprüfen:**
-   - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
-   ```powershell
+3. **Konfiguration von Git:**
+   - Nach der Installation sollte Git konfiguriert werden, um den Benutzer für alle zukünftigen Git-Aktionen zu identifizieren.
+   - Konfiguriere den Benutzernamen:
+   ```console
+   git config --global user.name "Benutzername"
+   ```
+   - Konfiguriere die E-Mail-Adresse:
+   ```console
+   git config --global user.email "email@example.com"
+   ```
+   - Überprüfe die Konfiguration:
+   ```console
    git config --global --list
    ```
-   - Sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
-   ```powershell
-   git config --global user.name "Ihr Name"
-   git config --global user.email "youremail@example.com"
-   ```
 
-5. **Proxy-Einstellungen für Git konfigurieren (falls erforderlich):**
-   - Wenn ein Proxy verwendet wird, können die Proxy-Einstellungen wie folgt konfiguriert werden:
-   ```powershell
+4. **Proxy-Einstellungen für Git (falls erforderlich):**
+   - Bei Verwendung eines Proxy-Servers können die Proxy-Einstellungen wie folgt konfiguriert werden:
+   ```console
    git config --global http.proxy http://username:password@proxy-server:port
    git config --global https.proxy https://username:password@proxy-server:port
    ```
 
-6. **DNS-Auflösung für GitHub überprüfen:**
-   - Die DNS-Auflösung für GitHub kann mit diesem Befehl überprüft werden:
-   ```powershell
+5. **Überprüfung der DNS-Auflösung:**
+   - Um sicherzustellen, dass GitHub erreichbar ist, kann die DNS-Auflösung wie folgt überprüft werden:
+   ```console
    nslookup github.com
    ```
 
-7. **Verbindung zu GitHub überprüfen:**
-   - Überprüfen, ob eine Verbindung zu GitHub über das Internet hergestellt werden kann:
-   ```powershell
+6. **Überprüfung der Verbindung zu GitHub:**
+   - Teste die Verbindung zu GitHub:
+   ```console
    Test-NetConnection -ComputerName github.com -Port 22
    ```
 
-#### 3.2 IntelliJ IDEA Installation
+### 3.2 IntelliJ IDEA Installation
 
-1. **IntelliJ IDEA Ultimate 2024.1 installieren:**
-   - IntelliJ IDEA kann über die JetBrains-Website [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download) heruntergeladen und mit den Standardeinstellungen installiert werden.
-   - Es sollte die Ultimate Edition ausgewählt und die Installationsdatei für Windows heruntergeladen werden.
+1. **Download und Installation von IntelliJ IDEA Ultimate:**
+   - IntelliJ IDEA Ultimate 2024.1 kann von der JetBrains-Website [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download) heruntergeladen werden.
+   - Installiere die Software mit den Standardeinstellungen.
 
-#### 3.3 SSH-Schlüssel erstellen und konfigurieren
+### 3.3 SSH-Schlüssel erstellen und konfigurieren
 
-1. **SSH-Schlüssel generieren:**
-   - Einen neuen SSH-Schlüssel mit PowerShell oder der Eingabeaufforderung generieren:
-   ```powershell
-   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+1. **Erstellung eines neuen SSH-Schlüssels:**
+   - Einen neuen SSH-Schlüssel generieren:
+   ```console
+   ssh-keygen -t rsa -b 4096 -C "email@example.com"
    ```
-   - Der Standardspeicherort (`C:\Users\VX\.ssh\id_rsa`) kann durch Drücken von Enter akzeptiert werden. Optional kann ein Passwort hinzugefügt werden.
+   - Den Standardspeicherort (`C:\Users\Benutzername\.ssh\id_rsa`) durch Drücken von Enter akzeptieren. Optional kann ein Passwort festgelegt werden.
 
-2. **SSH-Agent starten und Schlüssel hinzufügen:**
-   - SSH-Agent in PowerShell starten:
-     ```powershell
-     Start-Service ssh-agent
-     ```
-   - Den Schlüssel dem Agenten hinzufügen:
-     ```powershell
-     ssh-add ~/.ssh/id_rsa
-     ```
+2. **Starten des SSH-Agents und Hinzufügen des Schlüssels:**
+   - Start des SSH-Agents:
+   ```console
+   Start-Service ssh-agent
+   ```
+   - Hinzufügen des privaten Schlüssels zum Agenten:
+   ```console
+   ssh-add ~/.ssh/id_rsa
+   ```
 
-3. **Öffentlichen SSH-Schlüssel kopieren:**
-   - Öffentlichen Schlüssel in PowerShell kopieren:
-     ```powershell
-     Get-Content ~/.ssh/id_rsa.pub | Set-Clipboard
-     ```
+3. **Kopieren des öffentlichen Schlüssels:**
+   - Der öffentliche Schlüssel kann wie folgt kopiert werden:
+   ```console
+   Get-Content ~/.ssh/id_rsa.pub | Set-Clipboard
+   ```
 
-4. **SSH-Schlüssel zum GitHub-Konto hinzufügen:**
-   - Anmeldung bei GitHub, dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
+4. **Hinzufügen des SSH-Schlüssels zu GitHub:**
+   - Anmelden bei GitHub, dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
    - Den kopierten Schlüssel einfügen und speichern.
 
-5. **Verbindung zu GitHub testen:**
-   - Die Verbindung zu GitHub kann getestet werden mit:
-   ```powershell
+5. **Überprüfung der SSH-Verbindung zu GitHub:**
+   - Die Verbindung zu GitHub kann mit folgendem Befehl getestet werden:
+   ```console
    ssh -T git@github.com
    ```
 
-#### 3.4 Vorab-Checks vor Projektbeginn
-
-Vor der Installation und Konfiguration sollte sichergestellt werden, dass das System die notwendigen Voraussetzungen erfüllt und korrekt eingerichtet ist.
+### 3.4 Vorab-Checks vor Projektbeginn
 
 1. **Überprüfung der Git-Konfiguration:**
-   - Sicherstellen, dass Git korrekt konfiguriert ist, wie im vorherigen Abschnitt beschrieben.
+   - Stelle sicher, dass Git korrekt konfiguriert ist, indem die in Abschnitt 3.1 beschriebenen Schritte ausgeführt werden.
 
 2. **Proxy-Einstellungen überprüfen (falls erforderlich):**
-   - Überprüfen Sie die Proxy-Einstellungen und stellen Sie sicher, dass sie korrekt konfiguriert sind, um den Zugriff auf GitHub und andere externe Ressourcen zu gewährleisten.
+   - Überprüfe die Proxy-Einstellungen und stelle sicher, dass sie korrekt sind, um den Zugriff auf GitHub und andere externe Ressourcen zu gewährleisten.
 
 3. **Netzwerkzugriff testen:**
-   - Testen Sie die Verbindung zu GitHub und anderen benötigten Ressourcen, um sicherzustellen, dass keine Netzwerkrestriktionen den Zugriff blockieren.
+   - Teste die Verbindung zu GitHub und anderen benötigten Ressourcen:
+   ```console
+   Test-NetConnection -ComputerName github.com -Port 22
+   ```
 
-4. **DNS-Auflösung überprüfen:**
-   - Überprüfen Sie die DNS-Auflösung für alle wichtigen Ressourcen, wie GitHub, npm, und PyPI.
- 
+4. **Überprüfung der DNS-Auflösung:**
+   - Überprüfe die DNS-Auflösung für alle wichtigen Ressourcen, wie GitHub, npm und PyPI:
+   ```console
+   nslookup github.com
+   ```
+
 ### 4. GIT Setup Main
 
 #### 4.1 Erstellen des Hauptprojekts aus GitHub
