@@ -183,166 +183,173 @@ Data_Suite/
 
 ### 3. Installation und Basiskonfigurationen
 
-##### Git Installation
+#### 3.1 Git Installation
 
 1. **Git for Windows installieren:**
    - Git for Windows kann über die offizielle Git-Website [git-scm.com](https://git-scm.com) heruntergeladen und mit den Standardeinstellungen installiert werden.
 
-2. **Überprüfung der Git Installation:**
+2. **Überprüfung der Git-Installation:**
    - Die erfolgreiche Installation von Git kann durch Ausführen des folgenden Befehls überprüft werden:
    ```powershell
    git --version
    ```
    - Die Ausgabe sollte in etwa so aussehen: `git version 2.x.x`.
 
-##### IntelliJ IDEA Installation
+#### 3.2 IntelliJ IDEA Installation
 
 1. **IntelliJ IDEA Ultimate 2024.1 installieren:**
    - IntelliJ IDEA kann über die JetBrains-Website [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download) heruntergeladen und mit den Standardeinstellungen installiert werden.
    - Es sollte die Ultimate Edition ausgewählt und die Installationsdatei für Windows heruntergeladen werden.
 
-##### SSH-Schlüssel erstellen und konfigurieren
+#### 3.3 SSH-Schlüssel erstellen und konfigurieren
 
 1. **SSH-Schlüssel generieren:**
-   - Öffne PowerShell oder die Eingabeaufforderung und generiere einen neuen SSH-Schlüssel:
+   - Einen neuen SSH-Schlüssel mit PowerShell oder der Eingabeaufforderung generieren:
    ```powershell
    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
    ```
    - Der Standardspeicherort (`C:\Users\VX\.ssh\id_rsa`) kann durch Drücken von Enter akzeptiert werden. Optional kann ein Passwort hinzugefügt werden.
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
-   - **Für PowerShell:**
+   - SSH-Agent in PowerShell starten:
      ```powershell
      Start-Service ssh-agent
      ```
-    - Der Schlüssel wird dem Agenten hinzugefügt mit:
-   ```powershell
-   ssh-add ~/.ssh/id_rsa
-   ```
+   - Den Schlüssel dem Agenten hinzufügen:
+     ```powershell
+     ssh-add ~/.ssh/id_rsa
+     ```
 
 3. **Öffentlichen SSH-Schlüssel kopieren:**
-   - **Für PowerShell:**
+   - Öffentlichen Schlüssel in PowerShell kopieren:
      ```powershell
      Get-Content ~/.ssh/id_rsa.pub | Set-Clipboard
      ```
-     
+
 4. **SSH-Schlüssel zum GitHub-Konto hinzufügen:**
-   - Anmelden bei GitHub, dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
+   - Anmeldung bei GitHub, dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
    - Den kopierten Schlüssel einfügen und speichern.
 
 5. **Verbindung zu GitHub testen:**
    - Die Verbindung zu GitHub kann getestet werden mit:
    ```powershell
    ssh -T git@github.com
-   ```  
-#### Vorab-Check der GIT Konfigurationen (global)
-**Überprüfen der GIT-Konfiguration:**
+   ```
 
-1. **GIT-Konfigurationsdatei überprüfen:**
-   - Git-Konfiguration überprüfen:
-   ```powershell
-     git config --global --list
-   ```    
-- sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
-   ```powershell
-     git config --global user.name "Ihr Name"
-     git config --global user.email "youremail@example.com"
-   ```  
-#### Vorab-Checks vor Projektbeginn
+#### 3.4 Vorab-Check der Git-Konfigurationen (global)
 
-Vor der Installation und Konfiguration sollte eine Überprüfung durchgeführt werden, um sicherzustellen, dass das System die notwendigen Voraussetzungen erfüllt und korrekt eingerichtet ist.
-
-##### Git Konfiguration und Netzwerkeinstellungen überprüfen:
+**Überprüfen der Git-Konfiguration:**
 
 1. **Git-Konfigurationsdatei überprüfen:**
    - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
-   ```powershell
-   git config --global --list
-   ```
-   - Es sollte sichergestellt werden, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
-   ```powershell
-   git config --global user.name "Ihr Name"
-   git config --global user.email "youremail@example.com"
-   ```
+     ```powershell
+     git config --global --list
+     ```
+   - Sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
+     ```powershell
+     git config --global user.name "Ihr Name"
+     git config --global user.email "youremail@example.com"
+     ```
+
+#### 3.5 Vorab-Checks vor Projektbeginn
+
+Vor der Installation und Konfiguration sollte sichergestellt werden, dass das System die notwendigen Voraussetzungen erfüllt und korrekt eingerichtet ist.
+
+##### 3.5.1 Git-Konfiguration und Netzwerkeinstellungen überprüfen
+
+1. **Git-Konfigurationsdatei überprüfen:**
+   - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
+     ```powershell
+     git config --global --list
+     ```
+   - Sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
+     ```powershell
+     git config --global user.name "Ihr Name"
+     git config --global user.email "youremail@example.com"
+     ```
 
 2. **Proxy-Einstellungen für Git konfigurieren (falls erforderlich):**
    - Wenn ein Proxy verwendet wird, können die Proxy-Einstellungen wie folgt konfiguriert werden:
-   ```powershell
-   git config --global http.proxy http://username:password@proxy-server:port
-   git config --global https.proxy https://username:password@proxy-server:port
-   ```
+     ```powershell
+     git config --global http.proxy http://username:password@proxy-server:port
+     git config --global https.proxy https://username:password@proxy-server:port
+     ```
 
 3. **DNS-Auflösung für GitHub überprüfen:**
    - Die DNS-Auflösung für GitHub kann mit diesem Befehl überprüft werden:
-   ```powershell
-   nslookup github.com
-   ```
+     ```powershell
+     nslookup github.com
+     ```
 
 4. **Verbindung zu GitHub überprüfen:**
-   - Es sollte überprüft werden, ob eine Verbindung zu GitHub über das Internet hergestellt werden kann:
-   ```powershell
-   Test-NetConnection -ComputerName github.com -Port 22
-   ```
-       
-### 4.GIT Setup Main
+   - Überprüfen, ob eine Verbindung zu GitHub über das Internet hergestellt werden kann:
+     ```powershell
+     Test-NetConnection -ComputerName github.com -Port 22
+     ```
+     
+### 4. GIT Setup Main
 
-#### Hauptprojekt aus GitHub erstellen
-**Erstellen des GitHub-Repositorys für `Data_Suite`:**
+#### 4.1 Erstellen des Hauptprojekts aus GitHub
+
+**Schritte zur Erstellung des GitHub-Repositorys für `Data_Suite`:**
 
 1. **Erstellen des GitHub-Repositorys:**
-   - zu [GitHub](https://github.com) gehen und sich mit privaten Account (PrinceEitel) anmelden.
-   - Plus-Symbol (+) in der oberen rechten Ecke anklicken und "New repository" wählen.
-   - Namen `Data_Suite` eingeben.
-   - gewünschte Sichtbarkeit (Public oder Private) wählen.
-   - auf "Create repository" klicken.
+   - Auf [GitHub](https://github.com) mit dem privaten Account (PrinceEitel) anmelden.
+   - Das Plus-Symbol (+) in der oberen rechten Ecke anklicken und "New repository" wählen.
+   - Den Namen `Data_Suite` eingeben.
+   - Die gewünschte Sichtbarkeit (Public oder Private) auswählen.
+   - Auf "Create repository" klicken, um das Repository zu erstellen.
 
-2. **Initialisierung des lokalen GIT-Repositorys:**
-   - Eingabeaufforderung (Cmd) oder PowerShell öffnen.
-   - zum gewünschten Verzeichnis navigieren, in dem das Projekt erstellt werden soll:
-```powershell
-     cd U:\data_suite
-```     
-- neues GIT-Repository initialisieren:
-```powershell
-     git init
- ```
+2. **Initialisierung des lokalen Git-Repositorys:**
+   - Die Eingabeaufforderung (Cmd) oder PowerShell öffnen.
+   - Zum gewünschten Verzeichnis navigieren, in dem das Projekt erstellt werden soll:
+   ```console
+   cd U:\data_suite
+   ```
+   - Ein neues Git-Repository im aktuellen Verzeichnis initialisieren:
+   ```console
+   git init
+   ```
+
 3. **Hauptbranch umbenennen und Änderungen pushen:**
-   - Hauptbranch in `main` umbenennen:
-```powershell
-     git branch -M main
- ```   
-- Änderungen zum Remote-Repository pushen:
-```powershell
-     git push -u origin main
-```
-4. **Verbindung zum Remote-Repository herstellen:**
-   - Remote-Repository hinzufügen:
-```powershell
-     git remote add origin https://github.com/PrinceEitel/Data_Suite.git
-```     
-- Verbindung zum Remote-Repository überprüfen:
-```powershell
-     git remote -v
-```     
-- URLs für `fetch` und `push` sollten jetzt erscheinen, die mit dem GitHub-Repository verbunden sind.
+   - Den Hauptbranch in `main` umbenennen, um dem gängigen Standard zu folgen:
+   ```console
+   git branch -M main
+   ```
+   - Änderungen zum Remote-Repository pushen, um das lokale Repository mit dem Remote-Repository zu verbinden:
+   ```console
+   git push -u origin main
+   ```
 
-5. **Überprüfung der Verzeichnisse und bestehenden GIT-Repositories Main:**
-   -  Überprüfen, ob das data_suite Verzeichnis bereits existiert: 
-```powershell
-     if (Test-Path "U:\data_suite") {
-         Write-Host "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
-     } else {
-         Write-Host "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
-     }
-```
-   -  sicherstellen,  dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
-```powershell
-     if (Test-Path "U:\data_suite\.git") {
-         Write-Host "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
-     } else {
-         Write-Host "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
-     }
-```  
+4. **Verbindung zum Remote-Repository herstellen:**
+   - Das Remote-Repository hinzufügen, um das lokale Repository mit GitHub zu verbinden:
+   ```console
+   git remote add origin https://github.com/PrinceEitel/Data_Suite.git
+   ```
+   - Die Verbindung zum Remote-Repository überprüfen, um sicherzustellen, dass die URLs für `fetch` und `push` korrekt sind:
+   ```console
+   git remote -v
+   ```
+   - Die Ausgabe sollte die URLs für `fetch` und `push` anzeigen, die mit dem GitHub-Repository verbunden sind.
+
+5. **Überprüfung der Verzeichnisse und bestehenden Git-Repositories:**
+   - Überprüfen, ob das `data_suite`-Verzeichnis bereits existiert:
+   ```powershell
+   if (Test-Path "U:\data_suite") {
+       Write-Host "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
+   } else {
+       Write-Host "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
+   }
+   ```
+   - Sicherstellen, dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
+   ```powershell
+   if (Test-Path "U:\data_suite\.git") {
+       Write-Host "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
+   } else {
+       Write-Host "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
+   }
+   ```
+   
 ### 5. GIT Setup Submodule
 
 #### 5.1 Beschreibung der Konfigurationsdateien
@@ -654,9 +661,7 @@ Zum Importieren des Projekts `Data_Suite` in IntelliJ IDEA:
    - Das Verzeichnis `U:\data_suite` auswählen und den Anweisungen folgen.
 
 2. **Submodule konfigurieren:**
-   - `
-
-File` -> `Settings` -> `Version Control` -> `Git`.
+   - `File` -> `Settings` -> `Version Control` -> `Git`.
    - Sicherstellen, dass alle Submodule korrekt erkannt und konfiguriert sind.
 
 #### 6.7 Python Interpreter konfigurieren
@@ -953,182 +958,192 @@ Um den Proxy-Dienst in der Umgebung zu installieren und zu konfigurieren:
 	 
 ### 9. Fehlerbehebung und Support
 
-#### Häufige Probleme und Lösungen
+#### 9.1 Häufige Probleme und Lösungen
 
-##### Probleme bei der Nutzung von GIT
+##### 9.1.1 Probleme bei der Nutzung von Git
 
 1. **Fehler beim Klonen eines Repositories: `Permission denied (publickey)`**
    - **Ursache:** Der SSH-Schlüssel ist nicht korrekt eingerichtet oder GitHub akzeptiert den verwendeten Schlüssel nicht.
    - **Lösung:** 
-     - Überprüfe, ob der SSH-Schlüssel generiert und dem GitHub-Account hinzugefügt wurde:
-```plaintext
+     - Überprüfen, ob der SSH-Schlüssel generiert und dem GitHub-Account hinzugefügt wurde:
+       ```console
        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
        cat ~/.ssh/id_rsa.pub
-``` 
-- öffentlichen Schlüssel zu GitHub hinzufügen unter [SSH Keys](https://github.com/settings/keys).
+       ```
+       - Der Befehl `ssh-keygen` generiert einen neuen SSH-Schlüssel. Der Befehl `cat` zeigt den öffentlichen Schlüssel an, der zu GitHub hinzugefügt werden muss.
+     - Öffentlichen Schlüssel zu GitHub hinzufügen unter [SSH Keys](https://github.com/settings/keys).
      - SSH-Verbindung testen:
-```plaintext
+       ```console
        ssh -T git@github.com
- ```       
+       ```
+       - Der Befehl `ssh -T git@github.com` testet die Verbindung zu GitHub unter Verwendung des eingerichteten SSH-Schlüssels.
+
 2. **Fehler beim Pushen: `fatal: unable to access 'https://github.com/USER/REPO.git/': The requested URL returned error: 403`**
    - **Ursache:** Zugriffsrechte auf das Repository sind unzureichend.
    - **Lösung:** 
-     - sicherstellen, dass die erforderlichen Berechtigungen für das Repository vorhanden sind.
+     - Sicherstellen, dass die erforderlichen Berechtigungen für das Repository vorhanden sind.
      - Git-Konfiguration überprüfen:
-```plaintext
+       ```console
        git config --global user.name "your_username"
        git config --global user.email "your_email@example.com"
-```        
+       ```
+       - Diese Befehle überprüfen und setzen den Git-Benutzernamen und die E-Mail-Adresse.
+
 3. **Fehler beim Mergen: `CONFLICT (content): Merge conflict in file.txt`**
    - **Ursache:** Änderungen in der gleichen Datei widersprechen sich.
    - **Lösung:** 
-     - Öffne die Datei mit Konflikten und beheben die Konflikte manuell.
-     - Stage die Änderungen und committe diese:
-```plaintext
+     - Die Datei mit Konflikten öffnen und die Konflikte manuell beheben.
+     - Änderungen stagen und committen:
+       ```console
        git add file.txt
        git commit -m "Resolved merge conflict in file.txt"
- ```       
+       ```
+       - Der Befehl `git add` stagt die Datei nach der Behebung der Konflikte, und `git commit` speichert die Änderungen.
+
 4. **Fehler bei der Submodule-Aktualisierung: `fatal: no submodule mapping found in .gitmodules for path 'submodule_path'`**
    - **Ursache:** Die `.gitmodules`-Datei ist nicht korrekt konfiguriert oder wurde gelöscht.
    - **Lösung:** 
-     - Überprüfen die `.gitmodules`-Datei und stelle sicher, dass alle Submodule korrekt aufgeführt sind.
-     - Initialisiere und aktualisiere die Submodule erneut:
-```plaintext
+     - Die `.gitmodules`-Datei überprüfen und sicherstellen, dass alle Submodule korrekt aufgeführt sind.
+     - Submodule initialisieren und aktualisieren:
+       ```console
        git submodule init
        git submodule update
-```        
-##### Probleme bei der Nutzung von IntelliJ IDEA
+       ```
+       - Diese Befehle initialisieren die Submodule und aktualisieren sie auf den neuesten Stand.
+
+##### 9.1.2 Probleme bei der Nutzung von IntelliJ IDEA
 
 1. **Problem beim Starten von IntelliJ IDEA: `IDE hangs or crashes`**
    - **Ursache:** Möglicherweise inkompatible Plugins oder fehlerhafte Konfigurationsdateien.
    - **Lösung:** 
      - IntelliJ IDEA im abgesicherten Modus starten:
-```plaintext
+       ```console
        Help -> Find Action -> Safe Mode
-```        
-- Deaktivieren oder entfernen kürzlich installierter Plugins.
+       ```
+       - Der abgesicherte Modus deaktiviert Plugins, die möglicherweise die Ursache für das Problem sind.
 
 2. **Problem mit der virtuellen Umgebung: `Python interpreter not configured`**
    - **Ursache:** Die virtuelle Umgebung ist nicht korrekt eingerichtet oder aktiviert.
    - **Lösung:** 
-     - sicherstellen, dass die virtuelle Umgebung korrekt erstellt wurde:
-```powershell
+     - Sicherstellen, dass die virtuelle Umgebung korrekt erstellt wurde:
+       ```console
        python -m venv venv
-```        
-   - virtuelle Umgebung aktivieren:
-```powershell 
-       venv\Scripts\activate     # On Windows
-```        
-- Python Interpreter in IntelliJ IDEA konfigurieren:
-```plaintext
+       ```
+       - Dieser Befehl erstellt eine neue virtuelle Umgebung.
+     - Virtuelle Umgebung aktivieren:
+       ```console
+       venv\Scripts\activate
+       ```
+       - Dieser Befehl aktiviert die virtuelle Umgebung unter Windows.
+     - Python Interpreter in IntelliJ IDEA konfigurieren:
+       ```console
        File -> Settings -> Project: <project_name> -> Python Interpreter
-```        
+       ```
+       - Hier wird der Python-Interpreter für das Projekt festgelegt.
+
 3. **Fehlerhafte Projektstruktur: `Cannot resolve symbol`**
    - **Ursache:** Quellverzeichnisse sind nicht korrekt markiert.
    - **Lösung:** 
-     - Markieren der relevanten Verzeichnisse als Quellverzeichnisse:
-```plaintext
+     - Relevante Verzeichnisse als Quellverzeichnisse markieren:
+       ```console
        Rechtsklick auf das Verzeichnis -> Mark Directory as -> Sources Root
-```        
-4. **Fehlerhafte GIT-Integration: `Unable to fetch changes`**
-   - **Ursache:** GIT-Konfiguration in IntelliJ IDEA ist fehlerhaft.
+       ```
+       - Dieser Schritt stellt sicher, dass IntelliJ IDEA die Quellverzeichnisse korrekt erkennt.
+
+4. **Fehlerhafte Git-Integration: `Unable to fetch changes`**
+   - **Ursache:** Die Git-Konfiguration in IntelliJ IDEA ist fehlerhaft.
    - **Lösung:** 
-     - Überprüfe die GIT-Einstellungen:
-```plaintext
+     - Git-Einstellungen überprüfen:
+       ```console
        File -> Settings -> Version Control -> Git
-```        
-- sicherstellen, dass der Pfad zur Git-Installation korrekt ist.
+       ```
+       - Sicherstellen, dass der Pfad zur Git-Installation korrekt ist und keine Fehlkonfigurationen vorliegen.
 
-
-#### Probleme bei der Nutzung von IntelliJ IDEA und Terminals
+#### 9.2 Probleme bei der Nutzung von IntelliJ IDEA und Terminals
 
 **Problem 1: AuthorizationManager check failed**
 
-**Ursache:**
-Das System führt das signierte Skript nicht aus, da der Publisher nicht als vertrauenswürdig eingestuft wird.
-
-**Lösung:**
-
-1. **Verifizierung des Zertifikats im vertrauenswürdigen Stammzertifikatspeicher:**
-   ```powershell
-   Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"}
-   ```
-
-2. **Hinzufügen des Zertifikats zu den vertrauenswürdigen Herausgebern:**
-   ```powershell
-   Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-   ```
-
-3. **Überprüfen, ob das Zertifikat für die Code-Signatur geeignet ist:**
-   ```powershell
-   $cert = Get-ChildItem -Path Cert:\CurrentUser\My\<Thumbprint>
-   $cert.Extensions | Format-List
-   ```
-
-4. **Skripte erneut signieren und das Vertrauen bestätigen:**
-   ```powershell
-   Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate $cert
-   ```
-
-5. **Aktualisieren der PowerShell-Ausführungsrichtlinie:**
-   ```powershell
-   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-   ```
-
-6. **Neustart der PowerShell-Sitzung und IntelliJ IDEA:**
+- **Ursache:** Das System führt das signierte Skript nicht aus, da der Publisher nicht als vertrauenswürdig eingestuft wird.
+- **Lösung:**
+  1. **Verifizierung des Zertifikats im vertrauenswürdigen Stammzertifikatspeicher:**
+     ```powershell
+     Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"}
+     ```
+     - Überprüft, ob das Zertifikat im Stammzertifikatspeicher vorhanden ist.
+  2. **Hinzufügen des Zertifikats zu den vertrauenswürdigen Herausgebern:**
+     ```powershell
+     Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     ```
+     - Fügt das Zertifikat zu den vertrauenswürdigen Herausgebern hinzu.
+  3. **Überprüfen, ob das Zertifikat für die Code-Signatur geeignet ist:**
+     ```powershell
+     $cert = Get-ChildItem -Path Cert:\CurrentUser\My\<Thumbprint>
+     $cert.Extensions | Format-List
+     ```
+     - Überprüft die Eignung des Zertifikats für die Code-Signatur.
+  4. **Skripte erneut signieren und das Vertrauen bestätigen:**
+     ```powershell
+     Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate $cert
+     ```
+     - Signiert das Skript mit dem entsprechenden Zertifikat.
+  5. **Aktualisieren der PowerShell-Ausführungsrichtlinie:**
+     ```powershell
+     Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+     ```
+     - Setzt die Ausführungsrichtlinie auf "RemoteSigned", um die Ausführung signierter Skripte zu erlauben.
+  6. **Neustart der PowerShell-Sitzung und IntelliJ IDEA:** Dieser Schritt stellt sicher, dass alle Änderungen wirksam werden.
 
 **Problem 2: UnknownError beim Signieren eines Skripts**
 
-**Ursache:**
-Das Zertifikat ist möglicherweise nicht richtig konfiguriert oder nicht für die Codesignatur geeignet.
-
-**Lösung:**
-
-1. **Erstellen eines Codesignaturzertifikats:**
-   ```powershell
-   $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
-   ```
-
-2. **Exportieren und Importieren des Zertifikats:**
-   ```powershell
-   Export-Certificate -Cert $cert -FilePath "C:\Users\VX\MyScriptSigningCert.cer"
-   Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-   Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-   ```
-
-3. **Signieren des Skripts:**
-   ```powershell
-   Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
-   ```
+- **Ursache:** Das Zertifikat ist möglicherweise nicht richtig konfiguriert oder nicht für die Codesignatur geeignet.
+- **Lösung:**
+  1. **Erstellen eines Codesignaturzertifikats:**
+     ```powershell
+     $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
+     ```
+     - Erstellt ein neues selbstsigniertes Zertifikat für die Codesignatur.
+  2. **Exportieren und Importieren des Zertifikats:**
+     ```powershell
+     Export-Certificate -Cert $cert -FilePath "C:\Users\VX\MyScriptSigningCert.cer"
+     Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+     Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     ```
+     - Exportiert und importiert das Zertifikat, um es für die Signatur zu verwenden.
+  3. **Signieren des Skripts:**
+     ```powershell
+     Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
+     ```
+     - Signiert das Skript mit dem erstellten Zertifikat.
 
 **Problem 3: Fehler bei der Ausführung des Skripts im IntelliJ Terminal**
 
-**Ursache:**
-Das Skript wird möglicherweise als "Remote" betrachtet und muss daher signiert sein, um den `AllSigned` Richtlinien zu entsprechen.
+- **Ursache:** Das Skript wird möglicherweise als "Remote" betrachtet und muss daher signiert sein, um den `AllSigned`-Richtlinien zu entsprechen.
+- **Lösung:** Sicherstellen, dass alle Skripte, die im IntelliJ Terminal ausgeführt werden, korrekt signiert sind und die Zertifikate im vertrauenswürdigen Stammzertifikatspeicher und TrustedPublisher-Store importiert sind.
 
-**Lösung:**
-sicherstellen, dass alle Skripte, die im IntelliJ Terminal ausgeführt werden, korrekt signiert und die Zertifikate im vertrauenswürdigen Stammzertifikatspeicher und TrustedPublisher-Store importiert sind.
-
-##### Proxy und Firewall
+##### 9.2.1 Proxy und Firewall
 
 1. **Problem beim Zugriff auf GitHub hinter einem Proxy: `Could not resolve host: github.com`**
    - **Ursache:** Der Proxy ist nicht korrekt konfiguriert oder blockiert den Zugriff.
    - **Lösung:** 
-     - sicherstellen, dass die Proxy-Einstellungen korrekt sind:
-```powershell
+     - Sicherstellen, dass die Proxy-Einstellungen korrekt sind:
+       ```powershell
        git config --global http.proxy http://proxyuser:proxypassword@proxy.server.com:port
        git config --global https.proxy https://proxyuser:proxypassword@proxy.server.com:port
-```        
-- Überprüfen der DNS-Auflösung:
-```powershell
+       ```
+       - Diese Befehle setzen die HTTP- und HTTPS-Proxy-Einstellungen für Git.
+     - DNS-Auflösung überprüfen:
+       ```powershell
        nslookup github.com
-```        
-- Konfigurieren des Proxy in IntelliJ IDEA:
-```plaintext
+       ```
+       - Dieser Befehl überprüft, ob die DNS-Auflösung für GitHub korrekt funktioniert.
+     - Proxy in IntelliJ IDEA konfigurieren:
+       ```console
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
-```
-   - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, überprüfe die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6 Step 11 „Proxy-Dienst einrichten“.
+       ```
+       - Stellt sicher, dass IntelliJ IDEA den Proxy korrekt verwendet.
 
+   - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6, „Proxy-Dienst einrichten“, überprüfen.
+     
 ### 10. Glossar
 **Repository (Repo)**
 - **Definition:** Ein Speicherort, in dem der gesamte Code, die Historie und die Konfigurationsdateien eines Projekts gespeichert werden.
