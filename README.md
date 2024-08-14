@@ -345,326 +345,365 @@ Vor der Installation und Konfiguration sollte eine Überprüfung durchgeführt w
 ```  
 ### 5. GIT Setup Submodule
 
-#### Beschreibung der Konfigurationsdateien
+#### 5.1 Beschreibung der Konfigurationsdateien
+
 - **.gitconfig Einstellungen für den Unternehmens-Account VX:**
-   `.gitconfig`-Datei enthält die benutzerspezifischen Konfigurationen für Git. Für den Unternehmens-Account VX wird sie folgendermaßen eingerichtet:
-```plaintext
-  [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-  [user]
-    name = VX
-    email = vx@company.com
-  [safe]
-    directory = U:/data_suite/text_anonymizer
-    directory = U:/data_suite/template_center
-    directory = U:/data_suite/OCR_Enricher
-    directory = U:/data_suite/html_b2b_form
-  [core]
-    autocrlf = true
-  [merge]
-    tool = meld
-  [rerere]
-    enabled = true
-```   
-**Erklärungen:**
-  - `[filter "lfs"]`: Einstellungen für Git Large File Storage (LFS), um große Dateien effizient zu verwalten.
-  - `[user]`: Benutzername und E-Mail-Adresse für Git-Commits.
-  - `[safe]`: Sichere Verzeichnisse, die Git-Befehle ausführen dürfen.
-  - `[core]`: Core-Einstellungen wie `autocrlf`, das sicherstellt, dass Zeilenendungen korrekt gehandhabt werden.
-  - `[merge]`: Merge-Tool, das für Konfliktlösungen verwendet wird.
-  - `[rerere]`: Aktiviert die Wiederverwendung von aufgezeichneten Lösungen für Merge-Konflikte.
+    - Die `.gitconfig`-Datei enthält die benutzerspezifischen Konfigurationen für Git. Für den Unternehmens-Account VX wird sie folgendermaßen eingerichtet:
 
-#### Zugriffsrechte konfigurieren
+    ```plaintext
+    [filter "lfs"]
+        clean = git-lfs clean -- %f        # Bereinigt Dateien vor dem Commit, um große Dateien durch LFS-Pointer zu ersetzen
+        smudge = git-lfs smudge -- %f      # Stellt die Originaldateien aus LFS wieder her
+        process = git-lfs filter-process   # Führt den LFS-Filterprozess aus
+        required = true                    # LFS ist für dieses Repository erforderlich
+
+    [user]
+        name = VX                          # Name des Benutzers für Commits
+        email = vx@company.com             # E-Mail-Adresse des Benutzers für Commits
+
+    [safe]
+        directory = U:/data_suite/text_anonymizer     # Sichere Verzeichnisse für Git-Operationen
+        directory = U:/data_suite/template_center
+        directory = U:/data_suite/OCR_Enricher
+        directory = U:/data_suite/html_b2b_form
+
+    [core]
+        autocrlf = true                     # Konvertiert Zeilenenden automatisch (Windows <-> Unix)
+
+    [merge]
+        tool = meld                        # Merge-Tool für Konfliktlösungen
+
+    [rerere]
+        enabled = true                      # Aktiviert die Wiederverwendung aufgezeichneter Konfliktlösungen
+    ```
+
+    **Erklärungen:**
+
+    - `[filter "lfs"]`: Einstellungen für Git Large File Storage (LFS), um große Dateien effizient zu verwalten.
+    - `[user]`: Benutzername und E-Mail-Adresse für Git-Commits.
+    - `[safe]`: Sichere Verzeichnisse, in denen Git-Befehle ausgeführt werden dürfen.
+    - `[core]`: Core-Einstellungen wie `autocrlf`, das sicherstellt, dass Zeilenendungen korrekt zwischen Windows und Unix-Systemen umgewandelt werden.
+    - `[merge]`: Merge-Tool, das für Konfliktlösungen verwendet wird (hier: `meld`).
+    - `[rerere]`: Aktiviert die Wiederverwendung von aufgezeichneten Lösungen für Merge-Konflikte.
+
+#### 5.2 Zugriffsrechte konfigurieren
+
 - **Einladen des VX-Accounts zu den privaten Repositories:**
-  1. Navigiere zu den Repository-Einstellungen der privaten Repositories (z.B. OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form).
-  2. Gehe zu `Settings -> Manage access`.
-  3. Klicke auf `Invite a collaborator` und gebe den VX-Account (z.B. `vx@company.com`) ein.
-  4. Weise den entsprechenden Zugriff zu (z.B. `Write` oder `Admin`).
 
-#### Vorab-Check der GIT Konfigurationen (Submodule-Ebene)
+    `1`. Navigiere zu den Repository-Einstellungen der privaten Repositories (z.B. `OCR_Manager_Suite`, `Template_Center`, `Text_Anonymizer` und `html_b2b_form`).
+    `2`. Gehe zu `Settings -> Manage access`.
+    `3`. Klicke auf `Invite a collaborator` und gebe den VX-Account (z.B. `vx@company.com`) ein.
+    `4`. Weise den entsprechenden Zugriff zu (z.B. `Write` oder `Admin`).
+
+#### 5.3 Vorab-Check der GIT Konfigurationen (Submodule-Ebene)
+
 - **Überprüfung der GIT-Installation und Konfiguration:**
-  1. Git Installation überprüfen:
-```powershell
-     git --version
-```      
-  2. überprüfen der Git-Konfiguration:
-```powershell
-     git config --global user.name
-     git config --global user.email
-```      
-     
-#### Submodule hinzufügen und konfigurieren
+
+    `1`. Git Installation überprüfen:
+
+    ```powershell
+    git --version
+    ```
+
+    `2`. Git-Konfiguration überprüfen:
+
+    ```powershell
+    git config --global user.name
+    git config --global user.email
+    ```
+
+#### 5.4 Submodule hinzufügen und konfigurieren
+
 - **Hinzufügen der Submodule:**
-```powershell
-  git submodule add https://github.com/PrinceEitel/OCR_Manager_Suite.git ocr_enricher
-  git submodule add https://github.com/PrinceEitel/Template_Center.git template_center
-  git submodule add https://github.com/PrinceEitel/Text_Anonymizer.git text_anonymizer
-  git submodule add https://github.com/PrinceEitel/html_b2b_form.git html_b2b_form
-  git submodule init
-  git submodule update
-```     
+
+    ```powershell
+    git submodule add [https://github.com/PrinceEitel/OCR_Manager_Suite.git](https://github.com/PrinceEitel/OCR_Manager_Suite.git) ocr_enricher
+    git submodule add [https://github.com/PrinceEitel/Template_Center.git](https://github.com/PrinceEitel/Template_Center.git) template_center
+    git submodule add [https://github.com/PrinceEitel/Text_Anonymizer.git](https://github.com/PrinceEitel/Text_Anonymizer.git) text_anonymizer
+    git submodule add [https://github.com/PrinceEitel/html_b2b_form.git](https://github.com/PrinceEitel/html_b2b_form.git) html_b2b_form
+    git submodule init          # Initialisiert die Submodule
+    git submodule update        # Aktualisiert die Submodule auf den neuesten Stand
+    ```
+
 - **Stagen und committen der Submodule:**
-```powershell
-  git add .gitmodules ocr_enricher template_center text_anonymizer html_b2b_form
-  git commit -m "Submodule OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form hinzugefügt"
-  git push origin main
-```     
+
+    ```powershell
+    git add .gitmodules ocr_enricher template_center text_anonymizer html_b2b_form
+    git commit -m "Submodule OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form hinzugefügt"
+    git push origin main        # Änderungen ins Remote-Repository übertragen
+    ``` 
+
 ### 6. IntelliJ Setup
 
-#### 1. Vorab-Checks
+#### 6.1 Vorab-Checks
 
-IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration zu überprüfen:
+Zwei Möglichkeiten stehen zur Verfügung, um die Installation und Konfiguration von IntelliJ IDEA zu überprüfen:
 
-* **1a. Vorab-Checks als Script:** Diese Methode eignet sich besonders für eine schnelle und automatisierte Überprüfung, insbesondere wenn das Projekt regelmäßig neu eingerichtet oder auf mehreren Rechnern installiert wird.
-* **1b. Vorab-Checks (selektiv):** Diese Methode ermöglicht eine detailliertere, manuelle Überprüfung und ist hilfreich, wenn gezielt bestimmte Aspekte der Konfiguration überprüft werden sollen oder wenn Probleme bei der Installation oder Konfiguration vermutet werden.
+- **Automatisierte Überprüfung:** Ein Skript führt eine schnelle und automatisierte Systemüberprüfung durch, ideal für regelmäßige oder wiederholte Setups.
+  
+- **Manuelle Überprüfung:** Eine detaillierte, manuelle Kontrolle einzelner Komponenten, besonders nützlich, wenn spezifische Probleme vermutet werden oder das Projekt erstmalig eingerichtet wird.
 
-**Empfehlung:** Es wird empfohlen, **1b. selektive Überprüfung** zu verwenden, wenn das Projekt zum ersten Mal eingerichtet wird oder Probleme auftreten. Für regelmäßige Überprüfungen oder bei der Einrichtung auf mehreren Rechnern ist das **Script (1a)** effizienter.
+**Empfehlung:** Die manuelle Überprüfung ist bei der erstmaligen Einrichtung oder bei Problemen zu bevorzugen. Für wiederholte Installationen ist das automatisierte Skript effizienter.
 
-#### 1a. Vorab-Checks als Script
+##### 6.1.1 Automatisierte Überprüfung mit Skript
 
-**Überprüfung der Installation und Konfiguration von IntelliJ via Script:**
-
-1. **Ausführung des IntelliJ System-Check Powershell Script:**
-   - Das Script ist im Anhang unter "Hilfs- und Prüfungs-Scripts/IntelliJ System-Check Powershell Script" verfügbar.
-   - Vor der Ausführung muss das Script signiert werden (siehe 6.3. "Signieren von PowerShell-Skripten im IntelliJ Terminal").
-   - Ausführung im Terminal (Powershell) oder direkt in Windows:
-     ```Powershell
-     .\intelliJ_system_check.ps1 -homeDir "U:\" 
+1. **Skript zur Überprüfung der Installation und Konfiguration ausführen:**
+   - Das entsprechende Skript befindet sich im Anhang unter "Hilfs- und Prüfungs-Scripts/IntelliJ System-Check Powershell Script".
+   - Vor der Ausführung muss das Skript signiert werden (siehe [Abschnitt 6.3](#63-signieren-von-powershell-skripten-im-intellij-terminal) "Signieren von PowerShell-Skripten im IntelliJ Terminal").
+   - Ausführung des Skripts im Terminal (PowerShell) oder direkt unter Windows:
+     ```powershell
+     .\intelliJ_system_check.ps1 -homeDir "U:\"
      ```
 
-#### 1b. Vorab-Checks (selektiv)
-
-**Selektive Überprüfung der Installation und Konfiguration von IntelliJ:**
+##### 6.1.2 Manuelle Überprüfung
 
 1. **Installation überprüfen:**
-   - Über `Help` -> `About` kann überprüft werden, ob `IntelliJ IDEA Ultimate 2024.1` installiert ist.
+   - Unter `Help` -> `About` kann sichergestellt werden, dass `IntelliJ IDEA Ultimate 2024.1` installiert ist.
 
 2. **Plugins überprüfen:**
-   - Unter `File` -> `Settings` -> `Plugins` kann überprüft werden, ob die benötigten Plugins wie `Python`, `Git` usw. installiert und aktiviert sind.
+   - Unter `File` -> `Settings` -> `Plugins` prüfen, ob die erforderlichen Plugins (`Python`, `Git`, etc.) installiert und aktiviert sind.
 
 3. **Konfigurationsdateien prüfen:**
    - Sicherstellen, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`).
 
-#### 2. IntelliJ Terminal konfigurieren
+#### 6.2 IntelliJ Terminal konfigurieren
 
-**Einstellungen für das Terminal:**
+Um das Terminal in IntelliJ IDEA optimal zu nutzen, sind folgende Schritte erforderlich:
 
 1. **Einstellungen öffnen:**
-   - Navigiere zu `File` -> `Settings` (oder drücke `Ctrl+Alt+S`).
+   - `File` -> `Settings` (oder `Ctrl+Alt+S`).
 
-2. **Terminal-Einstellungen:**
-   - Gehe zu `Tools` -> `Terminal`.
+2. **Terminal konfigurieren:**
+   - `Tools` -> `Terminal`.
 
 3. **Shell Path festlegen:**
    - **Für PowerShell 7 (empfohlen):**
-     ```plaintext
+     ```console
      Shell Path: C:\Program Files\PowerShell\7\pwsh.exe
      Shell Options: -NoLogo
      ```
-   - **Für Eingabeaufforderung (cmd):**
-     ```plaintext
+   - **Für die Eingabeaufforderung (cmd):**
+     ```console
      Shell Path: C:\Windows\System32\cmd.exe
      Shell Options: /K
      ```
 
 4. **Konfiguration testen:**
-   - Öffne Terminal innerhalb von IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`) und überprüfe, ob Einstellungen korrekt übernommen wurden. Stelle sicher, dass PowerShell 7 verwendet wird.
+   - Das Terminal innerhalb von IntelliJ IDEA unter `View` -> `Tool Windows` -> `Terminal` öffnen und überprüfen, ob die Einstellungen korrekt übernommen wurden. Es sollte sichergestellt werden, dass PowerShell 7 verwendet wird.
 
-#### 3. Signieren von PowerShell-Skripten im IntelliJ Terminal
+#### 6.3 Signieren von PowerShell-Skripten im IntelliJ Terminal
 
-**Voraussetzungen:**
+Zum sicheren Ausführen von PowerShell-Skripten müssen diese in vielen Unternehmensumgebungen signiert werden. Je nach verwendeter PowerShell-Version gibt es unterschiedliche Anforderungen:
 
-- **Für PowerShell 7 (`C:\Program Files\PowerShell\7\pwsh.exe`):**
-  - Administratorrechte sind erforderlich.
-  - Selbstsignierte Zertifikate können verwendet werden.
+##### 6.3.1 PowerShell 7 (Empfohlen)
 
-- **Für die reguläre Windows PowerShell (`C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`):**
-  - Es muss ein Zertifikat verwendet werden, das von der IT-Abteilung bereitgestellt wurde. Selbstsignierte Zertifikate sind in dieser Umgebung nicht zulässig.
+1. **Selbstsigniertes Zertifikat erstellen:**
+   ```powershell
+   $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
+   ```
 
-**Vorgehen zum Signieren eines PowerShell-Skripts:**
+2. **Zertifikat exportieren:**
+   ```powershell
+   Export-Certificate -Cert $cert -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer"
+   ```
 
-1. **PowerShell 7:**
+3. **Zertifikat importieren:**
+   ```powershell
+   Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+   Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+   ```
 
-   - **Selbstsigniertes Zertifikat erstellen:**
-     ```powershell
-     $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
-     ```
+4. **Thumbprint ermitteln:**
+   ```powershell
+   $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint).Trim()
+   ```
 
-   - **Zertifikat exportieren:**
-     ```powershell
-     Export-Certificate -Cert $cert -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer"
-     ```
+5. **Skript signieren:**
+   ```powershell
+   Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+   ```
 
-   - **Zertifikat importieren:**
-     ```powershell
-     Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-     Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-     ```
+6. **Ausführungsrichtlinie setzen (optional):**
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+   ```
 
-   - **Thumbprint ermitteln:**
-     ```powershell
-     $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint).Trim()
-     ```
+##### 6.3.2 Reguläre Windows PowerShell
 
-   - **Skript signieren:**
-     ```powershell
-     Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
-     ```
+1. **Erforderliches Zertifikat von der IT-Abteilung beziehen:**
+   - Ein Zertifikat muss von der IT-Abteilung bereitgestellt werden. Selbstsignierte Zertifikate sind in dieser Umgebung nicht zulässig.
 
-   - **Ausführungsrichtlinie setzen (optional):**
-     ```powershell
-     Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-     ```
+2. **Zertifikat importieren:**
+   ```powershell
+   Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\Root
+   Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+   ```
 
-2. **Reguläre Windows PowerShell:**
+3. **Thumbprint ermitteln:**
+   ```powershell
+   $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=ErhaltenesZertifikat"} | Select-Object -ExpandProperty Thumbprint).Trim()
+   ```
 
-   - **Erforderliches Zertifikat von der IT-Abteilung:**
-     - Das Zertifikat muss von der IT-Abteilung bereitgestellt werden und darf nicht selbstsigniert sein.
+4. **Skript signieren:**
+   ```powershell
+   Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+   ```
 
-   - **Zertifikat importieren:**
-     ```powershell
-     Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\Root
-     Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-     ```
+#### 6.4 Virtuelle Umgebung einrichten
 
-   - **Thumbprint ermitteln:**
-     ```powershell
-     $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=ErhaltenesZertifikat"} | Select-Object -ExpandProperty Thumbprint).Trim()
-     ```
+Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten:
 
-   - **Skript signieren:**
-     ```powershell
-     Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
-     ```
-#### 4. Virtuelle Umgebung einrichten
-
-**Schritte zur Erstellung und Aktivierung einer virtuellen Umgebung:**
 1. **Terminal öffnen:**
-   - Öffne das Terminal in IntelliJ IDEA (`View` -> `Tool Windows` -> `Terminal`).
+   - Terminal in IntelliJ IDEA unter `View` -> `Tool Windows` -> `Terminal` öffnen.
+
 2. **Virtuelle Umgebung erstellen:**
    ```powershell
    python -m venv venv
    ```
+
 3. **Virtuelle Umgebung aktivieren:**
    ```powershell
    venv\Scripts\activate
    ```
+
 4. **Abhängigkeiten installieren:**
    ```powershell
    pip install -r requirements.txt
    ```
 
-**Zusätzliche Schritte:**
-1. **Installierte Pakete überprüfen:**
+**Erweiterte Schritte:**
+
+- **Installierte Pakete überprüfen:**
    ```powershell
    pip list
    ```
-2. **Weitere Pakete hinzufügen:**
+
+- **Weitere Pakete hinzufügen:**
    ```powershell
    pip install <package-name>
    ```
-3. **Kompatibilität sicherstellen:**
+
+- **Kompatibilität sicherstellen:**
    - Überprüfen, ob alle notwendigen Pakete und deren Versionen korrekt installiert sind.
 
-#### 5. Zulu JDK und andere notwendige Komponenten
+**Installation und Verwaltung von npm-Abhängigkeiten in einer zentralen virtuellen Umgebung:**
 
-**Installation und Konfiguration:**
+- **Virtuelle Umgebung erstellen:**
+   ```console
+   cd U:\data_suite
+   mkdir venv
+   ```
+
+- **Initiale Installation der Abhängigkeiten:**
+   ```console
+   npm install --prefix ./venv
+   ```
+
+- **Neue Abhängigkeiten hinzufügen:**
+   ```console
+   npm install <paketname> --prefix ./venv --save
+   ```
+
+- **Entwicklungsabhängigkeiten hinzufügen:**
+   ```console
+   npm install <paketname> --prefix ./venv --save-dev
+   ```
+
+- **Abhängigkeiten aktualisieren:**
+   ```console
+   npm update --prefix ./venv
+   ```
+
+- **Installierte Abhängigkeiten überprüfen:**
+   ```console
+   npm list --prefix ./venv
+   ```
+
+#### 6.5 Zulu JDK und andere notwendige Komponenten
+
+Zur Installation und Konfiguration des Zulu JDK und weiterer Bibliotheken:
+
 1. **Zulu JDK installieren:**
-   - Lade das Zulu JDK von der offiziellen Webseite herunter und installiere es.
+   - Das Zulu JDK von der offiziellen Webseite herunterladen und installieren.
+
 2. **In IntelliJ konfigurieren:**
-   - Gehe zu `File` -> `Project Structure` -> `Project Settings` -> `Project`.
-   - Wähle das Zulu JDK als SDK aus und überprüfe den Pfad.
+   - `File` -> `Project Structure` -> `Project Settings` -> `Project`.
+   - Das Zulu JDK als SDK auswählen und den Pfad überprüfen.
+
 3. **Installation überprüfen:**
    - Sicherstellen, dass das Zulu JDK korrekt installiert ist und keine Fehlermeldungen auftreten.
 
 **Installation von `chardet` und anderen Bibliotheken:**
-1. **Bibliothek in der virtuellen Umgebung installieren:**
+
+- **Bibliothek in der virtuellen Umgebung installieren:**
    ```powershell
    pip install chardet
    ```
-2. **Installation überprüfen:**
+
+- **Installation überprüfen:**
    ```powershell
    pip show chardet
    ```
 
-#### 6. Projekt importieren
+#### 6.6 Projekt importieren
 
-**Schritte zum Importieren des Projekts `Data_Suite` in IntelliJ IDEA:**
+Zum Importieren des Projekts `Data_Suite` in IntelliJ IDEA:
+
 1. **Projekt importieren:**
-   - Öffne IntelliJ IDEA und navigiere zu `File` -> `New` -> `Project from Existing Sources...`.
-   - Wähle das Verzeichnis `U:\data_suite` und folge den Anweisungen.
+   - IntelliJ IDEA öffnen und zu `File` -> `New` -> `Project from Existing Sources...` navigieren.
+   - Das Verzeichnis `U:\data_suite` auswählen und den Anweisungen folgen.
+
 2. **Submodule konfigurieren:**
-   - Gehe zu `File` -> `Settings` -> `Version Control` -> `Git`.
+   - `
+
+File` -> `Settings` -> `Version Control` -> `Git`.
    - Sicherstellen, dass alle Submodule korrekt erkannt und konfiguriert sind.
 
-#### 7. Python Interpreter konfigurieren
+#### 6.7 Python Interpreter konfigurieren
 
-**Schritte zur Konfiguration des Python Interpreters:**
+Zur Konfiguration des Python Interpreters:
+
 1. **Einstellungen öffnen:**
-   - Gehe zu `File` -> `Settings` -> `Project: <Projektname>` -> `Python Interpreter`.
+   - `File` -> `Settings` -> `Project: <Projektname>` -> `Python Interpreter`.
+
 2. **Interpreter hinzufügen:**
-   - Klicke auf das Zahnrad-Symbol und wähle `Add...`.
-   - Wähle `Existing environment` und navigiere zum Python-Interpreter in der virtuellen Umgebung (`U:\data_suite\venv\Scripts\python.exe`).
+   - Auf das Zahnrad-Symbol klicken und `Add...` auswählen.
+   - `Existing environment` wählen und zum Python-Interpreter in der virtuellen Umgebung navigieren (`U:\data_suite\venv\Scripts\python.exe`).
 
-#### 8. Quellverzeichnisse konfigurieren
+#### 6.8 Quellverzeichnisse konfigurieren
 
-**Relevante Verzeichnisse als Quellverzeichnisse markieren:**
+Um relevante Verzeichnisse als Quellverzeichnisse zu markieren:
+
 1. **Projektstruktur öffnen:**
-   - Gehe zu `File` -> `Project Structure`.
+   - `File` -> `Project Structure`.
+
 2. **Verzeichnisse markieren:**
    - Rechtsklick auf das Verzeichnis im Projektfenster -> `Mark Directory as` -> `Sources Root`.
 
-#### 9. GIT-Integration im IntelliJ konfigurieren
+#### 6.9 GIT-Integration im IntelliJ konfigurieren
 
-**Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:**
+Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
+
 1. **Einstellungen öffnen:**
-   - Gehe zu `File` -> `Settings` -> `Version Control` -> `Git`.
+   - `File` -> `Settings` -> `Version Control` -> `Git`.
+
 2. **Pfad zur Git-Installation überprüfen:**
    - Sicherstellen, dass der Pfad zur Git-Installation korrekt gesetzt ist (z.B., `C:\Program Files\Git\cmd\git.exe`).
+
 3. **Git-Integration aktivieren:**
    - Überprüfen, ob die Git-Integration aktiviert ist und das Hauptprojekt sowie alle Submodule erkannt werden.
+
 4. **Repository-Status überprüfen:**
-   - Öffne das Terminal in IntelliJ IDEA und führe folgende Befehle aus:
+   - Das Terminal in IntelliJ IDEA öffnen und folgende Befehle ausführen:
    ```powershell
    git pull
    git submodule init
    git submodule update
    ```
 
-#### 10. Konfiguration von npm in der virtuellen Umgebung
+#### 6.10 Proxy-Dienst einrichten
 
-**Installation und Verwaltung von npm-Abhängigkeiten in einer zentralen virtuellen Umgebung:**
-1. **Virtuelle Umgebung erstellen:**
-   ```bash
-   cd U:\data_suite
-   mkdir venv
-   ```
-2. **Initiale Installation der Abhängigkeiten:**
-   ```bash
-   npm install --prefix ./venv
-   ```
-3. **Neue Abhängigkeiten hinzufügen:**
-   ```bash
-   npm install <paketname> --prefix ./venv --save
-   ```
-4. **Entwicklungsabhängigkeiten hinzufügen:**
-   ```bash
-   npm install <paketname> --prefix ./venv --save-dev
-   ```
-5. **Abhängigkeiten aktualisieren:**
-   ```bash
-   npm update --prefix ./venv
-   ```
-6. **Installierte Abhängigkeiten überprüfen:**
-   ```bash
-   npm list --prefix ./venv
-   ```
-### 11. Proxy-Dienst einrichten
-
-**Bestellung, Installation und Konfiguration des Proxy-Dienstes:**
+Um den Proxy-Dienst in der Umgebung zu installieren und zu konfigurieren:
 
 1. **Bestellung des Proxy-Dienstes:**
    - Der Proxy-Dienst (px-pxy) wird über das Service-Center des Unternehmens bestellt und über das interne Jira-Portal angefordert.
@@ -680,11 +719,12 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
      - `NO_PROXY=localhost,*.xxx.uk,.xxx.uk,xxx.uk`
 
 4. **Testen der Proxy-Konfiguration:**
-   - **Überprüfung mit cURL:** Führe den folgenden Befehl aus, um zu prüfen, ob der Proxy korrekt konfiguriert ist:
+   - **Überprüfung mit cURL:** Der folgende Befehl kann ausgeführt werden, um zu prüfen, ob der Proxy korrekt konfiguriert ist:
      ```powershell
      curl -x http://xxx.xxx.xxx.xxx:xxxx -i -k -L https://copilot-proxy.githubusercontent.com/_ping
      ```
-   - **Test mit Python:** Um sicherzustellen, dass keine Passwortabfragen erfolgen, kann dieser Python-Code verwendet werden:
+
+   - **Test mit Python:** Um sicherzustellen, dass keine Passwortabfragen erfolgen, kann folgender Python-Code verwendet werden:
      ```python
      from pytpd.tca.liquidmetrix import LiquidMetrix
      lm_client = LiquidMetrix()
@@ -697,6 +737,7 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
      $certPath = "C:\Users\VX\cert\proxy.pem"
      Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\LocalMachine\Root
      ```
+
    - **Dynamische Ermittlung des Zertifikats-Thumbprints:** Der Thumbprint des Zertifikats kann nach der Installation dynamisch ermittelt werden:
      ```powershell
      $proxyCert = Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object { $_.Subject -like "*Proxy*" }
@@ -706,7 +747,6 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
          Write-Host "Proxy-Zertifikat nicht gefunden."
      }
      ```
- 
 ### 7. Entwicklung
 
 #### Projektstruktur
