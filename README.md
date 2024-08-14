@@ -238,24 +238,9 @@ Data_Suite/
 
 #### 3.4 Vorab-Check der Git-Konfigurationen (global)
 
-**Überprüfen der Git-Konfiguration:**
-
-1. **Git-Konfigurationsdatei überprüfen:**
-   - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
-     ```powershell
-     git config --global --list
-     ```
-   - Sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
-     ```powershell
-     git config --global user.name "Ihr Name"
-     git config --global user.email "youremail@example.com"
-     ```
-
-#### 3.5 Vorab-Checks vor Projektbeginn
-
 Vor der Installation und Konfiguration sollte sichergestellt werden, dass das System die notwendigen Voraussetzungen erfüllt und korrekt eingerichtet ist.
 
-##### 3.5.1 Git-Konfiguration und Netzwerkeinstellungen überprüfen
+##### 3.4.1 Git-Konfiguration und Netzwerkeinstellungen überprüfen
 
 1. **Git-Konfigurationsdatei überprüfen:**
    - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
