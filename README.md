@@ -183,59 +183,66 @@ Data_Suite/
 
 ### 3. Installation und Basiskonfigurationen
 
-#### Git Installation
-**Installation von GIT for Windows:**
+##### Git Installation
 
-1. **Download und Installation von GIT for Windows:** via Git-Website: [git-scm.com](https://git-scm.com/) mit Standardeinstellungen
+1. **Git for Windows installieren:**
+   - Git for Windows kann über die offizielle Git-Website [git-scm.com](https://git-scm.com) heruntergeladen und mit den Standardeinstellungen installiert werden.
 
-2. **Überprüfen der GIT Installation:**
-```bash
-     git --version
-```     
-  - Ergebnis sollte eine Ausgabe ähnlich wie `git version 2.x.x` sein.
+2. **Überprüfung der Git Installation:**
+   - Die erfolgreiche Installation von Git kann durch Ausführen des folgenden Befehls überprüft werden:
+   ```powershell
+   git --version
+   ```
+   - Die Ausgabe sollte in etwa so aussehen: `git version 2.x.x`.
 
-#### IntelliJ IDEA Installation
-**Installation von IntelliJ IDEA Ultimate 2024.1:**
+##### IntelliJ IDEA Installation
 
-1. **Download und Installation von IntelliJ IDEA:** via JetBrains-Website: [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download/) mit Standardeinstellungen.
-   - Ultimate Edition wählen und Installationsdatei für Windows herunterladen.
+1. **IntelliJ IDEA Ultimate 2024.1 installieren:**
+   - IntelliJ IDEA kann über die JetBrains-Website [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download) heruntergeladen und mit den Standardeinstellungen installiert werden.
+   - Es sollte die Ultimate Edition ausgewählt und die Installationsdatei für Windows heruntergeladen werden.
 
-#### SSH-Schlüssel erstellen und konfigurieren
-**Schritt-für-Schritt-Anleitung zur Erstellung und Konfiguration eines SSH-Schlüssels für GitHub:**
+##### SSH-Schlüssel erstellen und konfigurieren
 
 1. **SSH-Schlüssel generieren:**
-   - PowerShell oder Eingabeaufforderung öffnen.
-   - neuen SSH-Schlüssel generieren:
-```Powershell
-     ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-```         
-- Enter drücken, um den Standardspeicherort (C:\Users\VX\.ssh\id_rsa) zu akzeptieren.
-   - bei Aufforderung ein sicheres Passwort eingeben (optional).
+   - Öffnen Sie PowerShell oder die Eingabeaufforderung und generieren Sie einen neuen SSH-Schlüssel:
+   ```powershell
+   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   ```
+   - Der Standardspeicherort (`C:\Users\VX.ssh\id_rsa`) kann durch Drücken von Enter akzeptiert werden. Optional kann ein Passwort hinzugefügt werden.
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
-   - Starten des SSH-Agenten im Hintergrund:
-```Powershell
-    Start-Service ssh-agent
-```         
-- SSH-Schlüssel dem Agenten hinzufügen:
-```Powershell
-     ssh-add C:\Users\VX\.ssh\id_rsa
- ``` 
+   - **Für PowerShell:**
+     ```powershell
+     Start-Service ssh-agent
+     ```
+   - **Für die Eingabeaufforderung:**
+     ```powershell
+     eval $(ssh-agent -s)
+     ```
+   - Der Schlüssel wird dem Agenten hinzugefügt mit:
+   ```powershell
+   ssh-add ~/.ssh/id_rsa
+   ```
+
 3. **Öffentlichen SSH-Schlüssel kopieren:**
-   - Inhalt des öffentlichen Schlüssels in die Zwischenablage kopieren:
-```Powershell
-     Get-Content C:\Users\VX\.ssh\id_rsa.pub | Set-Clipboard
- ```   
+   - **Für PowerShell:**
+     ```powershell
+     Get-Content ~/.ssh/id_rsa.pub | Set-Clipboard
+     ```
+   - **Für die Eingabeaufforderung:**
+     ```powershell
+     cat ~/.ssh/id_rsa.pub | clip
+     ```
+
 4. **SSH-Schlüssel zum GitHub-Konto hinzufügen:**
-   - bei GitHub anmelden.
-   - zu `Settings navigieren -> SSH and GPG keys -> New SSH key`.
-   - kopierten Schlüssel einfügen und speichern.
+   - Anmelden bei GitHub, dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
+   - Den kopierten Schlüssel einfügen und speichern.
 
 5. **Verbindung zu GitHub testen:**
-   - Verbindung zu GitHub testen:
-```Powershell
-     ssh -T git@github.com
-```     
+   - Die Verbindung zu GitHub kann getestet werden mit:
+   ```powershell
+   ssh -T git@github.com
+   ```  
 #### Vorab-Check der GIT Konfigurationen (global)
 **Überprüfen der GIT-Konfiguration:**
 
@@ -249,26 +256,42 @@ Data_Suite/
      git config --global user.name "Ihr Name"
      git config --global user.email "youremail@example.com"
  ```    
-**Überprüfen der Proxy-Einstellungen (falls erforderlich):**
-1. **Proxy-Einstellungen für GIT konfigurieren:**
-   - wenn hinter einem Proxy gearbeitet wird, müssen die Proxy-Einstellungen auch für GIT korrekt gesetzt werden.
-   - Einstellungen können direkt in der GIT-Konfiguration oder als Umgebungsvariablen definiert werden. 
-```Powershell
-     git config --global http.proxy http://username:password@proxy-server:port
-     git config --global https.proxy https://username:password@proxy-server:port
- ```
-    - weitere Details und Beispiele sind in Abschnitt 6 Step 11 „Proxy-Dienst einrichten“ aufgeführt.
-    
-**Überprüfen der Netzwerkeinstellungen:**
-1. **DNS-Auflösung für GitHub überprüfen:**
-```bash
-     nslookup github.com
-```     
-2. **Verbindung zu GitHub überprüfen:**
-   - Verbindung zu GitHub über das Internet überprüfen:
-```bash
-     Test-NetConnection -ComputerName github.com -Port 22
-```     
+#### Vorab-Checks vor Projektbeginn
+
+Vor der Installation und Konfiguration sollte eine Überprüfung durchgeführt werden, um sicherzustellen, dass das System die notwendigen Voraussetzungen erfüllt und korrekt eingerichtet ist.
+
+##### Git Konfiguration und Netzwerkeinstellungen überprüfen:
+
+1. **Git-Konfigurationsdatei überprüfen:**
+   - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
+   ```powershell
+   git config --global --list
+   ```
+   - Es sollte sichergestellt werden, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
+   ```powershell
+   git config --global user.name "Ihr Name"
+   git config --global user.email "youremail@example.com"
+   ```
+
+2. **Proxy-Einstellungen für Git konfigurieren (falls erforderlich):**
+   - Wenn ein Proxy verwendet wird, können die Proxy-Einstellungen wie folgt konfiguriert werden:
+   ```powershell
+   git config --global http.proxy http://username:password@proxy-server:port
+   git config --global https.proxy https://username:password@proxy-server:port
+   ```
+
+3. **DNS-Auflösung für GitHub überprüfen:**
+   - Die DNS-Auflösung für GitHub kann mit diesem Befehl überprüft werden:
+   ```powershell
+   nslookup github.com
+   ```
+
+4. **Verbindung zu GitHub überprüfen:**
+   - Es sollte überprüft werden, ob eine Verbindung zu GitHub über das Internet hergestellt werden kann:
+   ```powershell
+   Test-NetConnection -ComputerName github.com -Port 22
+   ```
+       
 ### 4.GIT Setup Main
 
 #### Hauptprojekt aus GitHub erstellen
@@ -399,24 +422,37 @@ Data_Suite/
 ```     
 ### 6. IntelliJ Setup
 
+#### 1. Vorab-Checks
+
+IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration zu überprüfen:
+
+* **1a. Vorab-Checks als Script:** Diese Methode eignet sich besonders für eine schnelle und automatisierte Überprüfung, insbesondere wenn das Projekt regelmäßig neu eingerichtet oder auf mehreren Rechnern installiert wird.
+* **1b. Vorab-Checks (selektiv):** Diese Methode ermöglicht eine detailliertere, manuelle Überprüfung und ist hilfreich, wenn gezielt bestimmte Aspekte der Konfiguration überprüft werden sollen oder wenn Probleme bei der Installation oder Konfiguration vermutet werden.
+
+**Empfehlung:** Es wird empfohlen, **1b. selektive Überprüfung** zu verwenden, wenn das Projekt zum ersten Mal eingerichtet wird oder Probleme auftreten. Für regelmäßige Überprüfungen oder bei der Einrichtung auf mehreren Rechnern ist das **Script (1a)** effizienter.
+
 #### 1a. Vorab-Checks als Script
 
 **Überprüfung der Installation und Konfiguration von IntelliJ via Script:**
+
 1. **Ausführung des IntelliJ System-Check Powershell Script:**
-   - zu finden im Anhang unter Hilfs- und Prüfungs-Scripts/"IntelliJ System-Check Powershell Script".
-   - PS-Script vorab signieren: siehe Abschnitt 6 Stept 3 "Signieren von PowerShell-Skripten im IntelliJ Terminal"
-   - ausführen im Terminal (Powershell) oder direkt im Windows
-      ```Powershell
+   - Das Script ist im Anhang unter "Hilfs- und Prüfungs-Scripts/IntelliJ System-Check Powershell Script" verfügbar.
+   - Vor der Ausführung muss das Script signiert werden (siehe 6.3. "Signieren von PowerShell-Skripten im IntelliJ Terminal").
+   - Ausführung im Terminal (Powershell) oder direkt in Windows:
+     ```Powershell
      .\intelliJ_system_check.ps1 -homeDir "U:\" 
-      ```
+     ```
+
 #### 1b. Vorab-Checks (selektiv)
 
-**selektive Überprüfung der Installation und Konfiguration von IntelliJ:**
+**Selektive Überprüfung der Installation und Konfiguration von IntelliJ:**
+
 1. **Installation überprüfen:**
-   - Gehe zu `Help` -> `About` und stelle sicher, dass `IntelliJ IDEA Ultimate 2024.1` installiert ist.
+   - Über `Help` -> `About` kann überprüft werden, ob `IntelliJ IDEA Ultimate 2024.1` installiert ist.
+
 2. **Plugins überprüfen:**
-   - Navigiere zu `File` -> `Settings` -> `Plugins`.
-   - Sicherstellen, dass Plugins für `Python`, `GIT` und andere benötigte Tools installiert und aktiviert sind.
+   - Unter `File` -> `Settings` -> `Plugins` kann überprüft werden, ob die benötigten Plugins wie `Python`, `Git` usw. installiert und aktiviert sind.
+
 3. **Konfigurationsdateien prüfen:**
    - Sicherstellen, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`).
 
@@ -634,42 +670,42 @@ Data_Suite/
    ```bash
    npm list --prefix ./venv
    ```
-#### 11. Proxy-Dienst einrichten
+### 11. Proxy-Dienst einrichten
 
 **Bestellung, Installation und Konfiguration des Proxy-Dienstes:**
 
-1. **Bestellung des Proxy-Dienstes**  
-   - Der Proxy-Dienst (px-pxy) muss über das Service-Center des Unternehmens bestellt werden. Dazu wird der entsprechende Service über das interne Jira-Portal angefordert.
+1. **Bestellung des Proxy-Dienstes:**
+   - Der Proxy-Dienst (px-pxy) wird über das Service-Center des Unternehmens bestellt und über das interne Jira-Portal angefordert.
 
-2. **Installation des Proxy-Dienstes**  
-   - **Installationsort**: Der Proxy-Dienst wird in das Verzeichnis `C:\Program Files\px-pxy` installiert.
-   - **Installation ausführen**: Nach dem Download und Entpacken des Dienstes wird das Skript `px.exe --install` im Installationsverzeichnis ausgeführt, um den Dienst zu installieren.
+2. **Installation des Proxy-Dienstes:**
+   - **Installationsort:** Der Proxy-Dienst wird im Verzeichnis `C:\Program Files\px-pxy` installiert.
+   - **Installation ausführen:** Nach dem Download und Entpacken des Dienstes wird das Skript `px.exe --install` im Installationsverzeichnis ausgeführt.
 
-3. **Konfiguration der Umgebungsvariablen**  
+3. **Konfiguration der Umgebungsvariablen:**
    - Die folgenden Umgebungsvariablen müssen in den Systemeinstellungen hinzugefügt werden:
      - `HTTP_PROXY=http://xxx.xxx.xxx.xxx:xxxx`
      - `HTTPS_PROXY=http://xxx.xxx.xxx.xxx:xxxx`
      - `NO_PROXY=localhost,*.xxx.uk,.xxx.uk,xxx.uk`
 
-4. **Testen der Proxy-Konfiguration**  
-   - **Überprüfung mit cURL**: Führe den folgenden Befehl aus, um zu prüfen, ob der Proxy korrekt konfiguriert ist:
-     ```bash
+4. **Testen der Proxy-Konfiguration:**
+   - **Überprüfung mit cURL:** Führe den folgenden Befehl aus, um zu prüfen, ob der Proxy korrekt konfiguriert ist:
+     ```powershell
      curl -x http://xxx.xxx.xxx.xxx:xxxx -i -k -L https://copilot-proxy.githubusercontent.com/_ping
      ```
-   - **Test mit Python**: Um sicherzustellen, dass keine Passwortabfragen erfolgen, kann dieser Python-Code verwendet werden:
+   - **Test mit Python:** Um sicherzustellen, dass keine Passwortabfragen erfolgen, kann dieser Python-Code verwendet werden:
      ```python
      from pytpd.tca.liquidmetrix import LiquidMetrix
      lm_client = LiquidMetrix()
      print(lm_client.version)
      ```
 
-5. **Einbindung des Unternehmens-Proxy-Zertifikats**  
-   - **Import des Zertifikats**: Das Unternehmens-Proxy-Zertifikat muss zunächst in die Zertifikatsverwaltung importiert werden:
+5. **Einbindung des Unternehmens-Proxy-Zertifikats:**
+   - **Import des Zertifikats:** Das Unternehmens-Proxy-Zertifikat muss zunächst in die Zertifikatsverwaltung importiert werden:
      ```powershell
      $certPath = "C:\Users\VX\cert\proxy.pem"
      Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\LocalMachine\Root
      ```
-   - **Dynamische Ermittlung des Zertifikats-Thumbprints**: Der Thumbprint des Zertifikats kann nach der Installation dynamisch ermittelt werden:
+   - **Dynamische Ermittlung des Zertifikats-Thumbprints:** Der Thumbprint des Zertifikats kann nach der Installation dynamisch ermittelt werden:
      ```powershell
      $proxyCert = Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object { $_.Subject -like "*Proxy*" }
      if ($proxyCert) {
@@ -677,7 +713,8 @@ Data_Suite/
      } else {
          Write-Host "Proxy-Zertifikat nicht gefunden."
      }
-       
+     ```
+ 
 ### 7. Entwicklung
 
 #### Projektstruktur
