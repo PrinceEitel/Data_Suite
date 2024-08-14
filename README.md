@@ -183,7 +183,7 @@ Data_Suite/
 
 ### 3. Installation und Basiskonfigurationen
 
-#### 3.1 Git Installation
+#### 3.1 Git Installation und Konfiguration
 
 1. **Git for Windows installieren:**
    - Git for Windows kann über die offizielle Git-Website [git-scm.com](https://git-scm.com) heruntergeladen und mit den Standardeinstellungen installiert werden.
@@ -194,6 +194,39 @@ Data_Suite/
    git --version
    ```
    - Die Ausgabe sollte in etwa so aussehen: `git version 2.x.x`.
+
+3. **Git-Konfiguration einrichten:**
+   - Nach der Installation sollte Git direkt konfiguriert werden, um die Arbeit mit den Repositories zu ermöglichen.
+
+4. **Git-Konfigurationsdatei überprüfen:**
+   - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
+   ```powershell
+   git config --global --list
+   ```
+   - Sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
+   ```powershell
+   git config --global user.name "Ihr Name"
+   git config --global user.email "youremail@example.com"
+   ```
+
+5. **Proxy-Einstellungen für Git konfigurieren (falls erforderlich):**
+   - Wenn ein Proxy verwendet wird, können die Proxy-Einstellungen wie folgt konfiguriert werden:
+   ```powershell
+   git config --global http.proxy http://username:password@proxy-server:port
+   git config --global https.proxy https://username:password@proxy-server:port
+   ```
+
+6. **DNS-Auflösung für GitHub überprüfen:**
+   - Die DNS-Auflösung für GitHub kann mit diesem Befehl überprüft werden:
+   ```powershell
+   nslookup github.com
+   ```
+
+7. **Verbindung zu GitHub überprüfen:**
+   - Überprüfen, ob eine Verbindung zu GitHub über das Internet hergestellt werden kann:
+   ```powershell
+   Test-NetConnection -ComputerName github.com -Port 22
+   ```
 
 #### 3.2 IntelliJ IDEA Installation
 
@@ -236,42 +269,22 @@ Data_Suite/
    ssh -T git@github.com
    ```
 
-#### 3.4 Vorab-Check der Git-Konfigurationen (global)
+#### 3.4 Vorab-Checks vor Projektbeginn
 
 Vor der Installation und Konfiguration sollte sichergestellt werden, dass das System die notwendigen Voraussetzungen erfüllt und korrekt eingerichtet ist.
 
-##### 3.4.1 Git-Konfiguration und Netzwerkeinstellungen überprüfen
+1. **Überprüfung der Git-Konfiguration:**
+   - Sicherstellen, dass Git korrekt konfiguriert ist, wie im vorherigen Abschnitt beschrieben.
 
-1. **Git-Konfigurationsdatei überprüfen:**
-   - Die aktuelle Git-Konfiguration kann mit folgendem Befehl angezeigt werden:
-     ```powershell
-     git config --global --list
-     ```
-   - Sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
-     ```powershell
-     git config --global user.name "Ihr Name"
-     git config --global user.email "youremail@example.com"
-     ```
+2. **Proxy-Einstellungen überprüfen (falls erforderlich):**
+   - Überprüfen Sie die Proxy-Einstellungen und stellen Sie sicher, dass sie korrekt konfiguriert sind, um den Zugriff auf GitHub und andere externe Ressourcen zu gewährleisten.
 
-2. **Proxy-Einstellungen für Git konfigurieren (falls erforderlich):**
-   - Wenn ein Proxy verwendet wird, können die Proxy-Einstellungen wie folgt konfiguriert werden:
-     ```powershell
-     git config --global http.proxy http://username:password@proxy-server:port
-     git config --global https.proxy https://username:password@proxy-server:port
-     ```
+3. **Netzwerkzugriff testen:**
+   - Testen Sie die Verbindung zu GitHub und anderen benötigten Ressourcen, um sicherzustellen, dass keine Netzwerkrestriktionen den Zugriff blockieren.
 
-3. **DNS-Auflösung für GitHub überprüfen:**
-   - Die DNS-Auflösung für GitHub kann mit diesem Befehl überprüft werden:
-     ```powershell
-     nslookup github.com
-     ```
-
-4. **Verbindung zu GitHub überprüfen:**
-   - Überprüfen, ob eine Verbindung zu GitHub über das Internet hergestellt werden kann:
-     ```powershell
-     Test-NetConnection -ComputerName github.com -Port 22
-     ```
-     
+4. **DNS-Auflösung überprüfen:**
+   - Überprüfen Sie die DNS-Auflösung für alle wichtigen Ressourcen, wie GitHub, npm, und PyPI.
+ 
 ### 4. GIT Setup Main
 
 #### 4.1 Erstellen des Hauptprojekts aus GitHub
