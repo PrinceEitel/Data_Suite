@@ -215,11 +215,7 @@ Data_Suite/
      ```powershell
      Start-Service ssh-agent
      ```
-   - **Für die Eingabeaufforderung:**
-     ```powershell
-     eval $(ssh-agent -s)
-     ```
-   - Der Schlüssel wird dem Agenten hinzugefügt mit:
+    - Der Schlüssel wird dem Agenten hinzugefügt mit:
    ```powershell
    ssh-add ~/.ssh/id_rsa
    ```
@@ -229,11 +225,7 @@ Data_Suite/
      ```powershell
      Get-Content ~/.ssh/id_rsa.pub | Set-Clipboard
      ```
-   - **Für die Eingabeaufforderung:**
-     ```powershell
-     cat ~/.ssh/id_rsa.pub | clip
-     ```
-
+     
 4. **SSH-Schlüssel zum GitHub-Konto hinzufügen:**
    - Anmelden bei GitHub, dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
    - Den kopierten Schlüssel einfügen und speichern.
@@ -248,14 +240,14 @@ Data_Suite/
 
 1. **GIT-Konfigurationsdatei überprüfen:**
    - Git-Konfiguration überprüfen:
-```Powershell
+   ```powershell
      git config --global --list
-```     
+   ```    
 - sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
-```Powershell
+   ```powershell
      git config --global user.name "Ihr Name"
      git config --global user.email "youremail@example.com"
- ```    
+   ```  
 #### Vorab-Checks vor Projektbeginn
 
 Vor der Installation und Konfiguration sollte eine Überprüfung durchgeführt werden, um sicherzustellen, dass das System die notwendigen Voraussetzungen erfüllt und korrekt eingerichtet ist.
@@ -929,13 +921,13 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
    - **Ursache:** Der SSH-Schlüssel ist nicht korrekt eingerichtet oder GitHub akzeptiert den verwendeten Schlüssel nicht.
    - **Lösung:** 
      - Überprüfen Sie, ob der SSH-Schlüssel generiert und dem GitHub-Account hinzugefügt wurde:
-```bash
+```plaintext
        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
        cat ~/.ssh/id_rsa.pub
 ``` 
 - öffentlichen Schlüssel zu GitHub hinzufügen unter [SSH Keys](https://github.com/settings/keys).
      - SSH-Verbindung testen:
-```bash
+```plaintext
        ssh -T git@github.com
  ```       
 2. **Fehler beim Pushen: `fatal: unable to access 'https://github.com/USER/REPO.git/': The requested URL returned error: 403`**
@@ -943,25 +935,25 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
    - **Lösung:** 
      - sicherstellen, dass die erforderlichen Berechtigungen für das Repository vorhanden sind.
      - Git-Konfiguration überprüfen:
-```bash
+```plaintext
        git config --global user.name "your_username"
        git config --global user.email "your_email@example.com"
 ```        
 3. **Fehler beim Mergen: `CONFLICT (content): Merge conflict in file.txt`**
    - **Ursache:** Änderungen in der gleichen Datei widersprechen sich.
    - **Lösung:** 
-     - Öffnen Sie die Datei mit Konflikten und beheben Sie die Konflikte manuell.
-     - Stagen Sie die Änderungen und committen Sie sie:
-```bash
+     - Öffne die Datei mit Konflikten und beheben die Konflikte manuell.
+     - Stage die Änderungen und committe sie:
+```plaintext
        git add file.txt
        git commit -m "Resolved merge conflict in file.txt"
  ```       
 4. **Fehler bei der Submodule-Aktualisierung: `fatal: no submodule mapping found in .gitmodules for path 'submodule_path'`**
    - **Ursache:** Die `.gitmodules`-Datei ist nicht korrekt konfiguriert oder wurde gelöscht.
    - **Lösung:** 
-     - Überprüfen Sie die `.gitmodules`-Datei und stellen Sie sicher, dass alle Submodule korrekt aufgeführt sind.
+     - Überprüfen die `.gitmodules`-Datei und stelle sicher, dass alle Submodule korrekt aufgeführt sind.
      - Initialisieren und aktualisieren Sie die Submodule erneut:
-```bash
+```plaintext
        git submodule init
        git submodule update
 ```        
@@ -980,11 +972,11 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
    - **Ursache:** Die virtuelle Umgebung ist nicht korrekt eingerichtet oder aktiviert.
    - **Lösung:** 
      - sicherstellen, dass die virtuelle Umgebung korrekt erstellt wurde:
-```bash
+```powershell
        python -m venv venv
 ```        
    - virtuelle Umgebung aktivieren:
-```bash 
+```powershell 
        venv\Scripts\activate     # On Windows
 ```        
 - Python Interpreter in IntelliJ IDEA konfigurieren:
@@ -1083,12 +1075,12 @@ sicherstellen, dass alle Skripte, die im IntelliJ Terminal ausgeführt werden, k
    - **Ursache:** Der Proxy ist nicht korrekt konfiguriert oder blockiert den Zugriff.
    - **Lösung:** 
      - sicherstellen, dass die Proxy-Einstellungen korrekt sind:
-```bash
+```powershell
        git config --global http.proxy http://proxyuser:proxypassword@proxy.server.com:port
        git config --global https.proxy https://proxyuser:proxypassword@proxy.server.com:port
 ```        
 - Überprüfen der DNS-Auflösung:
-```bash
+```powershell
        nslookup github.com
 ```        
 - Konfigurieren des Proxy in IntelliJ IDEA:
@@ -1096,13 +1088,6 @@ sicherstellen, dass alle Skripte, die im IntelliJ Terminal ausgeführt werden, k
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
 ```
    - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, überprüfe die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6 Step 11 „Proxy-Dienst einrichten“.
-   - 
-##### Zugriff auf Portale und Download-Seiten
-
-1. **Zugriffsprobleme auf Download-Seiten: `Access Denied`**
-   - **Ursache:** Firewall oder Netzwerkbeschränkungen blockieren den Zugriff.
-   - **Lösung:** 
-     - beim Netzwerkadministrator die Freigabe der benötigten URLs beantragen
 
 ### 10. Glossar
 **Repository (Repo)**
@@ -1272,7 +1257,6 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 # Dies wird das `data_suite` Verzeichnis unter `U:\` annehmen.
 
 #.\intelliJ_system_check.ps1 -homeDir "U:\"
-
 
 # Beispiel 2: Home-Verzeichnis ist `C:\`
 # Das Skript wird mit dem Home-Verzeichnis `C:\` ausgeführt.
