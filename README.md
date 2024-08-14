@@ -3,7 +3,9 @@
 
 #### Projektbeschreibung
 Das Projekt "Data_Suite" ist ein umfassendes Softwarepaket, das aus mehreren Submodulen besteht, darunter OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form. Diese Module bieten eine breite Palette von Funktionen zur Datenverarbeitung, Dokumentenanalyse und Textanonymisierung. 
-Ziel des Projekts ist es, eine modulare und flexible Lösung bereitzustellen, die Unternehmen dabei unterstützt, ihre Datenverarbeitungs- und Anonymisierungsprozesse effizient zu gestalten. Durch die Nutzung dieser Suite können Unternehmen ihre Arbeitsabläufe automatisieren, die Datenqualität verbessern und sicherstellen, dass vertrauliche Informationen geschützt bleiben.
+Ziel des Projekts ist es, eine modulare und flexible Lösung bereitzustellen, die Unternehmen dabei unterstützt, ihre Datenverarbeitungs- und Anonymisierungsprozesse effizient zu gestalten. 
+Da viele Projektkomponenten über das Internet abgerufen werden, ist die korrekte Konfiguration eines Proxy-Dienstes essenziell, insbesondere wenn hinter einer Unternehmens-Firewall gearbeitet wird. 
+Durch die Nutzung dieser Suite können Unternehmen ihre Arbeitsabläufe automatisieren, die Datenqualität verbessern und sicherstellen, dass vertrauliche Informationen geschützt bleiben.
 
 #### Zielgruppe
 Dieser Leitfaden richtet sich an Business Analysten und Entwickler, die das "Data_Suite"-Projekt in ihre Windows Arbeitsumgebung installieren, konfigurieren und verwenden möchten. Die Anleitung bietet detaillierte Schritte zur Einrichtung und Synchronisation des Projekts auf mehreren Windows-Clients und unterstützt die Zielgruppe dabei, das Projekt effizient zu nutzen und zu erweitern.
@@ -139,10 +141,11 @@ Data_Suite/
 3. **IntelliJ IDEA:**
    - **Edition:** Ultimate 2024.1
 5. **Python virtuelle Umgebungen:**
-   - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts (Details im Abschnitt 6 Konfiguration IntelliJ).
+   - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts (Details im Abschnitt 6 Step 4 "Virtuelle Umgebung einrichten").
 6. **Unternehmens-Proxy Zertifikat:**
    - Zertifikat wird aus dem Intranet (Dokumentationen IT Developer-Gilden) heruntergeladen
    - Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
+   - notwendig, um Zugriff auf externe Ressourcen wie GitHub und npm zu ermöglichen (Details im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“).
 
 #### Komponenten und Berechtigungen
 1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
@@ -157,7 +160,9 @@ Data_Suite/
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
    - **Einstellung der Proxy-Umgebungsvariablen:**
-     - HTTP_PROXY und HTTPS_PROXY müssen für Zugriff auf GitHub und andere externe Ressourcen konfiguriert werden. Dies kann in der `.gitconfig` oder in den Umgebungsvariablen erfolgen.
+     - HTTP_PROXY und HTTPS_PROXY müssen für Zugriff auf GitHub und andere externe Ressourcen konfiguriert werden.
+     - Konfiguration kann in der `.gitconfig` oder in den Umgebungsvariablen erfolgen.
+     - Details befinden sich im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“
 
 #### Netzwerk- und Ausführungsrechte
 
@@ -170,6 +175,7 @@ Data_Suite/
      - https://webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
      - https://pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
      - https://pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
+   - Weitere Details zur Proxy-Konfiguration und benötigten Berechtigungen finden sich in Abschnitt 6 Step 11 „Proxy-Dienst einrichten“.
 
 **Quellen:**
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
@@ -245,11 +251,14 @@ Data_Suite/
  ```    
 **Überprüfen der Proxy-Einstellungen (falls erforderlich):**
 1. **Proxy-Einstellungen für GIT konfigurieren:**
-   - bei Arbeiten hinter einem Proxy, müssen möglicherweise die Proxy-Einstellungen konfiguriert werden:
+   - wenn hinter einem Proxy gearbeitet wird, müssen die Proxy-Einstellungen auch für GIT korrekt gesetzt werden.
+   - Einstellungen können direkt in der GIT-Konfiguration oder als Umgebungsvariablen definiert werden. 
 ```bash
      git config --global http.proxy http://username:password@proxy-server:port
      git config --global https.proxy https://username:password@proxy-server:port
- ```    
+ ```
+    - weitere Details und Beispiele sind in Abschnitt 6 Step 11 „Proxy-Dienst einrichten“ aufgeführt.
+    
 **Überprüfen der Netzwerkeinstellungen:**
 1. **DNS-Auflösung für GitHub überprüfen:**
 ```bash
@@ -395,11 +404,11 @@ Data_Suite/
 **Überprüfung der Installation und Konfiguration von IntelliJ via Script:**
 1. **Ausführung des IntelliJ System-Check Powershell Script:**
    - zu finden im Anhang unter Hilfs- und Prüfungs-Scripts/"IntelliJ System-Check Powershell Script".
-   - PS-Script vorab signieren: siehe 6.3. "Signieren von PowerShell-Skripten im IntelliJ Terminal"
+   - PS-Script vorab signieren: siehe Abschnitt 6 Stept 3 "Signieren von PowerShell-Skripten im IntelliJ Terminal"
    - ausführen im Terminal (Powershell) oder direkt im Windows
       ```Powershell
      .\intelliJ_system_check.ps1 -homeDir "U:\" 
- 
+      ```
 #### 1b. Vorab-Checks (selektiv)
 
 **selektive Überprüfung der Installation und Konfiguration von IntelliJ:**
@@ -407,7 +416,7 @@ Data_Suite/
    - Gehe zu `Help` -> `About` und stelle sicher, dass `IntelliJ IDEA Ultimate 2024.1` installiert ist.
 2. **Plugins überprüfen:**
    - Navigiere zu `File` -> `Settings` -> `Plugins`.
-   - Sicherstellen, dass Plugins für `Python`, `Git` und andere benötigte Tools installiert und aktiviert sind.
+   - Sicherstellen, dass Plugins für `Python`, `GIT` und andere benötigte Tools installiert und aktiviert sind.
 3. **Konfigurationsdateien prüfen:**
    - Sicherstellen, dass die Konfigurationsdateien im `.idea`-Verzeichnis vorhanden und korrekt sind (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`).
 
@@ -937,7 +946,7 @@ Data_Suite/
 ```bash
        python -m venv venv
 ```        
-- virtuelle Umgebung aktivieren:
+   - virtuelle Umgebung aktivieren:
 ```bash 
        venv\Scripts\activate     # On Windows
 ```        
@@ -952,7 +961,7 @@ Data_Suite/
 ```plaintext
        Rechtsklick auf das Verzeichnis -> Mark Directory as -> Sources Root
 ```        
-4. **Fehlerhafte Git-Integration: `Unable to fetch changes`**
+4. **Fehlerhafte GIT-Integration: `Unable to fetch changes`**
    - **Ursache:** Git-Konfiguration in IntelliJ IDEA ist fehlerhaft.
    - **Lösung:** 
      - Überprüfen Sie die Git-Einstellungen:
@@ -989,7 +998,7 @@ Das System führt das signierte Skript nicht aus, da der Publisher nicht als ver
 
 4. **Skripte erneut signieren und das Vertrauen bestätigen:**
    ```powershell
-   Set-AuthenticodeSignature -FilePath "C:\path\to\script.ps1" -Certificate $cert
+   Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate $cert
    ```
 
 5. **Aktualisieren der PowerShell-Ausführungsrichtlinie:**
@@ -1048,7 +1057,9 @@ sicherstellen, dass alle Skripte, die im IntelliJ Terminal ausgeführt werden, k
 - Konfigurieren des Proxy in IntelliJ IDEA:
 ```plaintext
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
-```        
+```
+   - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, überprüfe die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6 Step 11 „Proxy-Dienst einrichten“.
+   - 
 ##### Zugriff auf Portale und Download-Seiten
 
 1. **Zugriffsprobleme auf Download-Seiten: `Access Denied`**
