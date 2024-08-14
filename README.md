@@ -204,11 +204,11 @@ Data_Suite/
 ##### SSH-Schlüssel erstellen und konfigurieren
 
 1. **SSH-Schlüssel generieren:**
-   - Öffnen Sie PowerShell oder die Eingabeaufforderung und generieren Sie einen neuen SSH-Schlüssel:
+   - Öffne PowerShell oder die Eingabeaufforderung und generiere einen neuen SSH-Schlüssel:
    ```powershell
    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
    ```
-   - Der Standardspeicherort (`C:\Users\VX.ssh\id_rsa`) kann durch Drücken von Enter akzeptiert werden. Optional kann ein Passwort hinzugefügt werden.
+   - Der Standardspeicherort (`C:\Users\VX\.ssh\id_rsa`) kann durch Drücken von Enter akzeptiert werden. Optional kann ein Passwort hinzugefügt werden.
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
    - **Für PowerShell:**
@@ -379,10 +379,10 @@ Vor der Installation und Konfiguration sollte eine Überprüfung durchgeführt w
 
 #### Zugriffsrechte konfigurieren
 - **Einladen des VX-Accounts zu den privaten Repositories:**
-  1. Navigieren Sie zu den Repository-Einstellungen der privaten Repositories (z.B. OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form).
-  2. Gehen Sie zu `Settings -> Manage access`.
-  3. Klicken Sie auf `Invite a collaborator` und geben Sie den VX-Account (z.B. `vx@company.com`) ein.
-  4. Weisen Sie den entsprechenden Zugriff zu (z.B. `Write` oder `Admin`).
+  1. Navigiere zu den Repository-Einstellungen der privaten Repositories (z.B. OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form).
+  2. Gehe zu `Settings -> Manage access`.
+  3. Klicke auf `Invite a collaborator` und gebe den VX-Account (z.B. `vx@company.com`) ein.
+  4. Weise den entsprechenden Zugriff zu (z.B. `Write` oder `Admin`).
 
 #### Vorab-Check der GIT Konfigurationen (Submodule-Ebene)
 - **Überprüfung der GIT-Installation und Konfiguration:**
@@ -796,14 +796,14 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
 
 - **Hinweise zur Erweiterung des Projekts um neue Funktionen:**
   - **Neue Module hinzufügen:**
-    - Strukturieren Sie neue Module ähnlich den bestehenden (`src/new_module/`).
-    - Erstellen Sie Hauptdateien und Unterverzeichnisse entsprechend den Anforderungen.
+    - Strukturiere neue Module ähnlich den bestehenden (`src/new_module/`).
+    - Erstelle Hauptdateien und Unterverzeichnisse entsprechend den Anforderungen.
   - **Erweiterung bestehender Module:**
-    - Fügen Sie neue Funktionen in den Hauptdateien hinzu.
-    - Nutzen Sie bestehende Hilfsfunktionen und -klassen.
+    - Füge neue Funktionen in den Hauptdateien hinzu.
+    - Nutze bestehende Hilfsfunktionen und -klassen.
   - **Integration neuer Bibliotheken:**
-    - Fügen Sie neue Abhängigkeiten in die `requirements.txt` ein.
-    - Installieren Sie die neuen Pakete in der virtuellen Umgebung:
+    - Füge neue Abhängigkeiten in die `requirements.txt` ein.
+    - Installiere die neuen Pakete in der virtuellen Umgebung:
 ```python
       pip install -r requirements.txt
 ```       
@@ -909,7 +909,7 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
        git push origin main
  ```      
 2. **Automatisierte Validierung**:
-     - Verwenden Sie Skripte oder CI/CD-Pipelines, um die Integrität der Konfigurationsdateien zu überprüfen. Diese Skripte können sicherstellen, dass die Dateien nicht manuell geändert wurden und dass alle erforderlichen Einstellungen vorhanden sind.
+     - Verwende Skripte oder CI/CD-Pipelines, um die Integrität der Konfigurationsdateien zu überprüfen. Diese Skripte können sicherstellen, dass die Dateien nicht manuell geändert wurden und dass alle erforderlichen Einstellungen vorhanden sind.
 	 
 ### 9. Fehlerbehebung und Support
 
@@ -920,7 +920,7 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
 1. **Fehler beim Klonen eines Repositories: `Permission denied (publickey)`**
    - **Ursache:** Der SSH-Schlüssel ist nicht korrekt eingerichtet oder GitHub akzeptiert den verwendeten Schlüssel nicht.
    - **Lösung:** 
-     - Überprüfen Sie, ob der SSH-Schlüssel generiert und dem GitHub-Account hinzugefügt wurde:
+     - Überprüfe, ob der SSH-Schlüssel generiert und dem GitHub-Account hinzugefügt wurde:
 ```plaintext
        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
        cat ~/.ssh/id_rsa.pub
@@ -943,7 +943,7 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
    - **Ursache:** Änderungen in der gleichen Datei widersprechen sich.
    - **Lösung:** 
      - Öffne die Datei mit Konflikten und beheben die Konflikte manuell.
-     - Stage die Änderungen und committe sie:
+     - Stage die Änderungen und committe diese:
 ```plaintext
        git add file.txt
        git commit -m "Resolved merge conflict in file.txt"
@@ -952,7 +952,7 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
    - **Ursache:** Die `.gitmodules`-Datei ist nicht korrekt konfiguriert oder wurde gelöscht.
    - **Lösung:** 
      - Überprüfen die `.gitmodules`-Datei und stelle sicher, dass alle Submodule korrekt aufgeführt sind.
-     - Initialisieren und aktualisieren Sie die Submodule erneut:
+     - Initialisiere und aktualisiere die Submodule erneut:
 ```plaintext
        git submodule init
        git submodule update
@@ -991,9 +991,9 @@ IntelliJ IDEA bietet zwei Möglichkeiten, um die Installation und Konfiguration 
        Rechtsklick auf das Verzeichnis -> Mark Directory as -> Sources Root
 ```        
 4. **Fehlerhafte GIT-Integration: `Unable to fetch changes`**
-   - **Ursache:** Git-Konfiguration in IntelliJ IDEA ist fehlerhaft.
+   - **Ursache:** GIT-Konfiguration in IntelliJ IDEA ist fehlerhaft.
    - **Lösung:** 
-     - Überprüfen Sie die Git-Einstellungen:
+     - Überprüfe die GIT-Einstellungen:
 ```plaintext
        File -> Settings -> Version Control -> Git
 ```        
