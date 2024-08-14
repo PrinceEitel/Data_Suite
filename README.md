@@ -206,7 +206,7 @@ Data_Suite/
 1. **SSH-Schlüssel generieren:**
    - PowerShell oder Eingabeaufforderung öffnen.
    - neuen SSH-Schlüssel generieren:
-```bash
+```Powershell
      ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```         
 - Enter drücken, um den Standardspeicherort (C:\Users\VX\.ssh\id_rsa) zu akzeptieren.
@@ -214,16 +214,16 @@ Data_Suite/
 
 2. **SSH-Agent starten und Schlüssel hinzufügen:**
    - Starten des SSH-Agenten im Hintergrund:
-```bash
+```Powershell
     Start-Service ssh-agent
 ```         
 - SSH-Schlüssel dem Agenten hinzufügen:
-```bash
+```Powershell
      ssh-add C:\Users\VX\.ssh\id_rsa
  ``` 
 3. **Öffentlichen SSH-Schlüssel kopieren:**
    - Inhalt des öffentlichen Schlüssels in die Zwischenablage kopieren:
-```bash
+```Powershell
      Get-Content C:\Users\VX\.ssh\id_rsa.pub | Set-Clipboard
  ```   
 4. **SSH-Schlüssel zum GitHub-Konto hinzufügen:**
@@ -233,7 +233,7 @@ Data_Suite/
 
 5. **Verbindung zu GitHub testen:**
    - Verbindung zu GitHub testen:
-```bash
+```Powershell
      ssh -T git@github.com
 ```     
 #### Vorab-Check der GIT Konfigurationen (global)
@@ -241,11 +241,11 @@ Data_Suite/
 
 1. **GIT-Konfigurationsdatei überprüfen:**
    - Git-Konfiguration überprüfen:
-```bash
+```Powershell
      git config --global --list
 ```     
 - sicherstellen, dass Name und E-Mail-Adresse korrekt konfiguriert sind:
-```bash
+```Powershell
      git config --global user.name "Ihr Name"
      git config --global user.email "youremail@example.com"
  ```    
@@ -253,7 +253,7 @@ Data_Suite/
 1. **Proxy-Einstellungen für GIT konfigurieren:**
    - wenn hinter einem Proxy gearbeitet wird, müssen die Proxy-Einstellungen auch für GIT korrekt gesetzt werden.
    - Einstellungen können direkt in der GIT-Konfiguration oder als Umgebungsvariablen definiert werden. 
-```bash
+```Powershell
      git config --global http.proxy http://username:password@proxy-server:port
      git config --global https.proxy https://username:password@proxy-server:port
  ```
