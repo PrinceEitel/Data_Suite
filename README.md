@@ -271,25 +271,31 @@ Data_Suite/
    ssh -T git@github.com
    ```
 
-### 3.4 Vorab-Checks vor Projektbeginn
+### 3.4 CA-Zertifikate hinzufügen
 
-1. **Überprüfung der Git-Konfiguration:**
-   - Stelle sicher, dass Git korrekt konfiguriert ist, indem die in Abschnitt 3.1 beschriebenen Schritte ausgeführt werden.
+1. **CA-Zertifikate hinzufügen (falls erforderlich):**
+   - Wenn der Fehler "Could not send message" oder ein PKIX path building failed-Fehler auftritt, stelle sicher, dass die entsprechenden CA-Zertifikate im Truststore von IntelliJ importiert wurden.
 
-2. **Proxy-Einstellungen überprüfen (falls erforderlich):**
-   - Überprüfe die Proxy-Einstellungen und stelle sicher, dass sie korrekt sind, um den Zugriff auf GitHub und andere externe Ressourcen zu gewährleisten.
-
-3. **Netzwerkzugriff testen:**
-   - Teste die Verbindung zu GitHub und anderen benötigten Ressourcen:
+2. **Verwendeter Truststore in IntelliJ:**
+   - Der von IntelliJ verwendete Truststore befindet sich an folgendem Ort:
    ```console
-   Test-NetConnection -ComputerName github.com -Port 22
+   C:\Program Files\JetBrains\<DEINE_INTELLIJ_VERSION>\jbr\lib\security\cacerts
    ```
 
-4. **Überprüfung der DNS-Auflösung:**
-   - Überprüfe die DNS-Auflösung für alle wichtigen Ressourcen, wie GitHub, npm und PyPI:
+3. **Zertifikate herunterladen und importieren:**
+   - Lade die folgenden Zertifikate herunter und importiere sie in den oben genannten Truststore:
+     - [Client Proxy Zertifikat](https://intranet...../client-proxy...)
+     - [CorporateInfrastructureCA1 Zertifikat](https://intranet....CorporateInfrastructureCA1.crt)
+
+4. **Zertifikate in den Truststore importieren:**
+   - Um die Zertifikate zu importieren, verwende folgenden Befehl (passe den Pfad zum Truststore und zu den heruntergeladenen Dateien entsprechend an):
    ```console
-   nslookup github.com
+   keytool -importcert -trustcacerts -keystore "C:\Program Files\JetBrains\<DEINE_INTELLIJ_VERSION>\jbr\lib\security\cacerts" -file <VOLLSTÄNDIGER_PFAD_ZUR_HERUNTERGELADENEN_DATEI>
    ```
+
+5. **Administrative Berechtigungen:**
+   - Stelle sicher, dass dieser Befehl als Administrator ausgeführt wird! Das Passwort für den Truststore lautet: `xxxxxxx`.
+
 
 ### 4. GIT Setup Main
 
