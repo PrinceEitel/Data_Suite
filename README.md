@@ -568,31 +568,10 @@ Für die Ausführung signierter Skripte kann die Ausführungsrichtlinie auf `Rem
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-##### 6.3.1.7 Regelmäßige Aktualisierung der Signatur
+#### 6.3.2 Regelmäßige Aktualisierung der Signatur
 
 **Wichtiger Hinweis:** **Nach jeder Änderung am Skript muss die Signatur aktualisiert werden**, da die Änderung den Hash-Wert des Skripts verändert und die ursprüngliche Signatur ungültig macht. Führen Sie dazu die Schritte **6.3.1.4 bis 6.3.1.6** erneut aus, um sicherzustellen, dass das Skript weiterhin den Sicherheitsrichtlinien entspricht und ausgeführt werden kann.
 
-
-##### 6.3.2 Reguläre Windows PowerShell
-
-1. **Erforderliches Zertifikat von der IT-Abteilung beziehen:**
-   - Ein Zertifikat muss von der IT-Abteilung bereitgestellt werden. Selbstsignierte Zertifikate sind in dieser Umgebung nicht zulässig.
-
-2. **Zertifikat importieren:**
-   ```powershell
-   Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\Root
-   Import-Certificate -FilePath "C:\Users\VX\cert\Zertifikat.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-   ```
-
-3. **Thumbprint ermitteln:**
-   ```powershell
-   $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=ErhaltenesZertifikat"} | Select-Object -ExpandProperty Thumbprint).Trim()
-   ```
-
-4. **Skript signieren:**
-   ```powershell
-   Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
-   ```
 
 #### 6.4 Virtuelle Umgebung einrichten
 
