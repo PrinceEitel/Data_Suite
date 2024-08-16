@@ -143,11 +143,10 @@ Data_Suite/
 5. **Python virtuelle Umgebungen:**
    - Details im Abschnitt 6 Step 4 "Virtuelle Umgebung einrichten".   
    - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts.
-7. **Unternehmens-Proxy Zertifikat:**
-    - Details im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“.
-    - Zertifikat wird aus dem Intranet (Links IT Developer-Gilden zu finden) heruntergeladen
-    - kann in den IntelliJ Settings Tools/Server Certificates auch via Flag bei "Accept non-trusted certificates automatically" auch ausser Kraft gesetzt werden
-    - notwendig, um Zugriff auf externe Ressourcen wie GitHub und npm zu ermöglichen.
+7. **Unternehmens-Proxy-Zertifikat:**
+   - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
+   - Das Zertifikat muss lokal in die Zertifikatsverwaltung importiert werden, um die Kommunikation über den Proxy zu ermöglichen.
+   - Die genaue Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
 
 #### Komponenten und Berechtigungen
 1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
@@ -161,16 +160,12 @@ Data_Suite/
      - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
-   - **Einstellung der Proxy-Umgebungsvariablen in den IntelliJ Settings:**
-     - HTTP_PROXY und HTTPS_PROXY sollten für Zugriff über IntelliJ auf GitHub und andere externe Ressourcen konfiguriert werden. 
-     - Details befinden sich im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“
-
-   - **Einstellung der Proxy-Umgebungsvariablen in den Path Variablen:**
-     - HTTP_PROXY und HTTPS_PROXY sollten in der environment path (Variablen auf System-Ebene sind gegenüber der User-Account Ebene vorzuziehen). 
-     - Details befinden sich im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“
-    
-   - **Einstellung der Proxy-Umgebungsvariablen in der gitconfig:**
-     - HTTP_PROXY und HTTPS_PROXY sollten auch in der `.gitconfig` hinterlegt werden.     
+   - **Verwendung von px.exe als zentraler Proxy-Dienst:**
+     - Statt HTTP_PROXY und HTTPS_PROXY separat zu konfigurieren, wird px.exe als lokaler Proxy-Dienst verwendet, der alle Proxy-Anfragen zentral über einen Port weiterleitet.
+     - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
+     - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
+     - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt „Proxy-Dienst einrichten“.
+  
        
 #### Netzwerk- und Ausführungsrechte
 
@@ -218,25 +213,21 @@ Data_Suite/
    ```console
    git config --global --list
    ```
-
+   
 4. **Proxy-Einstellungen für Git (falls erforderlich):**
-   - Bei Verwendung eines Proxy-Servers können die Proxy-Einstellungen wie folgt konfiguriert werden:
+   - Bei Verwendung eines Proxy-Servers können die Proxy-Einstellungen manuell in der gitconfig konfiguriert werden:
    ```console
    git config --global http.proxy http://username:password@proxy-server:port
    git config --global https.proxy https://username:password@proxy-server:port
    ```
-
-5. **Überprüfung der DNS-Auflösung:**
-   - Um sicherzustellen, dass GitHub erreichbar ist, kann die DNS-Auflösung wie folgt überprüft werden:
+5. **Überprüfung der Proxy-Konfiguration und Erreichbarkeit von GitHub:**
+   - Um sicherzustellen, dass GitHub über den konfigurierten Proxy erreichbar ist, verwende `curl`:
    ```console
-   nslookup github.com
+   curl -x http://<proxy-server>:<port> -I https://github.com
    ```
-
-6. **Überprüfung der Verbindung zu GitHub:**
-   - Teste die Verbindung zu GitHub:
-   ```console
-   Test-NetConnection -ComputerName github.com -Port 22
-   ```
+   - sendet eine HTTP-Anfrage an GitHub über den konfigurierten Proxy. Eine erfolgreiche Antwort zeigt, dass die Proxy-Konfiguration korrekt ist und GitHub erreichbar ist.
+   - `curl` berücksichtigt die Proxy-Einstellungen und simuliert die tatsächliche Kommunikation, wie sie auch bei der Verwendung von Git oder IntelliJ stattfinden würde.
+   - `nslookup` und `Test-NetConnection` könnten Eindruck erwecken, dass GitHub erreichbar ist, obwohl dies durch den Proxy blockiert werden könnte. `curl` vermeidet dies.
 
 ### 3.2 IntelliJ IDEA Installation
 
@@ -279,31 +270,10 @@ Data_Suite/
    ssh -T git@github.com
    ```
 
-### 3.4 CA-Zertifikate hinzufügen
-
-1. **CA-Zertifikate hinzufügen (falls erforderlich):**
-   - Wenn der Fehler "Could not send message" oder ein PKIX path building failed-Fehler auftritt, stelle sicher, dass die entsprechenden CA-Zertifikate im Truststore von IntelliJ importiert wurden.
-
-2. **Verwendeter Truststore in IntelliJ:**
-   - Der von IntelliJ verwendete Truststore befindet sich an folgendem Ort:
-   ```console
-   C:\Program Files\JetBrains\<DEINE_INTELLIJ_VERSION>\jbr\lib\security\cacerts
-   ```
-
-3. **Zertifikate herunterladen und importieren:**
-   - Lade die folgenden Zertifikate herunter und importiere sie in den oben genannten Truststore:
-     - [Client Proxy Zertifikat](https://intranet...../client-proxy...)
-     - [CorporateInfrastructureCA1 Zertifikat](https://intranet....CorporateInfrastructureCA1.crt)
-
-4. **Zertifikate in den Truststore importieren:**
-   - Um die Zertifikate zu importieren, verwende folgenden Befehl (passe den Pfad zum Truststore und zu den heruntergeladenen Dateien entsprechend an):
-   ```console
-   keytool -importcert -trustcacerts -keystore "C:\Program Files\JetBrains\<DEINE_INTELLIJ_VERSION>\jbr\lib\security\cacerts" -file <VOLLSTÄNDIGER_PFAD_ZUR_HERUNTERGELADENEN_DATEI>
-   ```
-
-5. **Administrative Berechtigungen:**
-   - Stelle sicher, dass dieser Befehl als Administrator ausgeführt wird! Das Passwort für den Truststore lautet: `xxxxxxx`.
-
+### 3.4 **CA-Zertifikate hinzufügen:**
+   - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird über px.exe zentral verwaltet, was die manuelle Integration in einzelne Anwendungen überflüssig macht.
+   - Stelle sicher, dass das Zertifikat in die lokale Zertifikatsverwaltung importiert wird, damit es von px.exe genutzt werden kann.
+   - detaillierte Vorgehensweise zur Zertifikatsintegration in px.exe ist im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
 
 ### 4. GIT Setup Main
 
@@ -730,53 +700,42 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
    git submodule init
    git submodule update
    ```
-
 #### 6.10 Proxy-Dienst einrichten
 
-Um den Proxy-Dienst in der Umgebung zu installieren und zu konfigurieren:
+**1. Installation von px.exe:**
+   - Laden Sie px.exe von [GitHub](https://github.com/genotrance/px/releases) herunter.
+   - Entpacken Sie die Datei und speichern Sie sie im Verzeichnis `C:\Program Files\px-pxy`.
+   - Führen Sie `px.exe --install` aus, um den Proxy-Dienst zu installieren.
 
-1. **Bestellung des Proxy-Dienstes:**
-   - Der Proxy-Dienst (px-pxy) wird über das Service-Center des Unternehmens bestellt und über das interne Jira-Portal angefordert.
+**2. Konfiguration der px.ini:**
+   - Erstellen Sie eine `px.ini` im Installationsverzeichnis mit folgenden Inhalten:
+     ```ini
+     [proxy]
+     server = proxy.company.com:8080
+     listen = 3128
+     ntlm = yes
+     user = DOMAIN\Username
+     [certificates]
+     cert = C:\path\to\corporate-proxy-cert.pem
+     ```
+   - Dieser Abschnitt konfiguriert den Proxy-Server, den Port und integriert das Unternehmens-Proxy-Zertifikat.
 
-2. **Installation des Proxy-Dienstes:**
-   - **Installationsort:** Der Proxy-Dienst wird im Verzeichnis `C:\Program Files\px-pxy` installiert.
-   - **Installation ausführen:** Nach dem Download und Entpacken des Dienstes wird das Skript `px.exe --install` im Installationsverzeichnis ausgeführt.
+**3. Windows-Authentifizierung aktivieren:**
+   - px.exe nutzt automatisch die Windows-Anmeldedaten, sodass keine weiteren Konfigurationen für die Authentifizierung notwendig sind.
 
-3. **Konfiguration der Umgebungsvariablen:**
-   - Die folgenden Umgebungsvariablen müssen in den Systemeinstellungen hinzugefügt werden:
-     - `HTTP_PROXY=http://xxx.xxx.xxx.xxx:xxxx`
-     - `HTTPS_PROXY=http://xxx.xxx.xxx.xxx:xxxx`
-     - `NO_PROXY=localhost,*.xxx.uk,.xxx.uk,xxx.uk`
+**4. Konfiguration der Anwendungen (Git, IntelliJ):**
+   - Stelle sicher, dass sowohl Git als auch IntelliJ auf px.exe als Proxy-Agent zugreifen. Dies geschieht durch die Standard-Proxy-Einstellung, die über px.exe geleitet wird.
+     - In Git kann dies durch Entfernen aller manuell gesetzten Proxy-Einstellungen sichergestellt werden.
+     - In IntelliJ verwende die Proxy-Einstellungen unter `File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy`, um auf den lokalen px.exe Proxy (z.B. `localhost:3128`) zu verweisen.
 
-4. **Testen der Proxy-Konfiguration:**
-   - **Überprüfung mit cURL:** Der folgende Befehl kann ausgeführt werden, um zu prüfen, ob der Proxy korrekt konfiguriert ist:
-     ```powershell
-     curl -x http://xxx.xxx.xxx.xxx:xxxx -i -k -L https://copilot-proxy.githubusercontent.com/_ping
+**5. Testen der Proxy-Konfiguration:**
+   - Überprüfen Sie die Funktionalität, indem Sie eine Verbindung zu GitHub oder einer anderen externen Ressource herstellen. Alle Anfragen sollten über px.exe geleitet werden.
+   - Verwenden Sie dazu Befehle wie:
+     ```console
+     git clone https://github.com/YourRepo/YourProject.git
+     curl -x http://localhost:3128 https://www.github.com
      ```
 
-   - **Test mit Python:** Um sicherzustellen, dass keine Passwortabfragen erfolgen, kann folgender Python-Code verwendet werden:
-     ```python
-     from pytpd.tca.liquidmetrix import LiquidMetrix
-     lm_client = LiquidMetrix()
-     print(lm_client.version)
-     ```
-
-5. **Einbindung des Unternehmens-Proxy-Zertifikats:**
-   - **Import des Zertifikats:** Das Unternehmens-Proxy-Zertifikat muss zunächst in die Zertifikatsverwaltung importiert werden:
-     ```powershell
-     $certPath = "C:\Users\VX\cert\proxy.pem"
-     Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\LocalMachine\Root
-     ```
-
-   - **Dynamische Ermittlung des Zertifikats-Thumbprints:** Der Thumbprint des Zertifikats kann nach der Installation dynamisch ermittelt werden:
-     ```powershell
-     $proxyCert = Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object { $_.Subject -like "*Proxy*" }
-     if ($proxyCert) {
-         $proxyCertThumbprint = $proxyCert.Thumbprint
-     } else {
-         Write-Host "Proxy-Zertifikat nicht gefunden."
-     }
-     ```
 ### 7. Entwicklung
 
 #### Projektstruktur
@@ -1168,6 +1127,27 @@ Um den Proxy-Dienst in der Umgebung zu installieren und zu konfigurieren:
        - Stellt sicher, dass IntelliJ IDEA den Proxy korrekt verwendet.
 
    - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6, „Proxy-Dienst einrichten“, überprüfen.
+
+##### 9.2.2 Probleme bei der Nutzung von px.exe
+
+**1. Fehler: Proxy-Dienst nicht verfügbar**
+   - **Ursache:** px.exe ist möglicherweise nicht gestartet oder der Dienst wurde nicht korrekt installiert.
+   - **Lösung:** Überprüfen Sie, ob der Dienst läuft, und starten Sie ihn gegebenenfalls neu:
+     ```powershell
+     Start-Process -FilePath "C:\Program Files\px-pxy\px.exe"
+     ```
+
+**2. Fehler: Zertifikatsfehler bei der Proxy-Nutzung**
+   - **Ursache:** Das Unternehmens-Proxy-Zertifikat wurde nicht korrekt in px.exe integriert.
+   - **Lösung:** Stellen Sie sicher, dass das Zertifikat korrekt in der `px.ini` konfiguriert ist und lokal importiert wurde:
+     ```powershell
+     Import-Certificate -FilePath "C:\path\to\corporate-proxy-cert.pem" -CertStoreLocation Cert:\LocalMachine\Root
+     ```
+
+**3. Fehler: Keine Verbindung zu GitHub oder IntelliJ**
+   - **Ursache:** px.exe könnte nicht korrekt konfiguriert sein oder es gibt Konflikte mit anderen Proxy-Einstellungen.
+   - **Lösung:** Stelle sicher, dass keine anderen Proxy-Einstellungen (z.B. in Umgebungsvariablen) px.exe überschreiben. Überprüfe die Konfiguration und führen Sie einen Neustart des Systems durch, um sicherzustellen, dass alle Änderungen übernommen wurden.
+
      
 ### 10. Glossar
 **Repository (Repo)**
