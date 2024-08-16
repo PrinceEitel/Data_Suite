@@ -141,11 +141,13 @@ Data_Suite/
 3. **IntelliJ IDEA:**
    - **Edition:** Ultimate 2024.1
 5. **Python virtuelle Umgebungen:**
-   - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts (Details im Abschnitt 6 Step 4 "Virtuelle Umgebung einrichten").
-6. **Unternehmens-Proxy Zertifikat:**
-   - Zertifikat wird aus dem Intranet (Dokumentationen IT Developer-Gilden) heruntergeladen
-   - Details zur Einrichtung finden sich in Abschnitt 6 Konfiguration IntelliJ.
-   - notwendig, um Zugriff auf externe Ressourcen wie GitHub und npm zu ermöglichen (Details im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“).
+   - Details im Abschnitt 6 Step 4 "Virtuelle Umgebung einrichten".   
+   - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts.
+7. **Unternehmens-Proxy Zertifikat:**
+    - Details im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“.
+    - Zertifikat wird aus dem Intranet (Links IT Developer-Gilden zu finden) heruntergeladen
+    - kann in den IntelliJ Settings Tools/Server Certificates auch via Flag bei "Accept non-trusted certificates automatically" auch ausser Kraft gesetzt werden
+    - notwendig, um Zugriff auf externe Ressourcen wie GitHub und npm zu ermöglichen.
 
 #### Komponenten und Berechtigungen
 1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
@@ -159,11 +161,17 @@ Data_Suite/
      - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
-   - **Einstellung der Proxy-Umgebungsvariablen:**
-     - HTTP_PROXY und HTTPS_PROXY müssen für Zugriff auf GitHub und andere externe Ressourcen konfiguriert werden.
-     - Konfiguration kann in der `.gitconfig` oder in den Umgebungsvariablen erfolgen.
+   - **Einstellung der Proxy-Umgebungsvariablen in den IntelliJ Settings:**
+     - HTTP_PROXY und HTTPS_PROXY sollten für Zugriff über IntelliJ auf GitHub und andere externe Ressourcen konfiguriert werden. 
      - Details befinden sich im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“
 
+   - **Einstellung der Proxy-Umgebungsvariablen in den Path Variablen:**
+     - HTTP_PROXY und HTTPS_PROXY sollten in der environment path (Variablen auf System-Ebene sind gegenüber der User-Account Ebene vorzuziehen). 
+     - Details befinden sich im Abschnitt 6 Step 11 „Proxy-Dienst einrichten“
+    
+   - **Einstellung der Proxy-Umgebungsvariablen in der gitconfig:**
+     - HTTP_PROXY und HTTPS_PROXY sollten auch in der `.gitconfig` hinterlegt werden.     
+       
 #### Netzwerk- und Ausführungsrechte
 
 1. **Netzwerk- und Ausführungsrechte zum unregelmässigen und regelmässigen Austausch:**
