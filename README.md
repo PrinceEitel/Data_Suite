@@ -508,42 +508,70 @@ Um das Terminal in IntelliJ IDEA optimal zu nutzen, sind folgende Schritte erfor
 4. **Konfiguration testen:**
    - Das Terminal innerhalb von IntelliJ IDEA unter `View` -> `Tool Windows` -> `Terminal` öffnen und überprüfen, ob die Einstellungen korrekt übernommen wurden. Es sollte sichergestellt werden, dass PowerShell 7 verwendet wird.
 
-#### 6.3 Signieren von PowerShell-Skripten im IntelliJ Terminal
+### 6.3 Signieren von PowerShell-Skripten im IntelliJ Terminal
 
-Zum sicheren Ausführen von PowerShell-Skripten müssen diese in vielen Unternehmensumgebungen signiert werden. Je nach verwendeter PowerShell-Version gibt es unterschiedliche Anforderungen:
+In gut gesicherten Unternehmensumgebungen ist es oft erforderlich, dass PowerShell-Skripte signiert werden, um ihre Integrität und Authentizität sicherzustellen. Eine digitale Signatur bestätigt, dass das Skript seit der Signierung nicht verändert wurde. **Jedes Mal, wenn ein Skript bearbeitet wird, ändert sich sein Hash-Wert, wodurch die ursprüngliche Signatur ungültig wird.** Daher muss das Skript nach jeder Änderung erneut signiert werden, um es weiterhin ausführen zu können. Dieser Abschnitt erläutert sowohl den Prozess der Erst-Signatur als auch die notwendige Aktualisierung der Signatur nach Codeänderungen.
 
-##### 6.3.1 PowerShell 7 (Empfohlen)
+#### 6.3.1 PowerShell 7 (Empfohlen)
 
-1. **Selbstsigniertes Zertifikat erstellen:**
-   ```powershell
-   $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
-   ```
+Dieser Abschnitt führt Schritt für Schritt durch den Prozess des Signierens von PowerShell-Skripten im IntelliJ Terminal. Dabei wird unterschieden zwischen:
 
-2. **Zertifikat exportieren:**
-   ```powershell
-   Export-Certificate -Cert $cert -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer"
-   ```
+- **Erst-Signatur des Skripts:** Hier müssen alle Schritte durchgeführt werden, um das Zertifikat zu erstellen und das Skript zu signieren.
+- **Update-Signatur nach einer Skriptänderung:** Hier sind nur die Schritte zur Signatur selbst erforderlich, da das Zertifikat bereits besteht.
 
-3. **Zertifikat importieren:**
-   ```powershell
-   Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-   Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-   ```
+##### 6.3.1.1 Erstellen eines selbstsignierten Zertifikats (Erst-Signatur)
 
-4. **Thumbprint ermitteln:**
-   ```powershell
-   $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint).Trim()
-   ```
+Zuerst wird ein selbstsigniertes Zertifikat erstellt, das für die Signierung der Skripte verwendet wird.
 
-5. **Skript signieren:**
-   ```powershell
-   Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
-   ```
+```powershell
+$cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
+```
 
-6. **Ausführungsrichtlinie setzen (optional):**
-   ```powershell
-   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-   ```
+##### 6.3.1.2 Exportieren des Zertifikats (Erst-Signatur)
+
+Das erstellte Zertifikat muss nun exportiert werden, um es in den vertrauenswürdigen Zertifikatspeicher des Systems zu importieren.
+
+```powershell
+Export-Certificate -Cert $cert -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer"
+```
+
+##### 6.3.1.3 Importieren des Zertifikats in vertrauenswürdige Speicher (Erst-Signatur)
+
+Damit das Zertifikat vom System als vertrauenswürdig anerkannt wird, muss es in die entsprechenden Zertifikatspeicher importiert werden.
+
+```powershell
+Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+```
+
+##### 6.3.1.4 Ermitteln des Thumbprints (Erst-Signatur & Update-Signatur)
+
+Der Thumbprint des Zertifikats wird benötigt, um das Skript signieren zu können. Dieser Schritt stellt sicher, dass das richtige Zertifikat verwendet wird.
+
+```powershell
+$thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint).Trim()
+```
+
+##### 6.3.1.5 Signieren des Skripts (Erst-Signatur & Update-Signatur)
+
+Nachdem das Zertifikat eingerichtet ist, kann das Skript signiert werden. **Dieser Schritt muss nach jeder Änderung am Skript wiederholt werden.**
+
+```powershell
+Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+```
+
+##### 6.3.1.6 Ausführungsrichtlinie setzen (optional) (Erst-Signatur & Update-Signatur)
+
+Für die Ausführung signierter Skripte kann die Ausführungsrichtlinie auf `RemoteSigned` gesetzt werden, um sicherzustellen, dass nur vertrauenswürdige Skripte ausgeführt werden dürfen.
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+##### 6.3.1.7 Regelmäßige Aktualisierung der Signatur
+
+**Wichtiger Hinweis:** **Nach jeder Änderung am Skript muss die Signatur aktualisiert werden**, da die Änderung den Hash-Wert des Skripts verändert und die ursprüngliche Signatur ungültig macht. Führen Sie dazu die Schritte **6.3.1.4 bis 6.3.1.6** erneut aus, um sicherzustellen, dass das Skript weiterhin den Sicherheitsrichtlinien entspricht und ausgeführt werden kann.
+
 
 ##### 6.3.2 Reguläre Windows PowerShell
 
