@@ -1169,33 +1169,33 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
 - **Besonderheiten:** Erlauben es, verschiedene Entwicklungsstränge zu pflegen und später zusammenzuführen.
 - **Vorteile:** Isolierte Entwicklung, risikofreie Experimente.
 - **Nachteile:** Potenzielle Konflikte beim Zusammenführen (Mergen).
-
-**Continuous Integration (CI)**
-- **Definition:** Ein Softwareentwicklungsprozess, bei dem alle Entwickler ihre Arbeit häufig (mehrmals täglich) in ein zentrales Repository integrieren.
-- **Verwendung im Leitfaden:** CI kann eingesetzt werden, um sicherzustellen, dass das Projekt stets in einem funktionsfähigen Zustand bleibt.
-- **Besonderheiten:** Automatisierte Builds und Tests, um Integrationsfehler frühzeitig zu erkennen.
-- **Vorteile:** Frühzeitige Fehlererkennung, konstante Codequalität.
-- **Nachteile:** Erfordert initiale Einrichtung und kontinuierliche Wartung.
-
+  
 **SSH (Secure Shell)**
-- **Definition:** Ein Netzwerkprotokoll, das einen sicheren Zugriff auf einen entfernten Computer ermöglicht.
-- **Verwendung im Leitfaden:** SSH wird für die sichere Authentifizierung und Verbindung zu GitHub verwendet.
-- **Besonderheiten:** Verschlüsselte Kommunikation, Authentifizierung über Schlüsselpaare.
-- **Vorteile:** Hohe Sicherheit, Schutz vor Man-in-the-Middle-Angriffen. 
+- **Definition:** SSH (Secure Shell) ist ein Protokoll, das verschlüsselte Kommunikation zwischen Computern ermöglicht und für die sichere Übertragung von Daten sowie die Remote-Verwaltung von Systemen verwendet wird. In der Softwareentwicklung wird SSH häufig für die sichere Authentifizierung und den Zugriff auf entfernte Git-Repositories, wie GitHub, eingesetzt.
+- **Relevanz im Projekt:** Im vorliegenden Projekt wird SSH verwendet, um eine sichere Verbindung zwischen der lokalen Entwicklungsumgebung und GitHub herzustellen. Diese Verbindung ist notwendig, um Quellcode aus dem Repository zu klonen, Änderungen zu pushen und neue Branches zu erstellen, ohne dass Passwörter über unsichere Kanäle übertragen werden.
+- **Einsatz in der Entwicklungsumgebung:** Die Konfiguration von SSH erfolgt durch die Generierung eines SSH-Schlüsselpaares, das aus einem privaten und einem öffentlichen Schlüssel besteht. Der öffentliche Schlüssel wird in Ihrem GitHub-Konto hinterlegt, während der private Schlüssel lokal gespeichert wird. Dieser Mechanismus stellt sicher, dass nur authentifizierte Benutzer auf das Repository zugreifen können.
+- **Integration in die Arbeitsabläufe:** SSH ist direkt in die IDE (z.B. IntelliJ IDEA) integriert, sodass Sie aus der Entwicklungsumgebung heraus nahtlos auf Git-Repositories zugreifen können. Die SSH-Verbindung wird entweder automatisch durch die IDE hergestellt oder kann manuell über die Kommandozeile (z.B. PowerShell oder Git Bash) gestartet werden.
 
 **SSH-Agent**
-- **Definition:** Ein Programm, das SSH-Schlüssel im Speicher hält und die Wiederholung der Passworteingabe beim Herstellen von SSH-Verbindungen vermeidet.
-- **Verwendung im Leitfaden:** Der SSH-Agent wird verwendet, um SSH-Schlüssel zu verwalten und die Authentifizierung gegenüber GitHub zu erleichtern.
-- **Besonderheiten:** Ermöglicht das Zwischenspeichern von Passphrasen, sodass der Benutzer nicht bei jeder Verbindung die Passphrase eingeben muss.
-- **Vorteile:** Erhöhte Benutzerfreundlichkeit, verbesserte Sicherheit.
-- **Nachteile:** Potenzielle Sicherheitsrisiken, wenn der Agent kompromittiert wird.
+- **Definition:** Der SSH-Agent ist ein Hintergrundprogramm, das SSH-Schlüssel im Arbeitsspeicher speichert und verwaltet. Es ermöglicht, einmal eingegebene Passphrasen über eine Sitzung hinweg zu speichern, sodass bei nachfolgenden Verbindungen keine erneute Eingabe erforderlich ist.
+- **Funktion im Projekt:** In einem Entwicklungsumfeld, insbesondere in einer Enterprise-Umgebung, erleichtert der SSH-Agent die Handhabung von SSH-Verbindungen erheblich. Er übernimmt die Aufgabe, die Passphrase für Ihren SSH-Schlüssel einmalig zu speichern, was repetitive Eingaben vermeidet und die Effizienz steigert. Dies ist besonders nützlich, wenn während einer Entwicklungs- oder Deployment-Sitzung mehrere SSH-Operationen durchgeführt werden.
+- **Start und Verwaltung:** Der SSH-Agent wird typischerweise beim Starten der Entwicklungsumgebung oder einer neuen Terminal-Sitzung initialisiert. Entwickler fügen ihren privaten Schlüssel einmalig zum Agenten hinzu, sodass alle nachfolgenden SSH-Verbindungen automatisch authentifiziert werden. In den meisten Unix-basierten Systemen wird der SSH-Agent automatisch mit dem Anmelden an die Shell gestartet; unter Windows kann dies manuell erfolgen, beispielsweise über PowerShell mit dem Befehl `Start-Service ssh-agent`.
+- **Best Practices:** Für eine reibungslose Nutzung sollte der SSH-Agent so konfiguriert sein, dass er beim Start des Systems oder der Entwicklungsumgebung automatisch gestartet wird. Dies minimiert Sicherheitsrisiken, da die Passphrase nur einmal pro Sitzung eingegeben werden muss, und reduziert potenzielle Unterbrechungen im Entwicklungsprozess.
 
 **Virtuelle Umgebung (Virtual Environment)**
-- **Definition:** Eine isolierte Python-Umgebung, die es ermöglicht, Abhängigkeiten separat vom globalen Python-Interpreter zu verwalten.
-- **Verwendung im Leitfaden:** Virtuelle Umgebungen werden verwendet, um die Abhängigkeiten des Data_Suite-Projekts zu isolieren und zu verwalten.
-- **Besonderheiten:** Jede virtuelle Umgebung kann ihre eigenen Versionen von Python-Paketen haben, unabhängig vom globalen Installationspfad.
-- **Vorteile:** Verhindert Versionskonflikte, erleichtert das Projektmanagement.
-- **Nachteile:** Zusätzlicher Verwaltungsaufwand, Speicherplatzbedarf.
+- **Definition:** Eine virtuelle Umgebung ist ein isolierter Python-Arbeitsbereich, der es ermöglicht, spezifische Versionen von Abhängigkeiten und Paketen für ein Projekt getrennt von anderen Projekten und dem globalen Python-Interpreter zu verwalten. Diese Isolation verhindert, dass Änderungen an einem Projekt unbeabsichtigt andere Projekte oder das System beeinflussen.
+
+- **Relevanz im Projekt:** In einem Projekt wie "Data_Suite", das aus mehreren Submodulen besteht, ist die Verwendung einer virtuellen Umgebung entscheidend. Sie gewährleistet, dass jedes Submodul seine eigenen Abhängigkeiten verwalten kann, ohne dass es zu Konflikten mit anderen Modulen oder globalen Paketen kommt. Dies ist besonders wichtig in Umgebungen, in denen verschiedene Bibliotheken in unterschiedlichen Versionen verwendet werden müssen.
+
+- **Einsatz in der Entwicklungsumgebung:** Im "Data_Suite"-Projekt wird die virtuelle Umgebung mit dem Werkzeug `venv` erstellt. Dadurch können für das Hauptprojekt und die Submodule spezifische Python-Pakete installiert werden, die unabhängig von der globalen Python-Installation sind. Dies fördert Konsistenz und Reproduzierbarkeit im Team, da alle Entwickler mit identischen Abhängigkeiten arbeiten können, ohne dass globale Systemänderungen erforderlich sind.
+
+- **Besonderheiten und Herausforderungen:**
+  - **Isolierte Verwaltung von Abhängigkeiten:** Jede virtuelle Umgebung führt ihre eigenen Versionen der benötigten Python-Pakete. Dies minimiert das Risiko von Versionskonflikten und stellt sicher, dass jedes Projekt unter stabilen und vorhersagbaren Bedingungen ausgeführt wird.
+  - **Verwaltung von Submodulen:** In Projekten mit mehreren Submodulen kann es herausfordernd sein, Abhängigkeiten zu koordinieren. Es muss entschieden werden, ob für jedes Submodul separate virtuelle Umgebungen eingerichtet werden oder ob alle Module eine gemeinsame Umgebung nutzen. Diese Entscheidung hängt von der Kompatibilität der Abhängigkeiten und der Komplexität des Projekts ab.
+
+- **Vorteile der venv-Nutzung:** Die Verwendung von `venv` ist in einem Enterprise-Umfeld besonders sinnvoll, da sie eine konsistente und reproduzierbare Entwicklungsumgebung sicherstellt. Trotz des zusätzlichen Verwaltungsaufwands überwiegen die Vorteile, insbesondere durch die Vermeidung von Versionskonflikten und die Flexibilität bei der Handhabung von Abhängigkeiten. Für ein komplexes Projekt mit mehreren Submodulen ist die sorgfältige Verwaltung der virtuellen Umgebungen unerlässlich, um eine reibungslose Entwicklung und Integration zu gewährleisten.
+
+- **Best Practices:** Es ist ratsam, für jedes Submodul entweder separate virtuelle Umgebungen zu verwenden oder sicherzustellen, dass alle Submodule kompatible Abhängigkeiten nutzen, die in einer gemeinsamen virtuellen Umgebung verwaltet werden. Regelmäßige Aktualisierung der `requirements.txt`-Dateien und deren Verwaltung im Versionskontrollsystem sind essenziell, um sicherzustellen, dass alle Entwickler mit den gleichen Versionen der Abhängigkeiten arbeiten. Dies unterstützt eine konsistente und problemfreie Entwicklung.
 
 **jinja2**
 - **Definition:** Ein modernes und flexibles Templating-System für Python, das es ermöglicht, HTML, XML oder andere Markup-Sprachen im Textformat zu generieren.
