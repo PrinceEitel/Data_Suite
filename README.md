@@ -1,4 +1,4 @@
-o# Data_Suite
+# Data_Suite
 ### 1. Einleitung
 
 #### Projektbeschreibung
@@ -27,7 +27,7 @@ Inhalte sind in folgende Hauptabschnitte gegliedert:
 
 ```plaintext
 Data_Suite/
-├── venv/                       # Virtuelle Umgebung für Python
+├── venv/                       # Virtuelle Umgebung für Python [Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment)
 │   ├── Scripts/
 │   ├── Lib/
 │   │   ├── site-packages/
@@ -121,8 +121,8 @@ Data_Suite/
     
 ### Erläuterungen zu den Projekt-Folder/Dateien
 
-- **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.
-- **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten.
+- **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.[Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment)
+- **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten (Submodule siehe [Submodule](#submodule) )
 - **.git/**: Git-Verzeichnis des Hauptprojekts.
 - **.idea/**: Konfigurationsdateien für IntelliJ IDEA, die projektübergreifende Einstellungen speichern.
 - **README.md**: Beschreibung des des jeweiligen Projekts.
@@ -141,7 +141,7 @@ Data_Suite/
 3. **IntelliJ IDEA:**
    - **Edition:** Ultimate 2024.1
 5. **Python virtuelle Umgebungen:**
-   - Details im Abschnitt 6 Step 4 "Virtuelle Umgebung einrichten".   
+   - Details im Abschnitt 6 Step 4 "Virtuelle Umgebung einrichten" ([Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment))
    - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts.
 7. **Unternehmens-Proxy-Zertifikat:**
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
@@ -158,7 +158,10 @@ Data_Suite/
      - Template_Center: https://github.com/PrinceEitel/Template_Center - Sichtbarkeit: Private
      - Text_Anonymizer: https://github.com/PrinceEitel/Text_Anonymizer - Sichtbarkeit: Private
      - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
-     - Infos zum Repository unter [Git Repository (Repository)](#git-repository-repository).
+   - **Links:**
+     - [Git Repository (Repository)](#git-repository-repository).
+     - [Submodule](#submodule)
+     - [Branch](#branch)
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
    - **Verwendung von px.exe als zentraler Proxy-Dienst:**
@@ -166,6 +169,7 @@ Data_Suite/
      - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
      - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
      - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt „Proxy-Dienst einrichten“.
+     - Links:[px.exe (Proxy-Dienst)](#pxexe-proxy-dienst).	
   
        
 #### Netzwerk- und Ausführungsrechte
@@ -288,6 +292,7 @@ Data_Suite/
    - Den Namen `Data_Suite` eingeben.
    - Die gewünschte Sichtbarkeit (Public oder Private) auswählen.
    - Auf "Create repository" klicken, um das Repository zu erstellen.
+   - Links:[Git Repository (Repository)](#git-repository-repository).
 
 2. **Initialisierung des lokalen Git-Repositorys:**
    - Die Eingabeaufforderung (Cmd) oder PowerShell öffnen.
@@ -554,7 +559,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 #### 6.4 Virtuelle Umgebung einrichten
 
-Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten:
+Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten (siehe [Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment)):
 
 1. **Terminal öffnen:**
    - Terminal in IntelliJ IDEA unter `View` -> `Tool Windows` -> `Terminal` öffnen.
