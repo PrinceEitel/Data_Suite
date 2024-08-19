@@ -146,7 +146,7 @@ Data_Suite/
 7. **Unternehmens-Proxy-Zertifikat:**
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
    - Das Zertifikat muss lokal in die Zertifikatsverwaltung importiert werden, um die Kommunikation über den Proxy zu ermöglichen.
-   - Die genaue Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
+   - Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
 
 #### Komponenten und Berechtigungen
 1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
@@ -158,6 +158,7 @@ Data_Suite/
      - Template_Center: https://github.com/PrinceEitel/Template_Center - Sichtbarkeit: Private
      - Text_Anonymizer: https://github.com/PrinceEitel/Text_Anonymizer - Sichtbarkeit: Private
      - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
+     - Infos zum Repository unter [Git Repository (Repository)](#git-repository-repository).
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
    - **Verwendung von px.exe als zentraler Proxy-Dienst:**
