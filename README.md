@@ -121,15 +121,15 @@ Data_Suite/
     
 ### Erläuterungen zu den Projekt-Folder/Dateien
 
-- **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.[Info venv](#virtual-environment)
-- **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten ([Info submodule](#submodule))
+- **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden ([venv](#virtual-environment)).
+- **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten ([Submodule](#submodule))
 - **.git/**: Git-Verzeichnis des Hauptprojekts.
 - **.idea/**: Konfigurationsdateien für IntelliJ IDEA, die projektübergreifende Einstellungen speichern.
 - **README.md**: Beschreibung des des jeweiligen Projekts.
 - **requirements.txt**: Liste der Python-Abhängigkeiten für das Hauptprojekt.
 - **package.json**: Liste der npm-Abhängigkeiten für das Hauptprojekt.
 - **node_modules/**: Enthält installierte npm-Bibliotheken.
-- **zulu/**: Verzeichnis fürs Zulu JDK, das als Java SDK verwendet wird.
+- **zulu/**: Verzeichnis fürs Zulu JDK, das als Java SDK verwendet wird ([zulu](#zulu-jdk))
  
 ### 2. Systemvoraussetzungen
 
@@ -147,7 +147,7 @@ Data_Suite/
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
    - Das Zertifikat muss lokal in die Zertifikatsverwaltung importiert werden, um die Kommunikation über den Proxy zu ermöglichen.
    - Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
-   - [Info Proxy-Dienst](#pxexe-proxy-dienst)
+   - [Proxy-Dienst](#pxexe-proxy-dienst)
 
 #### Komponenten und Berechtigungen
 1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
@@ -160,9 +160,9 @@ Data_Suite/
      - Text_Anonymizer: https://github.com/PrinceEitel/Text_Anonymizer - Sichtbarkeit: Private
      - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
    - **Links:**
-     - [Info git-repository](#git-repository).
-     - [Info submodule](#submodule)
-     - [Info branch](#branch)
+     - [git-repository](#git-repository).
+     - [Submodule](#submodule)
+     - [branch](#branch)
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
    - **Verwendung von px.exe als zentraler Proxy-Dienst:**
@@ -170,7 +170,7 @@ Data_Suite/
      - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
      - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
      - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt „Proxy-Dienst einrichten“.
-     -[Info Proxy-Dienst](#pxexe-proxy-dienst).	
+     -[Proxy-Dienst](#pxexe-proxy-dienst).	
   
        
 #### Netzwerk- und Ausführungsrechte
@@ -249,7 +249,7 @@ Data_Suite/
    ssh-keygen -t rsa -b 4096 -C "email@example.com"
    ```
    - Den Standardspeicherort (`C:\Users\Benutzername\.ssh\id_rsa`) durch Drücken von Enter akzeptieren. Optional kann ein Passwort festgelegt werden.
-   - [Info ssh-shell](#ssh-secure-shell)
+   - [ssh-shell](#ssh-secure-shell)
 
 2. **Starten des SSH-Agents und Hinzufügen des Schlüssels:**
    - Start des SSH-Agents:
@@ -282,7 +282,7 @@ Data_Suite/
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird über px.exe zentral verwaltet, was die manuelle Integration in einzelne Anwendungen überflüssig macht.
    - Stelle sicher, dass das Zertifikat in die lokale Zertifikatsverwaltung importiert wird, damit es von px.exe genutzt werden kann.
    - detaillierte Vorgehensweise zur Zertifikatsintegration in px.exe ist im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
-   - [Info Proxy-Dienst](#pxexe-proxy-dienst)
+   - [Proxy-Dienst](#pxexe-proxy-dienst)
 
 ### 4. GIT Setup Main
 
@@ -296,7 +296,7 @@ Data_Suite/
    - Den Namen `Data_Suite` eingeben.
    - Die gewünschte Sichtbarkeit (Public oder Private) auswählen.
    - Auf "Create repository" klicken, um das Repository zu erstellen.
-   - [Info git-repository](#git-repository).
+   - [git-repository](#git-repository).
 
 2. **Initialisierung des lokalen Git-Repositorys:**
    - Die Eingabeaufforderung (Cmd) oder PowerShell öffnen.
@@ -498,7 +498,7 @@ Um das Terminal in IntelliJ IDEA optimal zu nutzen, sind folgende Schritte erfor
 
 ### 6.3 Signieren von PowerShell-Skripten im IntelliJ Terminal
 
-In gut gesicherten Unternehmensumgebungen ist es oft erforderlich, dass PowerShell-Skripte signiert werden, um ihre Integrität und Authentizität sicherzustellen. Eine digitale Signatur bestätigt, dass das Skript seit der Signierung nicht verändert wurde. **Jedes Mal, wenn ein Skript bearbeitet wird, ändert sich sein Hash-Wert, wodurch die ursprüngliche Signatur ungültig wird.** Daher muss das Skript nach jeder Änderung erneut signiert werden, um es weiterhin ausführen zu können. Dieser Abschnitt erläutert sowohl den Prozess der Erst-Signatur als auch die notwendige Aktualisierung der Signatur nach Codeänderungen ([Info Signate](#signate-scripts)) 
+In gut gesicherten Unternehmensumgebungen ist es oft erforderlich, dass PowerShell-Skripte signiert werden, um ihre Integrität und Authentizität sicherzustellen. Eine digitale Signatur bestätigt, dass das Skript seit der Signierung nicht verändert wurde. **Jedes Mal, wenn ein Skript bearbeitet wird, ändert sich sein Hash-Wert, wodurch die ursprüngliche Signatur ungültig wird.** Daher muss das Skript nach jeder Änderung erneut signiert werden, um es weiterhin ausführen zu können. Dieser Abschnitt erläutert sowohl den Prozess der Erst-Signatur als auch die notwendige Aktualisierung der Signatur nach Codeänderungen ([Signieren](#signate-scripts)) 
 
 #### 6.3.1 PowerShell 7 (Empfohlen)
 
@@ -563,7 +563,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 #### 6.4 Virtuelle Umgebung einrichten
 
-Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten (siehe [Info venv](#virtual-environment) via [pip Installation](#pip-install)):
+Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten (siehe [venv](#virtual-environment) via [pip Installation](#pip-install)):
 
 1. **Terminal öffnen:**
    - Terminal in IntelliJ IDEA unter `View` -> `Tool Windows` -> `Terminal` öffnen.
@@ -682,7 +682,7 @@ Zur Konfiguration des Python Interpreters:
 
 #### 6.8 Quellverzeichnisse konfigurieren
 
-Um relevante Verzeichnisse als Quellverzeichnisse zu markieren ([Info Marks](#folder-marks)):
+Um relevante Verzeichnisse als Quellverzeichnisse zu markieren ([Verzeichnismarkieung](#folder-marks)):
 
 1. **Projektstruktur öffnen:**
    - `File` -> `Project Structure`.
@@ -716,7 +716,7 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
    - Laden Sie px.exe von [GitHub](https://github.com/genotrance/px/releases) herunter.
    - Entpacken Sie die Datei und speichern Sie sie im Verzeichnis `C:\Program Files\px-pxy`.
    - Führen  `px.exe --install` aus, um den Proxy-Dienst zu installieren.
-   - [Info Proxy-Dienst](#pxexe-proxy-dienst)
+   - [Proxy-Dienst](#pxexe-proxy-dienst)
 
 **2. Konfiguration der px.ini:**
    - Erstellen Sie eine `px.ini` im Installationsverzeichnis mit folgenden Inhalten:
@@ -771,7 +771,7 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
     - `.gitignore`: Dateien und Verzeichnisse, die von Git ignoriert werden sollen.
     - `README.md`: Projektbeschreibung und Anleitungen.
     - `requirements.txt`: Liste der Python-Abhängigkeiten.
-  - **Virtuelle Umgebung (`venv`)**: Enthält die Python-Umgebung und installierten Pakete ([Info venv](#virtual-environment))
+  - **Virtuelle Umgebung ([venv](#virtual-environment))**: Enthält die Python-Umgebung und installierten Pakete
 
 #### Code-Beispiele
 - **Ausführliche Erläuterung des Codes mit Beispielen und Erklärungen:**
@@ -811,7 +811,7 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
 ```     
 - **Erläuterung:**
       - `jinja2`: Template-Engine zur Verarbeitung von Vorlagen.
-      -  [Info jinja2](#jinja2)
+      -  [jinja2](#jinja2)
       - `render_template`: Funktion zur Verarbeitung und Ausgabe einer Vorlage mit Kontextdaten.
 
   - **Text Anonymizer Beispiel:**
@@ -946,8 +946,8 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ssh -T git@github.com
        ```
     - Befehle`ssh -T git@github.com` testet die Verbindung zu GitHub unter Verwendung des eingerichteten SSH-Schlüssels.
-    - [Info ssh-shell](#ssh-secure-shell)
-    - [Info ssh-agent](#ssh-agent)
+    - [ssh-shell](#ssh-secure-shell)
+    - [ssh-agent](#ssh-agent)
       
 2. **Fehler beim Pushen: `fatal: unable to access 'https://github.com/USER/REPO.git/': The requested URL returned error: 403`**
    - **Ursache:** Zugriffsrechte auf das Repository sind unzureichend.
@@ -1013,7 +1013,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
     - Hier wird der Python-Interpreter für das Projekt festgelegt.
 
 3. **Fehlerhafte Projektstruktur: `Cannot resolve symbol`**
-   - **Ursache:** Quellverzeichnisse sind nicht korrekt markiert ([Info Marks](#folder-marks)).
+   - **Ursache:** Quellverzeichnisse sind nicht korrekt markiert ([Verzeichnismarkierungen](#folder-marks)).
    - **Lösung:** 
      - Relevante Verzeichnisse als Quellverzeichnisse markieren:
        ```console
