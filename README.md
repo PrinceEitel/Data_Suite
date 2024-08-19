@@ -842,104 +842,76 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
 
 ### 8. Integration zentraler Konfigurationsdateien
 
-#### Wichtige Konfigurationsdateien im .idea-Verzeichnis:
-- **misc.xml**: Enthält allgemeine Projekteinstellungen wie das verwendete JDK, das Projektverzeichnis und den Compiler-Ausgabeort.
-- **modules.xml**: Speichert Informationen über die Module des Projekts, deren Pfade und die zugehörigen Konfigurationsdateien.
-- **compiler.xml**: Konfiguriert die Compiler-Einstellungen für das Projekt, einschließlich Compiler-Optionen und Ausgabeverzeichnisse.
-- **workspace.xml**: Speichert benutzerspezifische Einstellungen wie die Anordnung von Fenstern, Editor-Tabs, laufende Aufgaben und andere projektspezifische Einstellungen.
-- **vcs.xml**: Enthält die Versionskontrollsystem-Einstellungen für das Projekt, wie z.B. die Konfiguration der Git-Integration und andere VCS-spezifische Einstellungen.
+**Übersicht:**
+Die Verwendung zentraler Konfigurationsdateien im `.idea`-Verzeichnis von IntelliJ IDEA kann den Aufwand für die Einrichtung einer konsistenten Entwicklungsumgebung erheblich reduzieren. Durch die Bereitstellung und Nutzung zentraler Konfigurations-Templates, die spezifisch auf die Anforderungen des Projekts oder der Zielsysteme abgestimmt sind, lässt sich sicherstellen, dass alle notwendigen Einstellungen einheitlich und korrekt angewendet werden, ohne auf die GUI der IDE angewiesen zu sein.
 
-#### Beispiele für zentrale Konfigurationsdateien:
+#### Wichtige Konfigurationsdateien im `.idea`-Verzeichnis:
+- **misc.xml:** Speichert allgemeine Projekteinstellungen, einschließlich des verwendeten JDK, des Projektverzeichnisses und des Ausgabeortes für den Compiler.
+- **modules.xml:** Enthält Informationen über die Module des Projekts, ihre Pfade und zugehörige Konfigurationsdateien.
+- **compiler.xml:** Konfiguriert die Compiler-Einstellungen, einschließlich der Auswahl des Compilers und der Ausgabeverzeichnisse.
+- **workspace.xml:** Speichert benutzerspezifische Einstellungen wie Fensteranordnung, Editor-Tabs und laufende Aufgaben.
+- **vcs.xml:** Enthält die Versionskontrollsystem-Einstellungen, wie z. B. die Konfiguration der Git-Integration.
 
-- **misc.xml**
+Weitere Details zu diesen Konfigurationsdateien und deren Inhalt finden sich im Glossar unter [`.idea`-Konfigurationsdateien](#glossar).
+
+#### Vorgehensweise zur Einbindung zentraler Konfigurationsdateien:
+1. **Vorbereitung von Konfigurations-Templates:**
+   - Zentrale Konfigurations-Templates erstellen, die auf die spezifischen Anforderungen der Zielsysteme abgestimmt sind (z. B. `modules_win_data_suite_client.xml`).
+   - Diese Templates in einem zentralen Repository oder Verzeichnis bereitstellen, auf das alle Entwickler zugreifen können.
+
+2. **Initialisierung neuer Projekte:**
+   - Bei der Initialisierung eines neuen Projekts oder beim Hinzufügen neuer Module die vorbereiteten Konfigurations-Templates verwenden, um eine fehlerfreie und einheitliche Einrichtung zu gewährleisten.
+   - Die relevanten Dateien aus dem Templates-Verzeichnis in das `.idea`-Verzeichnis des Projekts kopieren.
+
+3. **Automatisierte Validierung:**
+   - Skripte oder CI/CD-Pipelines verwenden, um die Integrität und Konsistenz der `.idea`-Dateien regelmäßig zu überprüfen. Diese Validierungen stellen sicher, dass die Konfigurationen nicht manuell verändert wurden und alle erforderlichen Einstellungen enthalten sind.
+
+4. **Anpassung an spezielle Anforderungen:**
+   - Falls spezifische Anpassungen erforderlich sind, sollten diese sorgfältig dokumentiert und in den entsprechenden Templates hinterlegt werden, um sicherzustellen, dass alle Projekte von den gleichen Basis-Einstellungen ausgehen.
+
+### Anpassung und Erweiterung der `.idea`-Konfigurationsdateien
+
+**Erweiterte Konfigurationsmöglichkeiten in `compiler.xml`:**
+- Um zusätzliche Compiler oder spezifische Einstellungen direkt in der `compiler.xml`-Datei zu konfigurieren, kann die Datei manuell editiert werden. Hier ist ein erweitertes Beispiel, das die Konfiguration eines alternativen Compilers zeigt:
+
 ```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  <project version="4">
-    <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12" project-jdk-type="Python SDK">
-      <output url="file://$PROJECT_DIR$/out" />
-    </component>
-  </project>
- ```  
-- **Erklärung**: Diese Datei legt das Projekt-JDK auf "Python 3.12" fest und definiert das Ausgabeort für den Compiler.
+<component name="CompilerConfiguration">
+  <option name="DEFAULT_COMPILER" value="Javac" />
+  <option name="COMPILER_PROCESS_HEAP_SIZE" value="2048" />
+  <resourceExtensions />
+  <wildcardResourcePatterns>
+    <entry name="!?*.java" />
+    <entry name="!?*.kt" /> <!-- Kotlin Compiler als Beispiel -->
+  </wildcardResourcePatterns>
+  <annotationProcessing enabled="true">
+    <profile default="true" name="Default" enabled="true">
+      <processor path="" />
+    </profile>
+  </annotationProcessing>
+</component>
+```
 
-- **modules.xml**
+- **Neue Compiler hinzufügen:**
+  - Alternative Compiler können durch spezifische Einträge in der `compiler.xml`-Datei definiert werden. Um die genaue Syntax und mögliche Einstellungen herauszufinden, empfiehlt sich die Konsultation der IntelliJ IDEA-Dokumentation oder das Verwenden der GUI für die initiale Konfiguration, um anschließend die resultierende Datei zu inspizieren.
+
+**Terminal-Einstellungen in der `workspace.xml`:**
+- Die Konfiguration des Terminals in IntelliJ IDEA kann ebenfalls über die `workspace.xml`-Datei vorgenommen werden. Es ist möglich, hier Pfade zu verschiedenen Shells und andere terminalbezogene Einstellungen direkt zu definieren.
+
+Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
 ```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  <project version="4">
-    <component name="ProjectModuleManager">
-      <modules>
-        <module fileurl="file://$PROJECT_DIR$/data_suite.iml" filepath="$PROJECT_DIR$/data_suite.iml" />
-        <module fileurl="file://$PROJECT_DIR$/ocr_enricher.iml" filepath="$PROJECT_DIR$/ocr_enricher.iml" />
-        <module fileurl="file://$PROJECT_DIR$/template_center.iml" filepath="$PROJECT_DIR$/template_center.iml" />
-        <module fileurl="file://$PROJECT_DIR$/text_anonymizer.iml" filepath="$PROJECT_DIR$/text_anonymizer.iml" />
-        <module fileurl="file://$PROJECT_DIR$/html_b2b_form.iml" filepath="$PROJECT_DIR$/html_b2b_form.iml" />
-      </modules>
-    </component>
-  </project>
- ```  
-- **Erklärung**: Diese Datei listet alle Module des Projekts auf und definiert deren Pfade.
+<component name="TerminalProjectOptionsProvider">
+  <option name="shellPath" value="C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" />
+  <option name="tabName" value="PowerShell" />
+  <option name="shellArguments" value="-ExecutionPolicy Bypass" />
+</component>
+<component name="TerminalOptionsProvider">
+  <option name="defaultShellPath" value="C:\Windows\System32\cmd.exe" />
+</component>
+```
 
-- **compiler.xml**
-```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  <project version="4">
-    <component name="CompilerConfiguration">
-      <option name="DEFAULT_COMPILER" value="Javac" />
-      <resourceExtensions />
-      <wildcardResourcePatterns>
-        <entry name="!?*.java" />
-      </wildcardResourcePatterns>
-    </component>
-  </project>
-```   
-- **Erklärung**: Datei konfiguriert die Compiler-Einstellungen und gibt an, dass Javac als Standard-Compiler verwendet wird.
+- **Anpassung der Shell-Pfade:**
+  - Pfade im `shellPath`-Tag können geändert werden, um andere Shells wie Git Bash oder CMD zu verwenden. 	 
 
-- **workspace.xml**
-```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  <project version="4">
-    <component name="RunManager">
-      <configuration default="false" type="PythonConfigurationType" factoryName="Python">
-        <module name="data_suite" />
-        <option name="INTERPRETER_OPTIONS" value="" />
-        <option name="PARENT_ENVS" value="true" />
-        <option name="SDK_HOME" value="$USER_HOME$/Python/3.12" />
-        <envs>
-          <env name="PYTHONUNBUFFERED" value="1" />
-        </envs>
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-        <option name="IS_MODULE_SDK" value="true" />
-      </configuration>
-    </component>
-  </project>
-```   
-- **Erklärung**: Datei speichert benutzerspezifische Einstellungen für die Ausführung von Python-Skripten, einschließlich der Arbeitsverzeichnisse und Umgebungsvariablen.
-
-- **vcs.xml**
-```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  <project version="4">
-    <component name="VcsDirectoryMappings">
-      <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    </component>
-  </project>
-```   
-- **Erklärung**: Diese Datei definiert die Zuordnung des Projekts zu einem Versionskontrollsystem, in diesem Fall Git.
-
-#### Verwendung zentraler Konfigurationsdateien:
-
-- **Vorgehensweise zur Einbindung und Nutzung zentraler Konfigurationsdateien in der Versionskontrolle**:
-  1. **Konfigurationsdateien in die Versionskontrolle aufnehmen**:
-     -  `.idea`-Verzeichnis und die relevanten Konfigurationsdateien (`misc.xml`, `modules.xml`, `compiler.xml`, `workspace.xml`, `vcs.xml`) zu Ihrem Versionskontrollsystem (z.B. Git) hinzufügen.
-     - Beispiel:
-```powershell
-       git add .idea/misc.xml .idea/modules.xml .idea/compiler.xml .idea/workspace.xml .idea/vcs.xml
-       git commit -m "Added IntelliJ IDEA configuration files"
-       git push origin main
- ```      
-2. **Automatisierte Validierung**:
-     - Verwende Skripte oder CI/CD-Pipelines, um die Integrität der Konfigurationsdateien zu überprüfen. Diese Skripte können sicherstellen, dass die Dateien nicht manuell geändert wurden und dass alle erforderlichen Einstellungen vorhanden sind.
-	 
 ### 9. Fehlerbehebung und Support
 
 #### 9.1 Häufige Probleme und Lösungen
