@@ -121,8 +121,8 @@ Data_Suite/
     
 ### Erläuterungen zu den Projekt-Folder/Dateien
 
-- **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.[Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment)
-- **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten (Submodule siehe [Submodule](#submodule) )
+- **venv/**: Enthält virtuelle Umgebung fürs gesamte Projekt, wodurch Python-Abhängigkeiten isoliert und verwaltet werden.[Info venv](#virtual-environment)
+- **ocr_enricher/**, **template_center/**, **text_anonymizer/**, **html_b2b_form/**: Jedes dieser Verzeichnisse repräsentiert ein Submodul, enthält ein eigenes `.git`-Verzeichnis und eine eigene `requirements.txt`, um spezifische Abhängigkeiten zu verwalten ([Info submodule](#submodule))
 - **.git/**: Git-Verzeichnis des Hauptprojekts.
 - **.idea/**: Konfigurationsdateien für IntelliJ IDEA, die projektübergreifende Einstellungen speichern.
 - **README.md**: Beschreibung des des jeweiligen Projekts.
@@ -147,6 +147,7 @@ Data_Suite/
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
    - Das Zertifikat muss lokal in die Zertifikatsverwaltung importiert werden, um die Kommunikation über den Proxy zu ermöglichen.
    - Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
+   - [Info Proxy-Dienst](#pxexe-proxy-dienst)
 
 #### Komponenten und Berechtigungen
 1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
@@ -159,9 +160,9 @@ Data_Suite/
      - Text_Anonymizer: https://github.com/PrinceEitel/Text_Anonymizer - Sichtbarkeit: Private
      - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
    - **Links:**
-     - [Git Repository (Repository)](#git-repository-repository).
-     - [Submodule](#submodule)
-     - [Branch](#branch)
+     - [Info git-repository](#git-repository).
+     - [Info submodule](#submodule)
+     - [Info branch](#branch)
 
 3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
    - **Verwendung von px.exe als zentraler Proxy-Dienst:**
@@ -169,7 +170,7 @@ Data_Suite/
      - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
      - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
      - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt „Proxy-Dienst einrichten“.
-     - [Info-Link](#pxexe-proxy-dienst).	
+     -[Info Proxy-Dienst](#pxexe-proxy-dienst).	
   
        
 #### Netzwerk- und Ausführungsrechte
@@ -248,12 +249,14 @@ Data_Suite/
    ssh-keygen -t rsa -b 4096 -C "email@example.com"
    ```
    - Den Standardspeicherort (`C:\Users\Benutzername\.ssh\id_rsa`) durch Drücken von Enter akzeptieren. Optional kann ein Passwort festgelegt werden.
+   - [Info ssh-shell](#ssh-secure-shell)
 
 2. **Starten des SSH-Agents und Hinzufügen des Schlüssels:**
    - Start des SSH-Agents:
    ```console
    Start-Service ssh-agent
    ```
+   - [Info ssh-agent](#ssh-agent)
    - Hinzufügen des privaten Schlüssels zum Agenten:
    ```console
    ssh-add ~/.ssh/id_rsa
@@ -279,7 +282,7 @@ Data_Suite/
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird über px.exe zentral verwaltet, was die manuelle Integration in einzelne Anwendungen überflüssig macht.
    - Stelle sicher, dass das Zertifikat in die lokale Zertifikatsverwaltung importiert wird, damit es von px.exe genutzt werden kann.
    - detaillierte Vorgehensweise zur Zertifikatsintegration in px.exe ist im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
-   - [Info-Link](#pxexe-proxy-dienst)
+   - [Info Proxy-Dienst](#pxexe-proxy-dienst)
 
 ### 4. GIT Setup Main
 
@@ -293,7 +296,7 @@ Data_Suite/
    - Den Namen `Data_Suite` eingeben.
    - Die gewünschte Sichtbarkeit (Public oder Private) auswählen.
    - Auf "Create repository" klicken, um das Repository zu erstellen.
-   - Links:[Git Repository (Repository)](#git-repository-repository).
+   - [Info git-repository](#git-repository).
 
 2. **Initialisierung des lokalen Git-Repositorys:**
    - Die Eingabeaufforderung (Cmd) oder PowerShell öffnen.
@@ -495,7 +498,7 @@ Um das Terminal in IntelliJ IDEA optimal zu nutzen, sind folgende Schritte erfor
 
 ### 6.3 Signieren von PowerShell-Skripten im IntelliJ Terminal
 
-In gut gesicherten Unternehmensumgebungen ist es oft erforderlich, dass PowerShell-Skripte signiert werden, um ihre Integrität und Authentizität sicherzustellen. Eine digitale Signatur bestätigt, dass das Skript seit der Signierung nicht verändert wurde. **Jedes Mal, wenn ein Skript bearbeitet wird, ändert sich sein Hash-Wert, wodurch die ursprüngliche Signatur ungültig wird.** Daher muss das Skript nach jeder Änderung erneut signiert werden, um es weiterhin ausführen zu können. Dieser Abschnitt erläutert sowohl den Prozess der Erst-Signatur als auch die notwendige Aktualisierung der Signatur nach Codeänderungen.
+In gut gesicherten Unternehmensumgebungen ist es oft erforderlich, dass PowerShell-Skripte signiert werden, um ihre Integrität und Authentizität sicherzustellen. Eine digitale Signatur bestätigt, dass das Skript seit der Signierung nicht verändert wurde. **Jedes Mal, wenn ein Skript bearbeitet wird, ändert sich sein Hash-Wert, wodurch die ursprüngliche Signatur ungültig wird.** Daher muss das Skript nach jeder Änderung erneut signiert werden, um es weiterhin ausführen zu können. Dieser Abschnitt erläutert sowohl den Prozess der Erst-Signatur als auch die notwendige Aktualisierung der Signatur nach Codeänderungen ([Info Signate](#signate-scripts)) 
 
 #### 6.3.1 PowerShell 7 (Empfohlen)
 
@@ -560,7 +563,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 #### 6.4 Virtuelle Umgebung einrichten
 
-Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten (siehe [Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment)):
+Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten (siehe [Info venv](#virtual-environment) via [pip Installation](#pip-install)):
 
 1. **Terminal öffnen:**
    - Terminal in IntelliJ IDEA unter `View` -> `Tool Windows` -> `Terminal` öffnen.
@@ -679,7 +682,7 @@ Zur Konfiguration des Python Interpreters:
 
 #### 6.8 Quellverzeichnisse konfigurieren
 
-Um relevante Verzeichnisse als Quellverzeichnisse zu markieren:
+Um relevante Verzeichnisse als Quellverzeichnisse zu markieren ([Info Marks](#folder-marks)):
 
 1. **Projektstruktur öffnen:**
    - `File` -> `Project Structure`.
@@ -713,7 +716,7 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
    - Laden Sie px.exe von [GitHub](https://github.com/genotrance/px/releases) herunter.
    - Entpacken Sie die Datei und speichern Sie sie im Verzeichnis `C:\Program Files\px-pxy`.
    - Führen  `px.exe --install` aus, um den Proxy-Dienst zu installieren.
-   - [Info-Link](#pxexe-proxy-dienst)
+   - [Info Proxy-Dienst](#pxexe-proxy-dienst)
 
 **2. Konfiguration der px.ini:**
    - Erstellen Sie eine `px.ini` im Installationsverzeichnis mit folgenden Inhalten:
@@ -768,7 +771,7 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
     - `.gitignore`: Dateien und Verzeichnisse, die von Git ignoriert werden sollen.
     - `README.md`: Projektbeschreibung und Anleitungen.
     - `requirements.txt`: Liste der Python-Abhängigkeiten.
-  - **Virtuelle Umgebung (`venv`)**: Enthält die Python-Umgebung und installierten Pakete.
+  - **Virtuelle Umgebung (`venv`)**: Enthält die Python-Umgebung und installierten Pakete ([Info venv](#virtual-environment))
 
 #### Code-Beispiele
 - **Ausführliche Erläuterung des Codes mit Beispielen und Erklärungen:**
@@ -808,6 +811,7 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
 ```     
 - **Erläuterung:**
       - `jinja2`: Template-Engine zur Verarbeitung von Vorlagen.
+      -  [Info jinja2](#jinja2)
       - `render_template`: Funktion zur Verarbeitung und Ausgabe einer Vorlage mit Kontextdaten.
 
   - **Text Anonymizer Beispiel:**
@@ -942,6 +946,8 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ssh -T git@github.com
        ```
     - Befehle`ssh -T git@github.com` testet die Verbindung zu GitHub unter Verwendung des eingerichteten SSH-Schlüssels.
+    - [Info ssh-shell](#ssh-secure-shell)
+    - [Info ssh-agent](#ssh-agent)
       
 2. **Fehler beim Pushen: `fatal: unable to access 'https://github.com/USER/REPO.git/': The requested URL returned error: 403`**
    - **Ursache:** Zugriffsrechte auf das Repository sind unzureichend.
@@ -1007,7 +1013,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
     - Hier wird der Python-Interpreter für das Projekt festgelegt.
 
 3. **Fehlerhafte Projektstruktur: `Cannot resolve symbol`**
-   - **Ursache:** Quellverzeichnisse sind nicht korrekt markiert.
+   - **Ursache:** Quellverzeichnisse sind nicht korrekt markiert ([Info Marks](#folder-marks)).
    - **Lösung:** 
      - Relevante Verzeichnisse als Quellverzeichnisse markieren:
        ```console
@@ -1130,6 +1136,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
 
      
 ### 10. Glossar
+<a name="git-repository"></a>
 **Git Repository (Repository)**
 - **Definition:** Ein Git-Repository ist ein Speicherort, der alle Dateien, Verzeichnisse und die gesamte Historie eines Projekts umfasst, das mit Git, einem verteilten Versionskontrollsystem, verwaltet wird. Es enthält alle Versionen des Codes, einschließlich der gesamten Commit-Historie, Branches, Tags und Konfigurationsdateien.
 
@@ -1151,6 +1158,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
   - **Konflikte:** Wenn mehrere Entwickler gleichzeitig am selben Code arbeiten, können Merge-Konflikte auftreten, die manuell gelöst werden müssen.
   - **Größe des Repositories:** Bei großen Projekten kann das Repository sehr groß werden, was die Klon- und Pull-Zeiten erhöht. Daher sollte das Repository regelmäßig gepflegt und unnötige Dateien ausgeschlossen werden.
 
+<a name="submodule"></a>
 **Submodule**
 - **Definition:** Ein Submodul ist ein Git-Repository, das innerhalb eines anderen Git-Repositorys (dem sogenannten "Superprojekt") als Unterverzeichnis eingebunden ist. Submodule ermöglichen es, separate Code-Basen in einem Hauptprojekt zu integrieren, ohne den Quellcode direkt in das Hauptprojekt zu kopieren. Dies erleichtert die Verwaltung und Wiederverwendung von gemeinsam genutzten Code-Komponenten über verschiedene Projekte hinweg.
 
@@ -1172,6 +1180,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
   - **Komplexität:** Die Verwaltung von Submodulen kann komplex sein, insbesondere wenn viele Submodule oder tief verschachtelte Abhängigkeiten vorhanden sind.
   - **Zusätzlicher Aufwand:** Submodule erfordern zusätzliche Schritte bei der Initialisierung und Aktualisierung, was die Entwicklungsprozesse etwas verlangsamen kann.
 
+<a name="branch"></a>
 **Branch**
 - **Definition:** Ein Branch (oder Zweig) ist eine parallele Entwicklungsinstanz innerhalb eines Git-Repositorys. Branches ermöglichen es, Änderungen an der Codebasis isoliert von der Hauptentwicklungslinie durchzuführen. Jeder Branch kann unabhängig entwickelt und modifiziert werden, bevor er in den Hauptzweig (häufig "main" oder "master" genannt) integriert wird.
 
@@ -1193,18 +1202,21 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
   - **Merge-Konflikte:** Beim Zusammenführen (Merging) von Branches können Konflikte auftreten, wenn dieselben Teile des Codes in verschiedenen Branches geändert wurden. Diese Konflikte müssen manuell gelöst werden.
   - **Veraltete Branches:** Branches, die nicht regelmäßig aktualisiert werden, können schnell veralten, was das Zusammenführen schwieriger macht.
 
+<a name="ssh-secure-shell"></a>
 **SSH (Secure Shell)**
 - **Definition:** SSH (Secure Shell) ist ein Protokoll, das verschlüsselte Kommunikation zwischen Computern ermöglicht und für die sichere Übertragung von Daten sowie die Remote-Verwaltung von Systemen verwendet wird. In der Softwareentwicklung wird SSH häufig für die sichere Authentifizierung und den Zugriff auf entfernte Git-Repositories, wie GitHub, eingesetzt.
 - **Relevanz im Projekt:** Im vorliegenden Projekt wird SSH verwendet, um eine sichere Verbindung zwischen der lokalen Entwicklungsumgebung und GitHub herzustellen. Diese Verbindung ist notwendig, um Quellcode aus dem Repository zu klonen, Änderungen zu pushen und neue Branches zu erstellen, ohne dass Passwörter über unsichere Kanäle übertragen werden.
 - **Einsatz in der Entwicklungsumgebung:** Die Konfiguration von SSH erfolgt durch die Generierung eines SSH-Schlüsselpaares, das aus einem privaten und einem öffentlichen Schlüssel besteht. Der öffentliche Schlüssel wird in Ihrem GitHub-Konto hinterlegt, während der private Schlüssel lokal gespeichert wird. Dieser Mechanismus stellt sicher, dass nur authentifizierte Benutzer auf das Repository zugreifen können.
 - **Integration in die Arbeitsabläufe:** SSH ist direkt in die IDE (z.B. IntelliJ IDEA) integriert, sodass Sie aus der Entwicklungsumgebung heraus nahtlos auf Git-Repositories zugreifen können. Die SSH-Verbindung wird entweder automatisch durch die IDE hergestellt oder kann manuell über die Kommandozeile (z.B. PowerShell oder Git Bash) gestartet werden.
 
+<a name="ssh-agent"></a>
 **SSH-Agent**
 - **Definition:** Der SSH-Agent ist ein Hintergrundprogramm, das SSH-Schlüssel im Arbeitsspeicher speichert und verwaltet. Es ermöglicht, einmal eingegebene Passphrasen über eine Sitzung hinweg zu speichern, sodass bei nachfolgenden Verbindungen keine erneute Eingabe erforderlich ist.
 - **Funktion im Projekt:** In einem Entwicklungsumfeld, insbesondere in einer Enterprise-Umgebung, erleichtert der SSH-Agent die Handhabung von SSH-Verbindungen erheblich. Er übernimmt die Aufgabe, die Passphrase für Ihren SSH-Schlüssel einmalig zu speichern, was repetitive Eingaben vermeidet und die Effizienz steigert. Dies ist besonders nützlich, wenn während einer Entwicklungs- oder Deployment-Sitzung mehrere SSH-Operationen durchgeführt werden.
 - **Start und Verwaltung:** Der SSH-Agent wird typischerweise beim Starten der Entwicklungsumgebung oder einer neuen Terminal-Sitzung initialisiert. Entwickler fügen ihren privaten Schlüssel einmalig zum Agenten hinzu, sodass alle nachfolgenden SSH-Verbindungen automatisch authentifiziert werden. In den meisten Unix-basierten Systemen wird der SSH-Agent automatisch mit dem Anmelden an die Shell gestartet; unter Windows kann dies manuell erfolgen, beispielsweise über PowerShell mit dem Befehl `Start-Service ssh-agent`.
 - **Best Practices:** Für eine reibungslose Nutzung sollte der SSH-Agent so konfiguriert sein, dass er beim Start des Systems oder der Entwicklungsumgebung automatisch gestartet wird. Dies minimiert Sicherheitsrisiken, da die Passphrase nur einmal pro Sitzung eingegeben werden muss, und reduziert potenzielle Unterbrechungen im Entwicklungsprozess.
 
+<a name="virtual-environment"></a>
 **Virtuelle Umgebung (Virtual Environment)**
 - **Definition:** Eine virtuelle Umgebung ist ein isolierter Python-Arbeitsbereich, der es ermöglicht, spezifische Versionen von Abhängigkeiten und Paketen für ein Projekt getrennt von anderen Projekten und dem globalen Python-Interpreter zu verwalten. Diese Isolation verhindert, dass Änderungen an einem Projekt unbeabsichtigt andere Projekte oder das System beeinflussen.
 
@@ -1241,6 +1253,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
 
 - **Best Practices:** Es wird empfohlen, die `px.ini`-Konfigurationsdatei regelmäßig zu überprüfen und anzupassen, insbesondere wenn sich die Proxy-Umgebung des Unternehmens ändert. Zusätzlich sollten alle Anwendungen, die auf externe Ressourcen zugreifen, so konfiguriert werden, dass sie den lokalen px.exe-Proxy verwenden, um sicherzustellen, dass alle Verbindungen konsistent und sicher sind.
 
+<a name="jinja2"></a>
 **Jinja2**
 - **Definition:** Jinja2 ist eine moderne und flexible Template-Engine für Python, die es ermöglicht, dynamische Inhalte in HTML, XML oder anderen textbasierten Formaten zu erstellen. Es wird häufig verwendet, um wiederverwendbare Templates zu definieren, die dann mit Daten gefüllt werden, um HTML-Seiten, E-Mails oder andere textbasierte Ausgaben zu generieren.
 
@@ -1262,6 +1275,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
   - **Komplexität bei großen Projekten:** In großen Projekten mit vielen Templates kann es schwierig werden, die Übersicht zu behalten, wenn nicht auf eine saubere Strukturierung geachtet wird.
   - **Leistung:** In sehr komplexen Templates kann die Verarbeitungsgeschwindigkeit zum Problem werden. Es ist ratsam, auf eine effiziente Template-Struktur zu achten.
 
+<a name="pip-install"></a>
 **Installation von Python-Paketen mit pip**
 - **Definition:** `pip` ist das offizielle Paketverwaltungstool für Python. Es wird verwendet, um Python-Pakete aus dem Python Package Index (PyPI) und anderen Repositories zu installieren, zu verwalten und zu aktualisieren. `pip` ist ein unverzichtbares Werkzeug für die Arbeit mit Python-Projekten, da es die Installation und Verwaltung von Bibliotheken und deren Abhängigkeiten vereinfacht.
 
@@ -1285,6 +1299,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
   - **Virtuelle Umgebungen:** Installationen sollten idealerweise in einer virtuellen Umgebung (`venv`) erfolgen, um Konflikte mit global installierten Paketen zu vermeiden und die Isolation des Projekts zu gewährleisten.
   - **Regelmäßige Updates:** Halten Sie Pakete auf dem neuesten Stand, um von Sicherheitsupdates und neuen Funktionen zu profitieren. Dies kann mit dem Befehl `pip install --upgrade <package-name>` erfolgen.
 
+<a name="zulu-jdk"></a>
 **Zulu JDK**
 - **Definition:** Zulu JDK ist eine zertifizierte, vollständig offene Implementierung des Java Development Kit (JDK), die auf OpenJDK basiert. Es wird von Azul Systems gewartet und bietet eine kostenlose, kommerziell unterstützte Java-Plattform für die Entwicklung und den Betrieb von Java-Anwendungen. Zulu JDK ist kompatibel mit den Spezifikationen von Java SE (Standard Edition) und bietet alle Features und Funktionen, die man von einem JDK erwartet.
 
@@ -1303,6 +1318,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
   - **Einsatz in virtuellen Maschinen:** Für Projekte, die in verschiedenen Umgebungen ausgeführt werden, kann die Verwendung von Zulu JDK in Docker-Containern oder virtuellen Maschinen eine konsistente Laufzeitumgebung sicherstellen.
   - **Konsistente Entwicklungsumgebung:** Entwickler sollten sicherstellen, dass alle Teammitglieder dieselbe Version des Zulu JDK verwenden, um Versionskonflikte und Inkompatibilitäten zu vermeiden.
 
+<a name="folder-marks"></a>
 **Verzeichnismarkierung in der Entwicklungsumgebung**
 - **Definition:** Verzeichnismarkierung bezieht sich auf die Praxis in Entwicklungsumgebungen wie IntelliJ IDEA oder Visual Studio, bei der bestimmte Verzeichnisse innerhalb eines Projekts als besondere Kategorien von Quellcode oder Ressourcen markiert werden. Diese Markierungen helfen der IDE, die Struktur des Projekts zu verstehen und zu organisieren, sodass bestimmte Verzeichnisse unterschiedliche Behandlungen erfahren, wie z. B. das Kompilieren, das Ausführen von Tests oder das Laden von Ressourcen.
 
@@ -1324,6 +1340,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
   - **Regelmäßige Überprüfung:** Die Markierungen sollten regelmäßig überprüft werden, insbesondere nach größeren Änderungen an der Projektstruktur, um sicherzustellen, dass sie weiterhin korrekt sind.
   - **Dokumentation:** Es ist hilfreich, die Struktur und Markierung der Verzeichnisse in der Projektdokumentation festzuhalten, um neuen Entwicklern den Einstieg zu erleichtern.
 
+<a name="signate-scripts"></a>
 **Signieren von Scripts in Windows:**
 
 **Definition:** Das Signieren von Scripts in Windows ist ein Sicherheitsprozess, bei dem eine digitale Signatur einem Skript hinzugefügt wird, um dessen Integrität und Authentizität zu gewährleisten. Diese Signatur bestätigt, dass das Skript von einer vertrauenswürdigen Quelle stammt und seit seiner Signierung nicht manipuliert wurde.
@@ -1359,7 +1376,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
 - **Skript-Management:** Verwalten Sie Ihre Skripte zentral und signieren Sie sie nach jeder Änderung, um die Integrität sicherzustellen.
 - **Vermeidung von Unsicherheitsstufen:** Konfigurieren Sie Ihre PowerShell-ExecutionPolicy so, dass nur signierte Skripte ausgeführt werden dürfen, um das Risiko durch unsignierten Code zu minimieren.
 
-
+<a name="unit-test"></a>
 **Unit Test**
 - **Definition:** Ein Unit Test ist eine Methode des Softwaretestens, bei der einzelne "Units" oder kleinste funktionale Teile des Codes (z. B. Funktionen, Methoden, oder Klassen) isoliert geprüft werden, um sicherzustellen, dass sie korrekt funktionieren. Unit Tests sind die kleinste Testeinheit im Entwicklungsprozess und sollen garantieren, dass jede Komponente unabhängig von anderen korrekt arbeitet.
 
