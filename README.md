@@ -1648,7 +1648,70 @@ try {
 } catch {
     Write-Result "DNS-Auflösung für GitHub fehlgeschlagen."
 }
-``` 
+```
+
+#### Step-by-Step Liste zur Installation und Konfiguration
+
+#### 1. **Systemvoraussetzungen prüfen**
+   - Überprüfen des Betriebssystems (Windows 10 Enterprise Version 22H2)
+   - Sicherstellen, dass lokale Administratorrechte vorhanden sind
+   - Netzwerkzugriff und Proxy-Konfigurationen prüfen
+
+#### 2. **Git for Windows installieren**
+   - Git for Windows von der offiziellen Website herunterladen und installieren
+   - Installation mit den Standardeinstellungen abschließen
+
+#### 3. **Git konfigurieren**
+   - Benutzername und E-Mail-Adresse konfigurieren
+   - Optional: Proxy-Einstellungen für Git konfigurieren, falls notwendig
+   - Sicherstellen, dass Git korrekt installiert ist (`git --version`)
+
+#### 4. **IntelliJ IDEA installieren**
+   - IntelliJ IDEA Ultimate von der JetBrains-Website herunterladen und installieren
+   - Installation mit den Standardeinstellungen abschließen
+
+#### 5. **SSH-Schlüssel generieren und konfigurieren**
+   - Einen neuen SSH-Schlüssel erstellen (`ssh-keygen -t rsa -b 4096 -C "email@example.com"`)
+   - Den SSH-Schlüssel zum SSH-Agenten hinzufügen
+   - Öffentlichen Schlüssel zu GitHub hinzufügen
+   - Überprüfen der SSH-Verbindung zu GitHub
+
+#### 6. **Hauptprojekt von GitHub erstellen und initialisieren**
+   - Erstellen des Hauptprojekts `Data_Suite` auf GitHub
+   - Lokales Git-Repository initialisieren und mit GitHub verbinden
+   - Hauptbranch in `main` umbenennen und Änderungen pushen
+
+#### 7. **Submodule hinzufügen und konfigurieren**
+   - Submodule wie `OCR_Manager_Suite`, `Template_Center`, `Text_Anonymizer`, und `html_b2b_form` hinzufügen
+   - Submodule initialisieren und aktualisieren
+   - Submodule stagen und committen
+
+#### 8. **Virtuelle Umgebung einrichten**
+   - Virtuelle Umgebung erstellen und aktivieren (`python -m venv venv`)
+   - Abhängigkeiten aus der `requirements.txt` installieren
+
+#### 9. **Zulu JDK und andere notwendige Komponenten installieren**
+   - Zulu JDK herunterladen und installieren
+   - Zulu JDK in IntelliJ IDEA als SDK konfigurieren
+
+#### 10. **Projekt in IntelliJ IDEA importieren**
+   - IntelliJ IDEA öffnen und das Projekt `Data_Suite` importieren
+   - Submodule in IntelliJ konfigurieren
+
+#### 11. **IntelliJ IDEA konfigurieren**
+   - Terminal-Einstellungen in IntelliJ IDEA anpassen
+   - Python Interpreter für das Projekt konfigurieren
+   - Relevante Verzeichnisse als Quellverzeichnisse markieren
+   - Git-Integration in IntelliJ IDEA überprüfen und konfigurieren
+
+#### 12. **Proxy-Dienst mit px.exe einrichten**
+   - px.exe herunterladen, installieren und konfigurieren
+   - Proxy-Einstellungen in IntelliJ IDEA und Git anpassen
+
+#### 13. **Automatisierte Validierung der Konfiguration**
+   - Ein Skript zur Systemüberprüfung ausführen, um die Konfiguration zu validieren
+   - Überprüfen der Installation und Konfiguration aller relevanten Komponenten
+     
 #### GIT Workflows
 **Typische Anwendungsfälle und Arbeitsabläufe mit Git:**
 
