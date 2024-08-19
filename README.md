@@ -1343,6 +1343,42 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
   - **Regelmäßige Überprüfung:** Die Markierungen sollten regelmäßig überprüft werden, insbesondere nach größeren Änderungen an der Projektstruktur, um sicherzustellen, dass sie weiterhin korrekt sind.
   - **Dokumentation:** Es ist hilfreich, die Struktur und Markierung der Verzeichnisse in der Projektdokumentation festzuhalten, um neuen Entwicklern den Einstieg zu erleichtern.
 
+**Signieren von Scripts in Windows:**
+
+**Definition:** Das Signieren von Scripts in Windows ist ein Sicherheitsprozess, bei dem eine digitale Signatur einem Skript hinzugefügt wird, um dessen Integrität und Authentizität zu gewährleisten. Diese Signatur bestätigt, dass das Skript von einer vertrauenswürdigen Quelle stammt und seit seiner Signierung nicht manipuliert wurde.
+
+**Relevanz im Projekt:** In Unternehmensumgebungen mit strengen Sicherheitsrichtlinien ist es oft notwendig, dass PowerShell-Skripte signiert werden, bevor sie ausgeführt werden dürfen. Dies verhindert die Ausführung von nicht autorisierten oder manipulierten Skripten und trägt zur Sicherstellung der Sicherheit und Vertrauenswürdigkeit der Codebasis bei.
+
+**Funktionsweise:**
+- **Digitale Signatur:** Beim Signieren eines Skripts wird ein kryptografischer Hash des Skripts erstellt und mit einem privaten Schlüssel verschlüsselt. Diese verschlüsselte Hash-Signatur wird dann dem Skript hinzugefügt. Wenn das Skript später ausgeführt wird, verifiziert das System die Signatur mit dem zugehörigen öffentlichen Schlüssel, um sicherzustellen, dass der Inhalt seit der Signatur nicht verändert wurde.
+- **Zertifikate:** Zum Signieren von Skripten wird ein Code-Signing-Zertifikat verwendet, das von einer vertrauenswürdigen Zertifizierungsstelle (CA) ausgestellt wird. Dieses Zertifikat enthält den öffentlichen Schlüssel, der zur Verifizierung der Signatur verwendet wird.
+
+**Einsatz im Projekt:** Im "Data_Suite"-Projekt, insbesondere bei der Ausführung von PowerShell-Skripten innerhalb der IntelliJ IDEA Entwicklungsumgebung, ist das Signieren der Skripte notwendig, um die Sicherheitsrichtlinien des Unternehmens zu erfüllen. Jedes PowerShell-Skript, das im Projekt verwendet wird, muss signiert sein, um ausgeführt werden zu können. Dies gilt sowohl für Skripte, die automatisierte Aufgaben ausführen, als auch für solche, die in CI/CD-Pipelines integriert sind.
+
+**Prozess der Signatur:**
+1. **Zertifikat anfordern:** Zunächst muss ein Code-Signing-Zertifikat bei der IT-Abteilung oder einer zertifizierten Zertifizierungsstelle angefordert werden. Das Zertifikat wird in der Regel im Windows-Zertifikatspeicher hinterlegt.
+2. **Skript signieren:** Um ein PowerShell-Skript zu signieren, wird das `Set-AuthenticodeSignature`-Cmdlet verwendet:
+   ```powershell
+   Set-AuthenticodeSignature -FilePath "C:\Path\To\YourScript.ps1" -Certificate (Get-Item Cert:\CurrentUser\My\YOURCERTTHUMBPRINT)
+   ```
+   Hierbei wird das Zertifikat, das für die Signatur verwendet werden soll, über den Thumbprint identifiziert.
+3. **Signatur aktualisieren:** Wenn das Skript geändert wird, muss es erneut signiert werden, da sich der Hash-Wert ändert und die ursprüngliche Signatur ungültig wird.
+
+**Vorteile:**
+- **Sicherheitsgarantie:** Signierte Skripte gewährleisten, dass der Code von einer vertrauenswürdigen Quelle stammt und seit seiner Signierung nicht manipuliert wurde.
+- **Compliance:** Das Signieren von Skripten hilft Unternehmen dabei, regulatorische Anforderungen und interne Sicherheitsrichtlinien zu erfüllen.
+- **Vertrauenswürdigkeit:** Systeme und Benutzer können sich darauf verlassen, dass signierte Skripte sicher ausgeführt werden können.
+
+**Nachteile:**
+- **Verwaltungsaufwand:** Das Signieren von Skripten erfordert zusätzlichen Aufwand, insbesondere wenn Skripte häufig aktualisiert werden.
+- **Notwendigkeit eines Zertifikats:** Entwickler müssen Zugriff auf ein gültiges Code-Signing-Zertifikat haben, was zusätzliche Kosten und Verwaltungsaufwand bedeuten kann.
+
+**Best Practices:**
+- **Regelmäßige Zertifikatsaktualisierung:** Stellen Sie sicher, dass das verwendete Code-Signing-Zertifikat aktuell ist und rechtzeitig erneuert wird.
+- **Skript-Management:** Verwalten Sie Ihre Skripte zentral und signieren Sie sie nach jeder Änderung, um die Integrität sicherzustellen.
+- **Vermeidung von Unsicherheitsstufen:** Konfigurieren Sie Ihre PowerShell-ExecutionPolicy so, dass nur signierte Skripte ausgeführt werden dürfen, um das Risiko durch unsignierten Code zu minimieren.
+
+
 **Unit Test**
 - **Definition:** Ein Unit Test ist eine Methode des Softwaretestens, bei der einzelne "Units" oder kleinste funktionale Teile des Codes (z. B. Funktionen, Methoden, oder Klassen) isoliert geprüft werden, um sicherzustellen, dass sie korrekt funktionieren. Unit Tests sind die kleinste Testeinheit im Entwicklungsprozess und sollen garantieren, dass jede Komponente unabhängig von anderen korrekt arbeitet.
 
