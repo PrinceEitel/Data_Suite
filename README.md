@@ -27,7 +27,7 @@ Inhalte sind in folgende Hauptabschnitte gegliedert:
 
 ```plaintext
 Data_Suite/
-├── venv/                       # Virtuelle Umgebung für Python [Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment)
+├── venv/                       # Virtuelle Umgebung für Python 
 │   ├── Scripts/
 │   ├── Lib/
 │   │   ├── site-packages/
