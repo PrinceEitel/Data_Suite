@@ -169,7 +169,7 @@ Data_Suite/
      - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
      - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
      - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt „Proxy-Dienst einrichten“.
-     - Links:[px.exe (Proxy-Dienst)](#pxexe-proxy-dienst).	
+     - [Info-Link](#pxexe-proxy-dienst).	
   
        
 #### Netzwerk- und Ausführungsrechte
@@ -279,6 +279,7 @@ Data_Suite/
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird über px.exe zentral verwaltet, was die manuelle Integration in einzelne Anwendungen überflüssig macht.
    - Stelle sicher, dass das Zertifikat in die lokale Zertifikatsverwaltung importiert wird, damit es von px.exe genutzt werden kann.
    - detaillierte Vorgehensweise zur Zertifikatsintegration in px.exe ist im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
+   - [Info-Link](#pxexe-proxy-dienst)
 
 ### 4. GIT Setup Main
 
@@ -711,7 +712,8 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
 **1. Installation von px.exe:**
    - Laden Sie px.exe von [GitHub](https://github.com/genotrance/px/releases) herunter.
    - Entpacken Sie die Datei und speichern Sie sie im Verzeichnis `C:\Program Files\px-pxy`.
-   - Führen Sie `px.exe --install` aus, um den Proxy-Dienst zu installieren.
+   - Führen  `px.exe --install` aus, um den Proxy-Dienst zu installieren.
+   - [Info-Link](#pxexe-proxy-dienst)
 
 **2. Konfiguration der px.ini:**
    - Erstellen Sie eine `px.ini` im Installationsverzeichnis mit folgenden Inhalten:
@@ -1218,6 +1220,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
 
 - **Best Practices:** Es ist ratsam, für jedes Submodul entweder separate virtuelle Umgebungen zu verwenden oder sicherzustellen, dass alle Submodule kompatible Abhängigkeiten nutzen, die in einer gemeinsamen virtuellen Umgebung verwaltet werden. Regelmäßige Aktualisierung der `requirements.txt`-Dateien und deren Verwaltung im Versionskontrollsystem sind essenziell, um sicherzustellen, dass alle Entwickler mit den gleichen Versionen der Abhängigkeiten arbeiten. Dies unterstützt eine konsistente und problemfreie Entwicklung.
 
+<a name="pxexe-proxy-dienst"></a>
 **px.exe (Proxy-Dienst)**
 - **Definition:** px.exe ist ein lokaler Proxy-Dienst für Windows, der HTTP- und HTTPS-Anfragen von Anwendungen entgegennimmt und sie an einen definierten Unternehmens-Proxy-Server weiterleitet. Der Dienst ermöglicht die Nutzung von Unternehmensnetzwerken, die eine Authentifizierung über einen Proxy erfordern, ohne dass Benutzer ihre Anmeldedaten manuell eingeben müssen.
 
@@ -1451,203 +1454,294 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 **1. Konfigurationsprüfung:**
 
 - **IntelliJ System-Check Powershell Script:**  
+### PowerShell-Skript: `intelliJ_system_check.ps1`
+
 ```powershell
 # intelliJ_system_check.ps1
-# Beispiele für das Ausführungskommando des PowerShell-Skripts mit einem dynamischen Home-Verzeichnis-Pfad:
 
-# Beispiel 1: Home-Verzeichnis ist `U:\`
-# Das Skript wird mit dem Home-Verzeichnis `U:\` ausgeführt.
-# Dies wird das `data_suite` Verzeichnis unter `U:\` annehmen.
+<# 
+Beispielaufruf des Skripts:
 
-#.\intelliJ_system_check.ps1 -homeDir "U:\"
+.\intelliJ_system_check.ps1 -homeDir "C:\Users\Test\" -proxyCertPath "C:\Path\To\ProxyCert.cer" -gitUserName "JohnDoe" -gitUserEmail "john.doe@example.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*"
 
-# Beispiel 2: Home-Verzeichnis ist `C:\`
-# Das Skript wird mit dem Home-Verzeichnis `C:\` ausgeführt.
-# Dies wird das `data_suite` Verzeichnis unter `C:\` annehmen.
-
-#.\intelliJ_system_check.ps1 -homeDir "C:\"
-
-# Beispiel 3: Home-Verzeichnis ist `C:\users\test\`
-# Das Skript wird mit dem Home-Verzeichnis `C:\users\test\` ausgeführt.
-# Dies wird das `data_suite` Verzeichnis unter `C:\users\test\` annehmen.
-
-#.\intelliJ_system_check.ps1 -homeDir "C:\users\test\"
+Parameter:
+- homeDir: Basisverzeichnis für das Projekt.
+- proxyCertPath: Vollständiger Pfad zur Zertifikatsdatei des Unternehmens-Proxys.
+- gitUserName: Git-Benutzername, falls dieser nicht global konfiguriert ist.
+- gitUserEmail: Git-Benutzer-E-Mail, falls diese nicht global konfiguriert ist.
+- intelliJRegistryPath: Pfad zur JetBrains-Registry für die IntelliJ-Installation.
+#>
 
 param (
-    [string]$homeDir = "U:\"
+    [string]$homeDir = "$env:USERPROFILE\",
+    [string]$proxyCertPath,
+    [string]$gitUserName = "",
+    [string]$gitUserEmail = "",
+    [string]$intelliJRegistryPath = "HKLM:\SOFTWARE\JetBrains\*"
 )
 
-$outputFile = "${homeDir}data_suite\system_check_results.txt"
+# Parameterprüfung
+function Validate-Parameters {
+    param (
+        [string]$paramName,
+        [string]$paramValue
+    )
 
+    if (-not $paramValue) {
+        Write-Host "Fehlender Parameter: $paramName" -ForegroundColor Red
+        exit 1
+    }
+
+    if ($paramName -eq "proxyCertPath" -and -not (Test-Path $paramValue)) {
+        Write-Host "Ungültiger Pfad für $paramName: $paramValue" -ForegroundColor Red
+        exit 1
+    }
+
+    if ($paramName -eq "homeDir" -and (-not ($paramValue -match "^[a-zA-Z]:\\.*")) ) {
+        Write-Host "Ungültiges Verzeichnisformat für $paramName: $paramValue" -ForegroundColor Red
+        exit 1
+    }
+}
+
+# Parameter validieren
+Validate-Parameters -paramName "homeDir" -paramValue $homeDir
+Validate-Parameters -paramName "proxyCertPath" -paramValue $proxyCertPath
+
+# Optional: Git-Parameter validieren
+if ($gitUserName) {
+    Validate-Parameters -paramName "gitUserName" -paramValue $gitUserName
+}
+
+if ($gitUserEmail) {
+    Validate-Parameters -paramName "gitUserEmail" -paramValue $gitUserEmail
+}
+
+$outputFile = "${homeDir}data_suite\system_check_results.txt"
+$totalSteps = 12 # Anzahl der Prüfungen für den Fortschrittsbalken
+
+# Funktion zur Ausgabe von Ergebnissen
 function Write-Result {
     param ($message)
     $message | Out-File -FilePath $outputFile -Append
     Write-Host $message
 }
 
-# Überprüfung der Git-Installation und Konfiguration
-Write-Result "Überprüfung der Git-Installation und Konfiguration:"
-Write-Result "-------------------------------------------"
-Write-Result "Git Version:"
-git --version | Out-File -FilePath $outputFile -Append
-Write-Result "Git Benutzername:"
-git config --global user.name | Out-File -FilePath $outputFile -Append
-Write-Result "Git Benutzer E-Mail:"
-git config --global user.email | Out-File -FilePath $outputFile -Append
-
-# Überprüfung der Verzeichnisse und bestehenden Git-Repositories
-Write-Result "`nÜberprüfung der Verzeichnisse und bestehenden Git-Repositories:"
-Write-Result "-------------------------------------------"
-if (Test-Path "${homeDir}data_suite") {
-    Write-Result "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
-} else {
-    Write-Result "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
-}
-if (Test-Path "${homeDir}data_suite\.git") {
-    Write-Result "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
-} else {
-    Write-Result "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
+# Funktion zur Anzeige des Fortschritts
+function Show-Progress {
+    param (
+        [string]$currentTask,
+        [int]$currentStep
+    )
+    $percentage = ($currentStep / $totalSteps) * 100
+    Write-Progress -Activity "Systemcheck läuft..." -Status $currentTask -PercentComplete $percentage
 }
 
-# Überprüfung relevanter Applikationen und Verzeichnisse
-Write-Result "`nÜberprüfung relevanter Applikationen und Verzeichnisse:"
-Write-Result "-------------------------------------------"
-if (Test-Path "${homeDir}data_suite\venv") {
-    Write-Result "Das Verzeichnis 'venv' existiert bereits."
-} else {
-    Write-Result "Das Verzeichnis 'venv' existiert nicht. Es muss erstellt werden."
-}
-
-if (Get-Module -ListAvailable -Name chardet) {
-    Write-Result "Die 'chardet' Bibliothek ist installiert."
-} else {
-    Write-Result "Die 'chardet' Bibliothek ist nicht installiert. Bitte installieren."
-}
-
-$ocrDir = "${homeDir}data_suite\ocr_enricher\src"
-if (Test-Path $ocrDir) {
-    Write-Result "Das Verzeichnis '$ocrDir' existiert."
-    if (Test-Path "$ocrDir\OCR_Enricher.ps1" -and Test-Path "$ocrDir\pdf_utils.py") {
-        Write-Result "Die erforderlichen Dateien im OCR-Manager-Verzeichnis sind vorhanden."
-    } else {
-        Write-Result "Eine oder mehrere erforderliche Dateien im OCR-Manager-Verzeichnis fehlen."
-    }
-} else {
-    Write-Result "Das Verzeichnis '$ocrDir' existiert nicht."
-}
-
-$submodules = @("ocr_enricher", "template_center", "text_anonymizer", "html_b2b_form")
-foreach ($module in $submodules) {
-    $filePath = "${homeDir}data_suite\$module\requirements.txt"
-    if (Test-Path $filePath) {
-        Write-Result "Die Datei 'requirements.txt' ist im Submodul '$module' vorhanden."
-    } else {
-        Write-Result "Die Datei 'requirements.txt' fehlt im Submodul '$module'."
-    }
-}
-
-$zuluDir = "${homeDir}data_suite\zulu"
-if (Test-Path $zuluDir) {
-    Write-Result "Das Verzeichnis '$zuluDir' existiert."
-} else {
-    Write-Result "Das Verzeichnis '$zuluDir' existiert nicht. Das Zulu JDK muss installiert werden."
-}
-
-$npmDir = "${homeDir}data_suite\venv\node_modules"
-if (Test-Path $npmDir) {
-    Write-Result "Die npm-Abhängigkeiten sind in der virtuellen Umgebung installiert."
-} else {
-    Write-Result "Die npm-Abhängigkeiten sind nicht installiert. Bitte npm-Abhängigkeiten installieren."
-}
-
-# Zusätzliche Überprüfungen
-Write-Result "`nZusätzliche Systemüberprüfungen:"
-Write-Result "-------------------------------------------"
-
-# Überprüfung des Windows-Betriebssystems
-Write-Result "Windows-Betriebssystem:"
-$osVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductName
-Write-Result $osVersion
-
-# Überprüfung der IntelliJ IDEA Installation
-Write-Result "IntelliJ IDEA Version:"
-$intelliJVersion = Get-ItemProperty "HKLM:\SOFTWARE\JetBrains\IntelliJ IDEA"
-Write-Result $intelliJVersion.DisplayName
-
-# Unternehmens-Proxy Zertifikat
-Write-Result "Unternehmens-Proxy Zertifikat:"
-if (Test-Path "Cert:\LocalMachine\Root\<ProxyCertThumbprint>") {
-    Write-Result "Das Unternehmens-Proxy Zertifikat ist installiert."
-} else {
-    Write-Result "Das Unternehmens-Proxy Zertifikat fehlt."
-}
-
-# Überprüfung der SSH-Schlüssel für GitHub
-Write-Result "SSH-Schlüssel für GitHub:"
-if (Test-Path "$env:USERPROFILE\.ssh\id_rsa.pub") {
-    Write-Result "SSH-Schlüssel ist vorhanden."
-} else {
-    Write-Result "SSH-Schlüssel fehlt."
-}
-
-# Überprüfung, ob SSH-Agent läuft
-Write-Result "SSH-Agent Status:"
-$sshAgentStatus = Get-Service -Name ssh-agent -ErrorAction SilentlyContinue
-if ($sshAgentStatus.Status -eq "Running") {
-    Write-Result "SSH-Agent ist gestartet."
-} else {
-    Write-Result "SSH-Agent läuft nicht."
-}
-
-# Überprüfung der .gitconfig-Einträge
-Write-Result "Überprüfung der .gitconfig-Einträge:"
-if (Test-Path "$env:USERPROFILE\.gitconfig") {
-    Get-Content "$env:USERPROFILE\.gitconfig" | Out-File -FilePath $outputFile -Append
-} else {
-    Write-Result ".gitconfig Datei fehlt."
-}
-
-# Überprüfung der Konfigurationsdateien im .idea-Verzeichnis
-Write-Result "Überprüfung der Konfigurationsdateien im .idea-Verzeichnis:"
-$ideaFiles = @("misc.xml", "modules.xml", "workspace.xml")
-foreach ($file in $ideaFiles) {
-    if (Test-Path "${homeDir}data_suite\.idea\$file") {
-        Write-Result "$file ist vorhanden."
-    } else {
-        Write-Result "$file fehlt."
-    }
-}
-
-# Netzzugriff überprüfen
-Write-Result "Überprüfung des Netzzugriffs:"
-$urls = @(
-    "https://www.npmjs.com",
-    "https://www.azul.com/downloads/#zulu",
-    "https://www.github.com",
-    "https://webpack.js.org",
-    "https://pypi.org/project/pdf-utils",
-    "https://pypi.org/project/chardet"
-)
-
-foreach ($url in $urls) {
+# Funktion zur Überprüfung der Git-Installation und Konfiguration
+function Check-GitInstallation {
+    Show-Progress -currentTask "Überprüfung der Git-Installation" -currentStep 1
+    Write-Result "Überprüfung der Git-Installation und Konfiguration:"
+    Write-Result "-------------------------------------------"
     try {
-        $request = Invoke-WebRequest -Uri $url -UseBasicParsing
-        if ($request.StatusCode -eq 200) {
-            Write-Result "$url ist erreichbar."
+        $gitVersion = git --version 
+        Write-Result "Git Version: $gitVersion"
+    } catch {
+        Write-Result "Fehler bei der Überprüfung der Git-Version: $_"
+    }
+    try {
+        if (-not $gitUserName) {
+            $gitUserName = git config --global user.name
+        }
+        Write-Result "Git Benutzername: $gitUserName"
+    } catch {
+        Write-Result "Fehler beim Abrufen des Git-Benutzernamens: $_"
+    }
+    try {
+        if (-not $gitUserEmail) {
+            $gitUserEmail = git config --global user.email
+        }
+        Write-Result "Git Benutzer E-Mail: $gitUserEmail"
+    } catch {
+        Write-Result "Fehler beim Abrufen der Git-Benutzer-E-Mail: $_"
+    }
+}
+
+# Funktion zur Überprüfung der Verzeichnisse und bestehenden Git-Repositories
+function Check-DirectoriesAndGitRepos {
+    Show-Progress -currentTask "Überprüfung der Verzeichnisse und Git-Repositories" -currentStep 2
+    Write-Result "`nÜberprüfung der Verzeichnisse und bestehenden Git-Repositories:"
+    Write-Result "-------------------------------------------"
+    if (Test-Path "${homeDir}data_suite") {
+        Write-Result "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
+    } else {
+        Write-Result "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
+    }
+    if (Test-Path "${homeDir}data_suite\.git") {
+        Write-Result "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
+    } else {
+        Write-Result "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
+    }
+}
+
+# Funktion zur Überprüfung relevanter Applikationen und Verzeichnisse
+function Check-ApplicationsAndDirectories {
+    Show-Progress -currentTask "Überprüfung relevanter Applikationen und Verzeichnisse" -currentStep 3
+    Write-Result "`nÜberprüfung relevanter Applikationen und Verzeichnisse:"
+    Write-Result "-------------------------------------------"
+    if (Test-Path "${homeDir}data_suite\venv") {
+        Write-Result "Das Verzeichnis 'venv' existiert bereits."
+    } else {
+        Write-Result "Das Verzeichnis 'venv' existiert nicht. Es muss erstellt werden."
+    }
+
+    if (Get-Module -ListAvailable -Name chardet) {
+        Write-Result "Die 'chardet' Bibliothek ist installiert."
+    } else {
+        Write-Result "Die 'chardet' Bibliothek ist nicht installiert. Bitte installieren."
+    }
+
+    $ocrDir = "${homeDir}data_suite\ocr_enricher\src"
+    if (Test-Path $ocrDir) {
+        Write-Result "Das Verzeichnis '$ocrDir' existiert."
+        if (Test-Path "$ocrDir\OCR_Enricher.ps1" -and Test-Path "$ocrDir\pdf_utils.py") {
+            Write-Result "Die erforderlichen Dateien im OCR-Manager-Verzeichnis sind vorhanden."
+        } else {
+            Write-Result "Eine oder mehrere erforderliche Dateien im OCR-Manager-Verzeichnis fehlen."
+        }
+    } else {
+        Write-Result "Das Verzeichnis '$ocrDir' existiert nicht."
+    }
+
+    $submodules = @("ocr_enricher", "template_center", "text_anonymizer", "html_b2b_form")
+    foreach ($module in $submodules) {
+        $filePath = "${homeDir}data_suite\$module\requirements.txt"
+        if (Test-Path $filePath) {
+            Write-Result "Die Datei 'requirements.txt' ist im Submodul '$module' vorhanden."
+        } else {
+            Write-Result "Die Datei 'requirements.txt' fehlt im Submodul '$module'."
+        }
+    }
+
+    $zuluDir = "${homeDir}data_suite\zulu"
+    if (Test-Path $zuluDir) {
+        Write-Result "Das Verzeichnis '$zuluDir' existiert."
+    } else {
+        Write-Result "Das Verzeichnis '$zuluDir' existiert nicht. Das Zulu JDK muss installiert werden."
+    }
+
+    $npmDir = "${homeDir}data_suite\venv\node_modules"
+    if (Test-Path $npmDir) {
+        Write-Result "Die npm-Abhängigkeiten sind in der virtuellen Umgebung installiert."
+    } else {
+        Write-Result "Die npm-Abhängigkeiten sind nicht installiert. Bitte npm-Abhängigkeiten installieren."
+    }
+}
+
+# Funktion zur Überprüfung zusätzlicher Systeminformationen
+function Check-AdditionalSystemInfo {
+    Show-Progress -currentTask "Überprüfung zusätzlicher Systeminformationen" -currentStep 4
+    Write-Result "`nZusätzliche Systemüberprüfungen:"
+    Write-Result "-------------------------------------------"
+
+    # Überprüfung des Windows-Betriebssystems
+    Write-Result "Windows-Betriebssystem:"
+    $osVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption
+    Write-Result $osVersion
+
+    # Überprüfung der IntelliJ IDEA Installation (über Registry)
+    Write-Result "IntelliJ IDEA Version:"
+    try {
+        $intelliJPath = Get-ItemProperty -Path $intelliJRegistryPath -ErrorAction SilentlyContinue
+        if ($intelliJPath) {
+            Write-Result "Gefundene JetBrains Produkte:"
+            $intelliJPath | ForEach-Object {
+                Write-Result "Produkt: $($_.DisplayName) Version: $
+
+($_.DisplayVersion)"
+            }
+        } else {
+            Write-Result "Keine JetBrains Produkte gefunden."
         }
     } catch {
-        Write-Result "$url ist nicht erreichbar."
+        Write-Result "Fehler beim Zugriff auf die JetBrains-Registry: $_"
+    }
+
+    # Unternehmens-Proxy Zertifikat
+    Write-Result "Unternehmens-Proxy Zertifikat:"
+    if (Test-Path $proxyCertPath) {
+        Write-Result "Das Unternehmens-Proxy Zertifikat ist vorhanden: $proxyCertPath"
+    } else {
+        Write-Result "Das Unternehmens-Proxy Zertifikat fehlt."
+    }
+
+    # Überprüfung der SSH-Schlüssel für GitHub
+    Write-Result "SSH-Schlüssel für GitHub:"
+    if (Test-Path "$env:USERPROFILE\.ssh\id_rsa.pub") {
+        Write-Result "SSH-Schlüssel ist vorhanden."
+    } else {
+        Write-Result "SSH-Schlüssel fehlt."
+    }
+
+    # Überprüfung, ob SSH-Agent läuft (über Prozessliste)
+    Write-Result "SSH-Agent Status:"
+    if (Get-Process ssh-agent -ErrorAction SilentlyContinue) {
+        Write-Result "SSH-Agent ist gestartet."
+    } else {
+        Write-Result "SSH-Agent läuft nicht."
+    }
+
+    # Überprüfung der .gitconfig-Einträge
+    Write-Result "Überprüfung der .gitconfig-Einträge:"
+    if (Test-Path "$env:USERPROFILE\.gitconfig") {
+        Get-Content "$env:USERPROFILE\.gitconfig" | Out-File -FilePath $outputFile -Append
+    } else {
+        Write-Result ".gitconfig Datei fehlt."
+    }
+
+    # Überprüfung der Konfigurationsdateien im .idea-Verzeichnis
+    Write-Result "Überprüfung der Konfigurationsdateien im .idea-Verzeichnis:"
+    $ideaFiles = @("misc.xml", "modules.xml", "workspace.xml")
+    foreach ($file in $ideaFiles) {
+        if (Test-Path "${homeDir}data_suite\.idea\$file") {
+            Write-Result "$file ist vorhanden."
+        } else {
+            Write-Result "$file fehlt."
+        }
     }
 }
 
-# DNS-Auflösung für GitHub überprüfen
-Write-Result "Überprüfung der DNS-Auflösung für GitHub:"
-try {
-    [System.Net.Dns]::GetHostAddresses("www.github.com") | Out-Null
-    Write-Result "DNS-Auflösung für GitHub erfolgreich."
-} catch {
-    Write-Result "DNS-Auflösung für GitHub fehlgeschlagen."
+# Funktion zur Überprüfung des Netzzugriffs
+function Check-NetworkAccess {
+    Show-Progress -currentTask "Überprüfung des Netzzugriffs" -currentStep 5
+    Write-Result "`nÜberprüfung des Netzzugriffs:"
+    Write-Result "-------------------------------------------"
+
+    $urls = @(
+        "https://www.jetbrains.com",
+        "https://www.npmjs.com",
+        "https://www.azul.com",
+        "https://www.github.com",
+        "https://webpack.js.org",
+        "https://pypi.org"
+    )
+
+    foreach ($url in $urls) {
+        try {
+            $response = Invoke-WebRequest -Uri $url -UseBasicParsing -ErrorAction Stop
+            Write-Result "Zugriff auf $url erfolgreich. Statuscode: $($response.StatusCode)"
+        } catch {
+            Write-Result "Fehler beim Zugriff auf $url: $_"
+        }
+    }
 }
+
+# Hauptskript ausführen
+Check-GitInstallation
+Check-DirectoriesAndGitRepos
+Check-ApplicationsAndDirectories
+Check-AdditionalSystemInfo
+Check-NetworkAccess
+
+Write-Result "`nSystemcheck abgeschlossen."
 ```
 
 #### Step-by-Step Liste zur Installation und Konfiguration
