@@ -146,7 +146,7 @@ Data_Suite/
 7. **Unternehmens-Proxy-Zertifikat:**
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
    - Das Zertifikat muss lokal in die Zertifikatsverwaltung importiert werden, um die Kommunikation über den Proxy zu ermöglichen.
-   - Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
+   - Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup) beschrieben.
    - [Proxy-Dienst](#pxexe-proxy-dienst)
 
 #### Komponenten und Berechtigungen
@@ -169,7 +169,7 @@ Data_Suite/
      - Statt HTTP_PROXY und HTTPS_PROXY separat zu konfigurieren, wird px.exe als lokaler Proxy-Dienst verwendet, der alle Proxy-Anfragen zentral über einen Port weiterleitet.
      - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
      - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
-     - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt „Proxy-Dienst einrichten“.
+     - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup).
      -[Proxy-Dienst](#pxexe-proxy-dienst).	
   
        
@@ -184,7 +184,7 @@ Data_Suite/
      - https://webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
      - https://pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
      - https://pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
-   - Weitere Details zur Proxy-Konfiguration und benötigten Berechtigungen finden sich in Abschnitt 6 Step 11 „Proxy-Dienst einrichten“.
+   - Weitere Details zur Proxy-Konfiguration und benötigten Berechtigungen finden sich in Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup).
 
 **Quellen:**
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
@@ -281,7 +281,7 @@ Data_Suite/
 ### 3.4 **CA-Zertifikate hinzufügen:**
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird über px.exe zentral verwaltet, was die manuelle Integration in einzelne Anwendungen überflüssig macht.
    - Stelle sicher, dass das Zertifikat in die lokale Zertifikatsverwaltung importiert wird, damit es von px.exe genutzt werden kann.
-   - detaillierte Vorgehensweise zur Zertifikatsintegration in px.exe ist im Abschnitt „Proxy-Dienst einrichten“ beschrieben.
+   - detaillierte Vorgehensweise zur Zertifikatsintegration in px.exe ist im Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup) beschrieben.
    - [Proxy-Dienst](#pxexe-proxy-dienst)
 
 ### 4. GIT Setup Main
@@ -710,6 +710,7 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
    git submodule init
    git submodule update
    ```
+<a name="proxy-setup"></a>
 #### 6.10 Proxy-Dienst einrichten
 
 **1. Installation von px.exe:**
