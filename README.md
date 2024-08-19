@@ -1150,26 +1150,69 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
 
      
 ### 10. Glossar
-**Repository (Repo)**
-- **Definition:** Ein Speicherort, in dem der gesamte Code, die Historie und die Konfigurationsdateien eines Projekts gespeichert werden.
-- **Verwendung im Leitfaden:** Das Data_Suite-Projekt und seine Submodule werden als Repositories auf GitHub gehostet.
-- **Besonderheiten:** Repositories ermöglichen die Nachverfolgung aller Änderungen im Code und bieten eine zentrale Quelle für die Zusammenarbeit.
-- **Vorteile:** Zentralisierte Speicherung, Versionskontrolle, einfache Zusammenarbeit.
+**Git Repository (Repository)**
+- **Definition:** Ein Git-Repository ist ein Speicherort, der alle Dateien, Verzeichnisse und die gesamte Historie eines Projekts umfasst, das mit Git, einem verteilten Versionskontrollsystem, verwaltet wird. Es enthält alle Versionen des Codes, einschließlich der gesamten Commit-Historie, Branches, Tags und Konfigurationsdateien.
+
+- **Verwendung:** In einem Git-Repository wird der Quellcode eines Projekts gespeichert und versioniert. Entwickler können den Code aus dem Repository klonen, daran arbeiten und Änderungen zurück in das Repository pushen. Das Repository dient als zentraler Ort, an dem der Projektcode gesichert und nachverfolgt wird.
+
+- **Relevanz im Projekt:** Im "Data_Suite"-Projekt wird ein Git-Repository verwendet, um den gesamten Projektcode zu speichern, inklusive der verschiedenen Submodule. Es ermöglicht mehreren Entwicklern, gemeinsam am Projekt zu arbeiten, während Git sicherstellt, dass alle Änderungen nachvollziehbar und kontrollierbar bleiben.
+
+- **Vorteile:**
+  - **Versionskontrolle:** Git speichert die komplette Historie aller Änderungen, wodurch frühere Versionen des Codes einfach wiederhergestellt werden können.
+  - **Kollaboration:** Mehrere Entwickler können gleichzeitig am selben Projekt arbeiten und ihre Änderungen in das zentrale Repository einpflegen.
+  - **Nachvollziehbarkeit:** Jede Änderung am Code wird mit einem Commit versehen, der Informationen darüber enthält, wer was wann geändert hat.
+
+- **Best Practices:**
+  - **Regelmäßige Commits:** Änderungen sollten häufig und in sinnvollen Einheiten (Commits) ins Repository übertragen werden, um eine klare Versionshistorie zu haben.
+  - **Aussagekräftige Commit-Nachrichten:** Jede Commit-Nachricht sollte klar und präzise beschreiben, was geändert wurde und warum, um die Historie nachvollziehbar zu halten.
+  - **Branch-Management:** Es ist empfehlenswert, Feature-Branches zu verwenden, um neue Funktionen zu entwickeln und diese erst nach erfolgreicher Fertigstellung in den Hauptzweig zu integrieren.
+
+- **Herausforderungen:**
+  - **Konflikte:** Wenn mehrere Entwickler gleichzeitig am selben Code arbeiten, können Merge-Konflikte auftreten, die manuell gelöst werden müssen.
+  - **Größe des Repositories:** Bei großen Projekten kann das Repository sehr groß werden, was die Klon- und Pull-Zeiten erhöht. Daher sollte das Repository regelmäßig gepflegt und unnötige Dateien ausgeschlossen werden.
 
 **Submodule**
-- **Definition:** Ein Git-Repository, das innerhalb eines anderen Git-Repositorys enthalten ist.
-- **Verwendung im Leitfaden:** Submodule wie OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form sind Teile des Data_Suite-Projekts.
-- **Besonderheiten:** Ermöglichen die Integration und Verwaltung externer Projekte innerhalb eines Hauptprojekts.
-- **Vorteile:** Wiederverwendbarkeit von Code, Modularität.
-- **Nachteile:** Komplexere Verwaltung und Aktualisierung, potenzielle Synchronisierungsprobleme.
+- **Definition:** Ein Submodul ist ein Git-Repository, das innerhalb eines anderen Git-Repositorys (dem sogenannten "Superprojekt") als Unterverzeichnis eingebunden ist. Submodule ermöglichen es, separate Code-Basen in einem Hauptprojekt zu integrieren, ohne den Quellcode direkt in das Hauptprojekt zu kopieren. Dies erleichtert die Verwaltung und Wiederverwendung von gemeinsam genutzten Code-Komponenten über verschiedene Projekte hinweg.
+
+- **Verwendung:** Submodule werden verwendet, um Abhängigkeiten oder Komponenten eines Projekts als eigenständige Git-Repositories zu behandeln. Dadurch können sie unabhängig entwickelt und versioniert werden, während sie trotzdem nahtlos in das Hauptprojekt integriert sind. Submodule sind besonders nützlich, wenn verschiedene Teile eines Projekts von unterschiedlichen Teams entwickelt werden oder wenn bestimmte Komponenten in mehreren Projekten verwendet werden sollen.
+
+- **Relevanz im Projekt:** Im "Data_Suite"-Projekt werden Submodule verwendet, um separate funktionale Einheiten wie den OCR-Manager, das Template-Center oder den Text-Anonymizer als eigenständige Code-Basen zu verwalten. Diese Struktur ermöglicht es, die Entwicklung und Wartung dieser Komponenten zu modularisieren, was die Zusammenarbeit und das Management von Abhängigkeiten erleichtert.
+
+- **Vorteile:**
+  - **Modularität:** Submodule ermöglichen eine klare Trennung von Code-Komponenten, was die Wiederverwendbarkeit und Wartbarkeit verbessert.
+  - **Unabhängige Versionierung:** Jede Komponente kann in ihrem eigenen Repository versioniert werden, was die Nachverfolgbarkeit und Verwaltung von Änderungen erleichtert.
+  - **Konsistenz:** Submodule stellen sicher, dass das Hauptprojekt immer auf eine spezifische Version des eingebundenen Moduls verweist, was Konsistenz in der Entwicklung und im Betrieb gewährleistet.
+
+- **Best Practices:**
+  - **Synchronisation:** Es ist wichtig, Submodule regelmäßig zu aktualisieren und sicherzustellen, dass die im Superprojekt referenzierten Versionen aktuell und funktionsfähig sind.
+  - **Klare Dokumentation:** Die Verwendung von Submodulen sollte gut dokumentiert werden, insbesondere wie sie aktualisiert und in das Hauptprojekt integriert werden.
+  - **Verwendung von Branches:** Bei der Verwendung von Submodulen ist es ratsam, stabile Branches zu referenzieren, um unerwartete Änderungen zu vermeiden.
+
+- **Herausforderungen:**
+  - **Komplexität:** Die Verwaltung von Submodulen kann komplex sein, insbesondere wenn viele Submodule oder tief verschachtelte Abhängigkeiten vorhanden sind.
+  - **Zusätzlicher Aufwand:** Submodule erfordern zusätzliche Schritte bei der Initialisierung und Aktualisierung, was die Entwicklungsprozesse etwas verlangsamen kann.
 
 **Branch**
-- **Definition:** Eine parallele Version eines Repositories, die unabhängig von der Hauptlinie der Entwicklung geändert werden kann.
-- **Verwendung im Leitfaden:** Branches werden genutzt, um neue Features zu entwickeln oder Bugs zu beheben, ohne die stabile Version des Projekts zu beeinflussen.
-- **Besonderheiten:** Erlauben es, verschiedene Entwicklungsstränge zu pflegen und später zusammenzuführen.
-- **Vorteile:** Isolierte Entwicklung, risikofreie Experimente.
-- **Nachteile:** Potenzielle Konflikte beim Zusammenführen (Mergen).
-  
+- **Definition:** Ein Branch (oder Zweig) ist eine parallele Entwicklungsinstanz innerhalb eines Git-Repositorys. Branches ermöglichen es, Änderungen an der Codebasis isoliert von der Hauptentwicklungslinie durchzuführen. Jeder Branch kann unabhängig entwickelt und modifiziert werden, bevor er in den Hauptzweig (häufig "main" oder "master" genannt) integriert wird.
+
+- **Verwendung:** Branches werden verwendet, um neue Features zu entwickeln, Bugs zu beheben oder Experimente durchzuführen, ohne die Stabilität der Hauptcodebasis zu gefährden. Durch das Arbeiten in einem Branch können Entwickler Änderungen vornehmen, testen und verfeinern, bevor diese Änderungen mit dem Hauptprojekt zusammengeführt (gemergt) werden.
+
+- **Relevanz im Projekt:** Im "Data_Suite"-Projekt ermöglichen Branches den Entwicklern, parallel an verschiedenen Features oder Korrekturen zu arbeiten, ohne dass diese sich gegenseitig beeinflussen. So kann zum Beispiel ein Feature-Branch für die Entwicklung eines neuen Moduls erstellt werden, während auf einem anderen Branch Fehlerbehebungen vorgenommen werden. Sobald ein Branch stabil ist, wird er in den Hauptzweig integriert.
+
+- **Vorteile:**
+  - **Isolierte Entwicklung:** Branches ermöglichen die parallele Entwicklung ohne das Risiko, den stabilen Code zu beeinträchtigen.
+  - **Flexibilität:** Branches bieten die Flexibilität, verschiedene Ansätze auszuprobieren, bevor sie in den Hauptzweig integriert werden.
+  - **Zusammenarbeit:** Mehrere Entwickler können gleichzeitig an verschiedenen Branches arbeiten und ihre Änderungen später zusammenführen.
+
+- **Best Practices:**
+  - **Konsistente Namensgebung:** Branches sollten klar und konsistent benannt werden, um ihre Funktion oder den Zweck zu kennzeichnen (z.B. `feature/login`, `bugfix/issue-123`).
+  - **Regelmäßiges Merging:** Branches sollten regelmäßig mit dem Hauptzweig oder anderen relevanten Branches synchronisiert werden, um Merge-Konflikte zu minimieren.
+  - **Verwendung von Feature-Branches:** Für jedes neue Feature oder jede signifikante Änderung sollte ein separater Branch erstellt werden, um die Entwicklung und den Integrationsprozess zu vereinfachen.
+
+- **Herausforderungen:**
+  - **Merge-Konflikte:** Beim Zusammenführen (Merging) von Branches können Konflikte auftreten, wenn dieselben Teile des Codes in verschiedenen Branches geändert wurden. Diese Konflikte müssen manuell gelöst werden.
+  - **Veraltete Branches:** Branches, die nicht regelmäßig aktualisiert werden, können schnell veralten, was das Zusammenführen schwieriger macht.
+
 **SSH (Secure Shell)**
 - **Definition:** SSH (Secure Shell) ist ein Protokoll, das verschlüsselte Kommunikation zwischen Computern ermöglicht und für die sichere Übertragung von Daten sowie die Remote-Verwaltung von Systemen verwendet wird. In der Softwareentwicklung wird SSH häufig für die sichere Authentifizierung und den Zugriff auf entfernte Git-Repositories, wie GitHub, eingesetzt.
 - **Relevanz im Projekt:** Im vorliegenden Projekt wird SSH verwendet, um eine sichere Verbindung zwischen der lokalen Entwicklungsumgebung und GitHub herzustellen. Diese Verbindung ist notwendig, um Quellcode aus dem Repository zu klonen, Änderungen zu pushen und neue Branches zu erstellen, ohne dass Passwörter über unsichere Kanäle übertragen werden.
@@ -1197,45 +1240,131 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
 
 - **Best Practices:** Es ist ratsam, für jedes Submodul entweder separate virtuelle Umgebungen zu verwenden oder sicherzustellen, dass alle Submodule kompatible Abhängigkeiten nutzen, die in einer gemeinsamen virtuellen Umgebung verwaltet werden. Regelmäßige Aktualisierung der `requirements.txt`-Dateien und deren Verwaltung im Versionskontrollsystem sind essenziell, um sicherzustellen, dass alle Entwickler mit den gleichen Versionen der Abhängigkeiten arbeiten. Dies unterstützt eine konsistente und problemfreie Entwicklung.
 
-**jinja2**
-- **Definition:** Ein modernes und flexibles Templating-System für Python, das es ermöglicht, HTML, XML oder andere Markup-Sprachen im Textformat zu generieren.
-- **Verwendung im Leitfaden:** Jinja2 wird verwendet, um dynamische Inhalte in HTML-Dateien für das Data_Suite-Projekt zu erzeugen.
-- **Besonderheiten:** Bietet leistungsstarke Template-Erweiterungsmechanismen und Steuerungsstrukturen.
-- **Vorteile:** Flexible und wiederverwendbare Templates, einfache Integration in Webanwendungen.
-- **Nachteile:** Lernkurve für neue Benutzer, Performance-Overhead bei komplexen Templates.
+**px.exe (Proxy-Dienst)**
+- **Definition:** px.exe ist ein lokaler Proxy-Dienst für Windows, der HTTP- und HTTPS-Anfragen von Anwendungen entgegennimmt und sie an einen definierten Unternehmens-Proxy-Server weiterleitet. Der Dienst ermöglicht die Nutzung von Unternehmensnetzwerken, die eine Authentifizierung über einen Proxy erfordern, ohne dass Benutzer ihre Anmeldedaten manuell eingeben müssen.
 
-**HTTP_PROXY**
-- **Definition:** Umgebungsvariable, die den HTTP-Proxy-Server spezifiziert, der für HTTP-Anfragen verwendet werden soll.
-- **Verwendung im Leitfaden:** HTTP_PROXY wird konfiguriert, um Netzwerkverkehr durch einen Proxy zu leiten, insbesondere in einer Unternehmensumgebung mit Firewall-Beschränkungen.
-- **Besonderheiten:** Notwendig für den Zugriff auf das Internet hinter einem Unternehmensproxy.
-- **Vorteile:** Ermöglicht die Verbindung zu externen Ressourcen trotz Netzwerkbeschränkungen. 
+- **Funktionsweise:** px.exe arbeitet als lokaler Vermittler zwischen Anwendungen und dem Unternehmens-Proxy. Es fungiert als zentraler Proxy-Agent, der automatisch die im Windows-System gespeicherten Anmeldedaten verwendet (Windows-Authentifizierung). Dadurch wird die manuelle Konfiguration von Proxy-Einstellungen in jeder einzelnen Anwendung überflüssig. px.exe nimmt Anfragen auf einem konfigurierten Port (standardmäßig 3128) entgegen, authentifiziert sich automatisch am Unternehmens-Proxy und leitet die Anfragen weiter.
 
-**pip install <package-name>**
-- **Definition:** Ein Befehl des Python-Paketmanagers `pip`, der ein bestimmtes Python-Paket aus dem Python Package Index (PyPI) installiert.
-- **Verwendung im Leitfaden:** Dieser Befehl wird verwendet, um die notwendigen Abhängigkeiten für das Data_Suite-Projekt zu installieren.
-- **Besonderheiten:** Installiert Pakete und deren Abhängigkeiten in die aktuelle Python-Umgebung.
-- **Vorteile:** Einfache Paketverwaltung, Zugriff auf eine große Anzahl von Bibliotheken.
-- **Nachteile:** Abhängigkeit von der Verfügbarkeit von Paketen in PyPI, potenzielle Konflikte bei Paketversionen.
+- **Einsatz im Projekt:** In einem Projekt wie "Data_Suite", bei dem mehrere Anwendungen wie Git und IntelliJ IDEA auf externe Ressourcen zugreifen müssen, stellt px.exe eine einfache und konsistente Lösung für die Proxy-Konfiguration dar. Durch die zentrale Verwaltung der Proxy-Einstellungen über px.exe wird sichergestellt, dass alle Anwendungen einheitlich über den Unternehmens-Proxy kommunizieren, ohne dass individuelle Konfigurationen nötig sind.
+
+- **Konfiguration:** px.exe wird über eine Konfigurationsdatei namens `px.ini` gesteuert, in der die Parameter für den Proxy-Server, die Authentifizierung und den lokalen Port festgelegt werden. Diese Datei kann bei Bedarf angepasst werden, um spezielle Anforderungen zu erfüllen, wie z. B. die Nutzung bestimmter Zertifikate oder die Anpassung von Timeout-Werten. px.exe kann bei Systemstart automatisch ausgeführt werden, um sicherzustellen, dass alle Anfragen abgedeckt sind.
+
+- **Vorteile:** 
+  - **Automatisierte Authentifizierung:** px.exe nutzt die gespeicherten Windows-Anmeldedaten, wodurch die manuelle Eingabe von Benutzername und Passwort entfällt.
+  - **Zentrale Verwaltung:** Alle Proxy-bezogenen Einstellungen können zentral in px.exe verwaltet werden, was die Einrichtung und Pflege von Entwicklungsumgebungen vereinfacht.
+  - **Kompatibilität:** px.exe kann mit jeder Anwendung verwendet werden, die HTTP- oder HTTPS-Anfragen stellt, und ist besonders nützlich in Unternehmensumgebungen mit strikten Netzwerksicherheitsrichtlinien.
+
+- **Nachteile:** 
+  - **Initiale Konfiguration:** Die Einrichtung von px.exe erfordert ein gewisses Maß an technischer Kenntnis, insbesondere bei der Anpassung der `px.ini`-Datei für spezifische Unternehmensanforderungen.
+  - **Fehlende Transparenz:** Da px.exe automatisch Anmeldedaten verwendet und im Hintergrund arbeitet, können Fehler bei der Authentifizierung oder Netzwerkprobleme schwerer zu diagnostizieren sein.
+
+- **Best Practices:** Es wird empfohlen, die `px.ini`-Konfigurationsdatei regelmäßig zu überprüfen und anzupassen, insbesondere wenn sich die Proxy-Umgebung des Unternehmens ändert. Zusätzlich sollten alle Anwendungen, die auf externe Ressourcen zugreifen, so konfiguriert werden, dass sie den lokalen px.exe-Proxy verwenden, um sicherzustellen, dass alle Verbindungen konsistent und sicher sind.
+
+**Jinja2**
+- **Definition:** Jinja2 ist eine moderne und flexible Template-Engine für Python, die es ermöglicht, dynamische Inhalte in HTML, XML oder anderen textbasierten Formaten zu erstellen. Es wird häufig verwendet, um wiederverwendbare Templates zu definieren, die dann mit Daten gefüllt werden, um HTML-Seiten, E-Mails oder andere textbasierte Ausgaben zu generieren.
+
+- **Verwendung:** In Python-Projekten, insbesondere bei der Entwicklung von Webanwendungen, wird Jinja2 verwendet, um Templates zu erstellen, die dynamisch generierte Inhalte enthalten. Jinja2 trennt die Präsentationslogik (wie HTML) vom Python-Code, was die Strukturierung und Wartung von Projekten erleichtert.
+
+- **Relevanz im Projekt:** Im "Data_Suite"-Projekt kann Jinja2 verwendet werden, um HTML-Templates für die Generierung von Berichten, E-Mails oder anderen textbasierten Ausgaben zu erstellen. Durch die Verwendung von Jinja2 können wiederverwendbare Vorlagen definiert werden, die je nach Bedarf mit unterschiedlichen Daten befüllt werden.
+
+- **Vorteile:**
+  - **Trennung von Logik und Darstellung:** Jinja2 ermöglicht es, die Darstellung von Daten (z.B. HTML) von der Geschäftslogik zu trennen, was zu einer klareren und modulareren Codebasis führt.
+  - **Wiederverwendbarkeit:** Durch die Definition von Templates können diese in verschiedenen Teilen der Anwendung wiederverwendet werden, was die Wartbarkeit verbessert.
+  - **Erweiterbarkeit:** Jinja2 bietet eine Vielzahl von Funktionen wie Schleifen, Bedingungen, Filter und Makros, die es ermöglichen, komplexe und dynamische Templates zu erstellen.
+
+- **Best Practices:**
+  - **Konsistente Struktur:** Organisieren Sie Ihre Templates in einer klaren und konsistenten Verzeichnisstruktur, um die Wartbarkeit zu erleichtern.
+  - **Nutzung von Makros:** Verwenden Sie Makros, um häufig wiederkehrende Template-Elemente zu kapseln und wiederverwendbar zu machen.
+  - **Sicherheitsaspekte:** Vermeiden Sie das direkte Einbinden von ungesicherten Daten in Templates, um Sicherheitslücken wie XSS (Cross-Site Scripting) zu verhindern. Jinja2 bietet standardmäßig automatische HTML-Escaping, was dieses Risiko mindert.
+
+- **Herausforderungen:**
+  - **Komplexität bei großen Projekten:** In großen Projekten mit vielen Templates kann es schwierig werden, die Übersicht zu behalten, wenn nicht auf eine saubere Strukturierung geachtet wird.
+  - **Leistung:** In sehr komplexen Templates kann die Verarbeitungsgeschwindigkeit zum Problem werden. Es ist ratsam, auf eine effiziente Template-Struktur zu achten.
+
+**Installation von Python-Paketen mit pip**
+- **Definition:** `pip` ist das offizielle Paketverwaltungstool für Python. Es wird verwendet, um Python-Pakete aus dem Python Package Index (PyPI) und anderen Repositories zu installieren, zu verwalten und zu aktualisieren. `pip` ist ein unverzichtbares Werkzeug für die Arbeit mit Python-Projekten, da es die Installation und Verwaltung von Bibliotheken und deren Abhängigkeiten vereinfacht.
+
+- **Verwendung:** Mit dem Befehl `pip install <package-name>` wird ein spezifisches Python-Paket installiert. Dieser Befehl lädt das Paket aus dem Standard-PyPI-Repository oder einer angegebenen Quelle herunter und installiert es in der aktuellen Python-Umgebung. Hierbei können auch mehrere Pakete gleichzeitig installiert werden, indem ihre Namen durch Leerzeichen getrennt werden.
+
+- **Beispiel:** 
+  ```console
+  pip install requests
+  ```
+  Dieser Befehl installiert die `requests`-Bibliothek, eine weit verbreitete Python-Bibliothek zur Arbeit mit HTTP-Anfragen.
+
+- **Relevanz im Projekt:** In Projekten wie "Data_Suite" wird `pip` verwendet, um alle benötigten Python-Bibliotheken zu installieren, die in der `requirements.txt`-Datei des Projekts aufgelistet sind. Dies stellt sicher, dass alle Entwickler dieselben Versionen von Bibliotheken verwenden, was die Konsistenz und Kompatibilität des Projekts gewährleistet.
+
+- **Vorteile:**
+  - **Einfachheit:** `pip` bietet eine einfache Möglichkeit, Pakete zu installieren und zu aktualisieren, ohne manuell nach Abhängigkeiten suchen zu müssen.
+  - **Verwaltung von Abhängigkeiten:** `pip` sorgt dafür, dass alle Abhängigkeiten eines Pakets automatisch mitinstalliert werden.
+  - **Aktualisierungen:** Mit `pip` können installierte Pakete einfach auf die neueste Version aktualisiert werden.
+
+- **Best Practices:**
+  - **Verwendung von `requirements.txt`:** Es ist ratsam, eine `requirements.txt`-Datei zu verwenden, um die Abhängigkeiten eines Projekts festzuhalten. Diese Datei kann mit dem Befehl `pip freeze > requirements.txt` erstellt werden.
+  - **Virtuelle Umgebungen:** Installationen sollten idealerweise in einer virtuellen Umgebung (`venv`) erfolgen, um Konflikte mit global installierten Paketen zu vermeiden und die Isolation des Projekts zu gewährleisten.
+  - **Regelmäßige Updates:** Halten Sie Pakete auf dem neuesten Stand, um von Sicherheitsupdates und neuen Funktionen zu profitieren. Dies kann mit dem Befehl `pip install --upgrade <package-name>` erfolgen.
 
 **Zulu JDK**
-- **Definition:** Eine zertifizierte, zu 100 % offene Version des Java Development Kit (JDK), basierend auf OpenJDK und unterstützt von Azul Systems.
-- **Verwendung im Leitfaden:** Zulu JDK wird als Java SDK verwendet, um Java-basierte Teile des Data_Suite-Projekts zu kompilieren und auszuführen.
-- **Besonderheiten:** Kompatibel mit allen Java SE-Standards und regelmäßigen Sicherheitsupdates.
-- **Vorteile:** Kostenlose Nutzung, kommerzielle Unterstützung verfügbar. 
+- **Definition:** Zulu JDK ist eine zertifizierte, vollständig offene Implementierung des Java Development Kit (JDK), die auf OpenJDK basiert. Es wird von Azul Systems gewartet und bietet eine kostenlose, kommerziell unterstützte Java-Plattform für die Entwicklung und den Betrieb von Java-Anwendungen. Zulu JDK ist kompatibel mit den Spezifikationen von Java SE (Standard Edition) und bietet alle Features und Funktionen, die man von einem JDK erwartet.
 
-**Markieren relevanter Verzeichnisse als Root, Test, Resources, etc.**
-- **Definition:** Eine Funktion in IntelliJ IDEA, um Verzeichnisse innerhalb eines Projekts als spezifische Quelltypen (z.B. `Sources Root`, `Test Sources Root`, `Resources`) zu kennzeichnen.
-- **Verwendung im Leitfaden:** Diese Markierungen helfen IntelliJ IDEA, den Code korrekt zu organisieren und zu verarbeiten, z.B. Testdateien von Produktionscode zu unterscheiden.
-- **Besonderheiten:** IntelliJ verwendet diese Markierungen, um den Inhalt zu indizieren und entsprechende Werkzeuge wie den Compiler oder die Laufzeitumgebung korrekt zu konfigurieren.
-- **Vorteile:** Verbesserte Projektorganisation, spezifische Werkzeuge für verschiedene Verzeichnistypen.
-- **Nachteile:** Falsche Markierungen können zu Fehlern bei der Kompilierung oder Laufzeit führen.
+- **Verwendung:** Zulu JDK wird in Entwicklungsprojekten eingesetzt, um Java-basierte Anwendungen zu kompilieren, auszuführen und zu debuggen. Es bietet eine stabile und zuverlässige Umgebung für die Entwicklung von Java-Anwendungen, die sowohl in Produktions- als auch in Entwicklungsumgebungen eingesetzt werden können.
 
-**Unit-Tests**
-- **Definition:** Automatisierte Tests, die einzelne Einheiten oder Komponenten einer Software isoliert und unabhängig voneinander testen, um sicherzustellen, dass sie korrekt funktionieren.
-- **Verwendung im Leitfaden:** Unit-Tests werden verwendet, um die Funktionalität einzelner Komponenten des Data_Suite-Projekts zu überprüfen und zu validieren.
-- **Besonderheiten:** Tests werden typischerweise für Funktionen, Methoden oder Klassen geschrieben und sollen alle möglichen Eingabewerte abdecken.
-- **Vorteile:** Frühzeitige Fehlererkennung, verbesserte Codequalität, erleichterte Refaktorisierung.
-- **Nachteile:** Erfordert zusätzlichen Aufwand für das Schreiben und Pflegen der Tests, mögliche Verzögerungen durch langsame Testausführung bei großen Testmengen.
+- **Relevanz im Projekt:** Im "Data_Suite"-Projekt wird Zulu JDK verwendet, um Java-basierte Module und Komponenten zu unterstützen. Es stellt sicher, dass die Java-Anwendungen auf einer zertifizierten und regelmäßigen sicherheitsgepatchten Plattform ausgeführt werden. Die Verwendung von Zulu JDK gewährleistet zudem die Kompatibilität mit anderen OpenJDK-basierten Projekten und bietet langfristige Unterstützung durch Azul Systems.
+
+- **Vorteile:**
+  - **Kostenlos und offen:** Zulu JDK ist kostenlos und open-source, was es ideal für den Einsatz in sowohl kleinen als auch großen Projekten macht.
+  - **Kommerzielle Unterstützung:** Azul Systems bietet kommerzielle Unterstützung für Zulu JDK, einschließlich regelmäßiger Sicherheitsupdates und Patches.
+  - **Breite Plattformunterstützung:** Zulu JDK ist auf verschiedenen Betriebssystemen verfügbar, darunter Windows, Linux und macOS, und unterstützt eine Vielzahl von Hardwarearchitekturen.
+  - **Kompatibilität:** Zulu JDK ist vollständig kompatibel mit Java SE-Standards, was eine reibungslose Entwicklung und Ausführung von Java-Anwendungen gewährleistet.
+
+- **Best Practices:**
+  - **Regelmäßige Updates:** Es wird empfohlen, regelmäßig nach neuen Versionen von Zulu JDK zu suchen und diese zu installieren, um von den neuesten Sicherheitsupdates und Features zu profitieren.
+  - **Einsatz in virtuellen Maschinen:** Für Projekte, die in verschiedenen Umgebungen ausgeführt werden, kann die Verwendung von Zulu JDK in Docker-Containern oder virtuellen Maschinen eine konsistente Laufzeitumgebung sicherstellen.
+  - **Konsistente Entwicklungsumgebung:** Entwickler sollten sicherstellen, dass alle Teammitglieder dieselbe Version des Zulu JDK verwenden, um Versionskonflikte und Inkompatibilitäten zu vermeiden.
+
+**Verzeichnismarkierung in der Entwicklungsumgebung**
+- **Definition:** Verzeichnismarkierung bezieht sich auf die Praxis in Entwicklungsumgebungen wie IntelliJ IDEA oder Visual Studio, bei der bestimmte Verzeichnisse innerhalb eines Projekts als besondere Kategorien von Quellcode oder Ressourcen markiert werden. Diese Markierungen helfen der IDE, die Struktur des Projekts zu verstehen und zu organisieren, sodass bestimmte Verzeichnisse unterschiedliche Behandlungen erfahren, wie z. B. das Kompilieren, das Ausführen von Tests oder das Laden von Ressourcen.
+
+- **Typische Markierungen:**
+  - **Source Root (Quellverzeichnis):** Das Verzeichnis, in dem sich der Hauptquellcode des Projekts befindet. Dateien in diesem Verzeichnis werden in der Regel kompiliert und ausgeführt.
+  - **Test Root (Testverzeichnis):** Verzeichnisse, die Testcode enthalten. Dateien in diesem Verzeichnis werden verwendet, um die Funktionalität des Quellcodes zu überprüfen und sicherzustellen, dass der Code korrekt arbeitet.
+  - **Resource Root (Ressourcenverzeichnis):** Verzeichnisse, die nicht-kompilierbare Ressourcen wie Konfigurationsdateien, Bilder oder andere statische Inhalte enthalten. Diese Dateien werden während der Ausführung des Programms geladen und verwendet.
+  - **Excluded (Ausgeschlossenes Verzeichnis):** Verzeichnisse, die von der IDE ignoriert werden sollen. Diese Dateien werden weder kompiliert noch in die Projektstruktur einbezogen.
+
+- **Relevanz im Projekt:** Die korrekte Markierung von Verzeichnissen in einem Projekt wie "Data_Suite" ist entscheidend, um sicherzustellen, dass die Entwicklungsumgebung den Code effizient und korrekt behandelt. Beispielsweise sorgt die Markierung eines Testverzeichnisses als "Test Root" dafür, dass Testframeworks wie JUnit oder pytest den darin enthaltenen Code korrekt ausführen.
+
+- **Vorteile:**
+  - **Erhöhte Übersichtlichkeit:** Durch die klare Unterscheidung von Quellcode, Testcode und Ressourcen wird die Projektstruktur übersichtlicher und besser wartbar.
+  - **Automatisierung:** Markierungen ermöglichen der Entwicklungsumgebung, automatisch die richtigen Werkzeuge und Einstellungen anzuwenden, z. B. das Testen von Code oder das Bereitstellen von Ressourcen.
+  - **Fehlervermeidung:** Die richtige Markierung hilft, typische Fehler zu vermeiden, wie z. B. das versehentliche Kompilieren von Testcode oder das Vergessen, Ressourcen in das Ausgabeverzeichnis zu kopieren.
+
+- **Best Practices:**
+  - **Klare Struktur:** Verzeichnisse sollten klar benannt und logisch organisiert sein, um eine intuitive Markierung und Nutzung zu ermöglichen.
+  - **Regelmäßige Überprüfung:** Die Markierungen sollten regelmäßig überprüft werden, insbesondere nach größeren Änderungen an der Projektstruktur, um sicherzustellen, dass sie weiterhin korrekt sind.
+  - **Dokumentation:** Es ist hilfreich, die Struktur und Markierung der Verzeichnisse in der Projektdokumentation festzuhalten, um neuen Entwicklern den Einstieg zu erleichtern.
+
+**Unit Test**
+- **Definition:** Ein Unit Test ist eine Methode des Softwaretestens, bei der einzelne "Units" oder kleinste funktionale Teile des Codes (z. B. Funktionen, Methoden, oder Klassen) isoliert geprüft werden, um sicherzustellen, dass sie korrekt funktionieren. Unit Tests sind die kleinste Testeinheit im Entwicklungsprozess und sollen garantieren, dass jede Komponente unabhängig von anderen korrekt arbeitet.
+
+- **Funktionsweise:** Unit Tests werden in der Regel automatisiert durchgeführt und sind so konzipiert, dass sie spezifische Eingaben an eine Codeeinheit übergeben und die Ausgaben mit den erwarteten Ergebnissen vergleichen. Wenn der Test fehlschlägt, deutet dies darauf hin, dass der Code fehlerhaft ist oder sich nicht wie erwartet verhält. Unit Tests werden häufig mithilfe von Test-Frameworks wie `unittest` (Python), `JUnit` (Java), oder `NUnit` (C#) implementiert.
+
+- **Einsatz im Projekt:** In einem komplexen Projekt wie "Data_Suite", das aus mehreren Submodulen besteht, spielen Unit Tests eine entscheidende Rolle. Sie stellen sicher, dass jede einzelne Komponente in den Submodulen zuverlässig arbeitet, bevor sie in größere Systeme integriert wird. Durch das frühe Erkennen von Fehlern in isolierten Einheiten wird die Fehlerbehebung erheblich erleichtert und die Wahrscheinlichkeit von Bugs in der finalen Anwendung reduziert.
+
+- **Vorteile:**
+  - **Frühe Fehlererkennung:** Unit Tests identifizieren Probleme im Code frühzeitig, bevor sie in die nächste Entwicklungsphase übergehen oder in die Produktion gelangen.
+  - **Erleichterte Refaktorisierung:** Da Unit Tests sicherstellen, dass bestehender Code weiterhin korrekt funktioniert, ermöglichen sie eine risikofreie Refaktorisierung und Verbesserung des Codes.
+  - **Dokumentation des Codes:** Unit Tests dokumentieren den erwarteten Gebrauch und die Funktionalität einer Codeeinheit, was das Verständnis und die Wartung des Codes erleichtert.
+  - **Erhöhte Codequalität:** Die regelmäßige Durchführung von Unit Tests trägt dazu bei, dass der Code stabiler und wartbarer ist.
+
+- **Nachteile:**
+  - **Wartungsaufwand:** Die Erstellung und Pflege von Unit Tests erfordert zusätzlichen Aufwand, insbesondere wenn der Code häufig geändert wird.
+  - **Isolationsproblem:** Da Unit Tests in Isolation durchgeführt werden, können sie keine Probleme erkennen, die durch die Interaktion zwischen verschiedenen Systemkomponenten entstehen.
+
+- **Best Practices:** 
+  - **Testabdeckung sicherstellen:** Eine hohe Testabdeckung ist entscheidend, um sicherzustellen, dass alle relevanten Codepfade getestet werden. Dies erhöht die Wahrscheinlichkeit, Fehler frühzeitig zu erkennen.
+  - **Regelmäßige Ausführung:** Unit Tests sollten regelmäßig ausgeführt werden, idealerweise als Teil eines Continuous Integration (CI) Prozesses, um sicherzustellen, dass der Code nach jeder Änderung weiterhin korrekt funktioniert.
+  - **Kleine, fokussierte Tests:** Jeder Unit Test sollte nur eine spezifische Funktionalität testen, um den Testfokus klar und die Fehlersuche im Fehlerfall einfach zu halten.
+  - **Mocking und Stubbing:** Nutzen von Mocks und Stubs, um Abhängigkeiten von externen Systemen zu isolieren und Unit Tests unabhängig von anderen Systemkomponenten auszuführen.
 
 ### 11. Anhang
 
