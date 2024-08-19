@@ -169,7 +169,7 @@ Data_Suite/
      - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
      - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
      - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt „Proxy-Dienst einrichten“.
-     - Links:[px.exe (Proxy-Dienst)](#pxexe-proxy-dienst).	
+     - Links:[px.exe (Proxy-Dienst)](px.exe (Proxy-Dienst)).	
   
        
 #### Netzwerk- und Ausführungsrechte
