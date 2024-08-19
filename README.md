@@ -141,7 +141,7 @@ Data_Suite/
 3. **IntelliJ IDEA:**
    - **Edition:** Ultimate 2024.1
 5. **Python virtuelle Umgebungen:**
-   - Details im Abschnitt 6 Step 4 "Virtuelle Umgebung einrichten" ([Virtuelle Umgebung (Virtual Environment)](#virtuelle-umgebung-virtual-environment))
+   - Details im Abschnitt 6 Step 4 ["Virtuelle Umgebung einrichten"](#venv-setup)
    - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts.
 7. **Unternehmens-Proxy-Zertifikat:**
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
@@ -560,7 +560,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 **Wichtiger Hinweis:** **Nach jeder Änderung am Skript muss die Signatur aktualisiert werden**, da die Änderung den Hash-Wert des Skripts verändert und die ursprüngliche Signatur ungültig macht. Führen Sie dazu die Schritte **6.3.1.4 bis 6.3.1.6** erneut aus, um sicherzustellen, dass das Skript weiterhin den Sicherheitsrichtlinien entspricht und ausgeführt werden kann.
 
-
+<a name="venv-setup"></a>
 #### 6.4 Virtuelle Umgebung einrichten
 
 Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten (siehe [venv](#virtual-environment) via [pip Installation](#pip-install)):
