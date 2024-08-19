@@ -453,8 +453,8 @@ Zwei Möglichkeiten stehen zur Verfügung, um die Installation und Konfiguration
 ##### 6.1.1 Automatisierte Überprüfung mit Skript
 
 1. **Skript zur Überprüfung der Installation und Konfiguration ausführen:**
-   - Das entsprechende Skript befindet sich im Anhang unter "Hilfs- und Prüfungs-Scripts/IntelliJ System-Check Powershell Script".
-   - Vor der Ausführung muss das Skript signiert werden (siehe [Abschnitt 6.3](#63-signieren-von-powershell-skripten-im-intellij-terminal) "Signieren von PowerShell-Skripten im IntelliJ Terminal").
+   - Das entsprechende Skript befindet sich im Anhang als ["IntelliJ System-Check Powershell Script"](#intellij-checkup).
+   - Vor der Ausführung muss das Skript signiert werden (siehe ["Signieren von PowerShell-Skripten im IntelliJ Terminal"](#script-sign-setup)).
    - Ausführung des Skripts im Terminal (PowerShell) oder direkt unter Windows:
      ```powershell
      .\intelliJ_system_check.ps1 -homeDir "U:\"
@@ -496,6 +496,7 @@ Um das Terminal in IntelliJ IDEA optimal zu nutzen, sind folgende Schritte erfor
 4. **Konfiguration testen:**
    - Das Terminal innerhalb von IntelliJ IDEA unter `View` -> `Tool Windows` -> `Terminal` öffnen und überprüfen, ob die Einstellungen korrekt übernommen wurden. Es sollte sichergestellt werden, dass PowerShell 7 verwendet wird.
 
+<a name="script-sign-setup"></a>
 ### 6.3 Signieren von PowerShell-Skripten im IntelliJ Terminal
 
 In gut gesicherten Unternehmensumgebungen ist es oft erforderlich, dass PowerShell-Skripte signiert werden, um ihre Integrität und Authentizität sicherzustellen. Eine digitale Signatur bestätigt, dass das Skript seit der Signierung nicht verändert wurde. **Jedes Mal, wenn ein Skript bearbeitet wird, ändert sich sein Hash-Wert, wodurch die ursprüngliche Signatur ungültig wird.** Daher muss das Skript nach jeder Änderung erneut signiert werden, um es weiterhin ausführen zu können. Dieser Abschnitt erläutert sowohl den Prozess der Erst-Signatur als auch die notwendige Aktualisierung der Signatur nach Codeänderungen ([Signieren](#signate-scripts)) 
@@ -1074,6 +1075,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
      $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
      ```
     - Erstellt ein neues selbstsigniertes Zertifikat für die Codesignatur.
+    - [„PowerShell Signatur einrichten“](#script-sign-setup)
   2. **Exportieren und Importieren des Zertifikats:**
      ```powershell
      Export-Certificate -Cert $cert -FilePath "C:\Users\VX\MyScriptSigningCert.cer"
@@ -1113,7 +1115,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
        ```
     - Stellt sicher, dass IntelliJ IDEA den Proxy korrekt verwendet.
-    - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6, „Proxy-Dienst einrichten“, überprüfen.
+    - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6,[„Proxy-Dienst einrichten“](#proxy-setup), überprüfen.
 
 ##### 9.2.2 Probleme bei der Nutzung von px.exe
 
@@ -1470,7 +1472,7 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 #### Hilfs- und Prüfungs-Scripts
 
 **1. Konfigurationsprüfung:**
-
+<a name="intellij-checkup"></a>
 - **IntelliJ System-Check Powershell Script:**  
 ### PowerShell-Skript: `intelliJ_system_check.ps1`
 
