@@ -932,14 +932,15 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
        cat ~/.ssh/id_rsa.pub
        ```
-       - Der Befehl `ssh-keygen` generiert einen neuen SSH-Schlüssel. Der Befehl `cat` zeigt den öffentlichen Schlüssel an, der zu GitHub hinzugefügt werden muss.
+    - Befehl `ssh-keygen` generiert einen neuen SSH-Schlüssel. Der Befehl `cat` zeigt den öffentlichen Schlüssel an, der zu GitHub hinzugefügt werden muss.
+      
      - Öffentlichen Schlüssel zu GitHub hinzufügen unter [SSH Keys](https://github.com/settings/keys).
      - SSH-Verbindung testen:
        ```console
        ssh -T git@github.com
        ```
-       - Der Befehl `ssh -T git@github.com` testet die Verbindung zu GitHub unter Verwendung des eingerichteten SSH-Schlüssels.
-
+    - Befehle`ssh -T git@github.com` testet die Verbindung zu GitHub unter Verwendung des eingerichteten SSH-Schlüssels.
+      
 2. **Fehler beim Pushen: `fatal: unable to access 'https://github.com/USER/REPO.git/': The requested URL returned error: 403`**
    - **Ursache:** Zugriffsrechte auf das Repository sind unzureichend.
    - **Lösung:** 
@@ -949,8 +950,8 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        git config --global user.name "your_username"
        git config --global user.email "your_email@example.com"
        ```
-       - Diese Befehle überprüfen und setzen den Git-Benutzernamen und die E-Mail-Adresse.
-
+    - Befehle überprüfen und setzen den Git-Benutzernamen und die E-Mail-Adresse.
+      
 3. **Fehler beim Mergen: `CONFLICT (content): Merge conflict in file.txt`**
    - **Ursache:** Änderungen in der gleichen Datei widersprechen sich.
    - **Lösung:** 
@@ -960,8 +961,8 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        git add file.txt
        git commit -m "Resolved merge conflict in file.txt"
        ```
-       - Der Befehl `git add` stagt die Datei nach der Behebung der Konflikte, und `git commit` speichert die Änderungen.
-
+    - Befehl `git add` stagt die Datei nach der Behebung der Konflikte, und `git commit` speichert die Änderungen.
+      
 4. **Fehler bei der Submodule-Aktualisierung: `fatal: no submodule mapping found in .gitmodules for path 'submodule_path'`**
    - **Ursache:** Die `.gitmodules`-Datei ist nicht korrekt konfiguriert oder wurde gelöscht.
    - **Lösung:** 
@@ -971,7 +972,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        git submodule init
        git submodule update
        ```
-       - Diese Befehle initialisieren die Submodule und aktualisieren sie auf den neuesten Stand.
+    - Befehle initialisieren die Submodule und aktualisieren sie auf den neuesten Stand.    
 
 ##### 9.1.2 Probleme bei der Nutzung von IntelliJ IDEA
 
@@ -982,7 +983,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ```console
        Help -> Find Action -> Safe Mode
        ```
-       - Der abgesicherte Modus deaktiviert Plugins, die möglicherweise die Ursache für das Problem sind.
+    - Der abgesicherte Modus deaktiviert Plugins, die möglicherweise die Ursache für das Problem sind.
 
 2. **Problem mit der virtuellen Umgebung: `Python interpreter not configured`**
    - **Ursache:** Die virtuelle Umgebung ist nicht korrekt eingerichtet oder aktiviert.
@@ -991,17 +992,17 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ```console
        python -m venv venv
        ```
-       - Dieser Befehl erstellt eine neue virtuelle Umgebung.
+    - Befehl erstellt eine neue virtuelle Umgebung.
      - Virtuelle Umgebung aktivieren:
        ```console
        venv\Scripts\activate
        ```
-       - Dieser Befehl aktiviert die virtuelle Umgebung unter Windows.
+    -  Befehl aktiviert die virtuelle Umgebung unter Windows.
      - Python Interpreter in IntelliJ IDEA konfigurieren:
        ```console
        File -> Settings -> Project: <project_name> -> Python Interpreter
        ```
-       - Hier wird der Python-Interpreter für das Projekt festgelegt.
+    - Hier wird der Python-Interpreter für das Projekt festgelegt.
 
 3. **Fehlerhafte Projektstruktur: `Cannot resolve symbol`**
    - **Ursache:** Quellverzeichnisse sind nicht korrekt markiert.
@@ -1019,7 +1020,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ```console
        File -> Settings -> Version Control -> Git
        ```
-       - Sicherstellen, dass der Pfad zur Git-Installation korrekt ist und keine Fehlkonfigurationen vorliegen.
+    - Sicherstellen, dass der Pfad zur Git-Installation korrekt ist und keine Fehlkonfigurationen vorliegen.
 
 #### 9.2 Probleme bei der Nutzung von IntelliJ IDEA und Terminals
 
@@ -1031,28 +1032,28 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
      ```powershell
      Get-ChildItem -Path Cert:\LocalMachine\Root | Where-Object {$_.Subject -eq "CN=MyScriptSigningCert"}
      ```
-     - Überprüft, ob das Zertifikat im Stammzertifikatspeicher vorhanden ist.
+    - Überprüft, ob das Zertifikat im Stammzertifikatspeicher vorhanden ist.
   2. **Hinzufügen des Zertifikats zu den vertrauenswürdigen Herausgebern:**
      ```powershell
      Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
      ```
-     - Fügt das Zertifikat zu den vertrauenswürdigen Herausgebern hinzu.
+    - Fügt das Zertifikat zu den vertrauenswürdigen Herausgebern hinzu.
   3. **Überprüfen, ob das Zertifikat für die Code-Signatur geeignet ist:**
      ```powershell
      $cert = Get-ChildItem -Path Cert:\CurrentUser\My\<Thumbprint>
      $cert.Extensions | Format-List
      ```
-     - Überprüft die Eignung des Zertifikats für die Code-Signatur.
+    - Überprüft die Eignung des Zertifikats für die Code-Signatur.
   4. **Skripte erneut signieren und das Vertrauen bestätigen:**
      ```powershell
      Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate $cert
      ```
-     - Signiert das Skript mit dem entsprechenden Zertifikat.
+    - Signiert das Skript mit dem entsprechenden Zertifikat.
   5. **Aktualisieren der PowerShell-Ausführungsrichtlinie:**
      ```powershell
      Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
      ```
-     - Setzt die Ausführungsrichtlinie auf "RemoteSigned", um die Ausführung signierter Skripte zu erlauben.
+    - Setzt die Ausführungsrichtlinie auf "RemoteSigned", um die Ausführung signierter Skripte zu erlauben.
   6. **Neustart der PowerShell-Sitzung und IntelliJ IDEA:** Dieser Schritt stellt sicher, dass alle Änderungen wirksam werden.
 
 **Problem 2: UnknownError beim Signieren eines Skripts**
@@ -1063,19 +1064,19 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
      ```powershell
      $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=MyScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
      ```
-     - Erstellt ein neues selbstsigniertes Zertifikat für die Codesignatur.
+    - Erstellt ein neues selbstsigniertes Zertifikat für die Codesignatur.
   2. **Exportieren und Importieren des Zertifikats:**
      ```powershell
      Export-Certificate -Cert $cert -FilePath "C:\Users\VX\MyScriptSigningCert.cer"
      Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
      Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
      ```
-     - Exportiert und importiert das Zertifikat, um es für die Signatur zu verwenden.
+    - Exportiert und importiert das Zertifikat, um es für die Signatur zu verwenden.
   3. **Signieren des Skripts:**
      ```powershell
      Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
      ```
-     - Signiert das Skript mit dem erstellten Zertifikat.
+    - Signiert das Skript mit dem erstellten Zertifikat.
 
 **Problem 3: Fehler bei der Ausführung des Skripts im IntelliJ Terminal**
 
@@ -1092,7 +1093,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        git config --global http.proxy http://proxyuser:proxypassword@proxy.server.com:port
        git config --global https.proxy https://proxyuser:proxypassword@proxy.server.com:port
        ```
-       - Diese Befehle setzen die HTTP- und HTTPS-Proxy-Einstellungen für Git.
+    - Befehle setzen die HTTP- und HTTPS-Proxy-Einstellungen für Git.
      - DNS-Auflösung überprüfen:
        ```powershell
        nslookup github.com
@@ -1102,9 +1103,8 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ```console
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
        ```
-       - Stellt sicher, dass IntelliJ IDEA den Proxy korrekt verwendet.
-
-   - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6, „Proxy-Dienst einrichten“, überprüfen.
+    - Stellt sicher, dass IntelliJ IDEA den Proxy korrekt verwendet.
+    - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6, „Proxy-Dienst einrichten“, überprüfen.
 
 ##### 9.2.2 Probleme bei der Nutzung von px.exe
 
