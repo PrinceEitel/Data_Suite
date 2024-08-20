@@ -1475,78 +1475,40 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 <a name="intellij-checkup"></a>
 - **IntelliJ System-Check Powershell Script:**  
 ### PowerShell-Skript: `intelliJ_system_check.ps1`
-
-```powershell
-# intelliJ_system_check.ps1
-
-<# 
-Beispielaufruf des Skripts:
-
-.\intelliJ_system_check.ps1 -homeDir "C:\Users\Test\" -proxyCertPath "C:\Path\To\ProxyCert.cer" -gitUserName "JohnDoe" -gitUserEmail "john.doe@example.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*"
-
-Parameter:
-- homeDir: Basisverzeichnis für das Projekt.
-- proxyCertPath: Vollständiger Pfad zur Zertifikatsdatei des Unternehmens-Proxys.
-- gitUserName: Git-Benutzername, falls dieser nicht global konfiguriert ist.
-- gitUserEmail: Git-Benutzer-E-Mail, falls diese nicht global konfiguriert ist.
-- intelliJRegistryPath: Pfad zur JetBrains-Registry für die IntelliJ-Installation.
-#>
-
+```powershell 
+[CmdletBinding()]
 param (
-    [string]$homeDir = "$env:USERPROFILE\",
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
+    [ValidatePattern('^[a-zA-Z]:\\')]
+    [string]$homeDir,
+
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
+    [ValidatePattern('\.cer$')]
     [string]$proxyCertPath,
+
+    [ValidateNotNullOrEmpty()]
     [string]$gitUserName = "",
+
+    [ValidatePattern('^[\w\.-]+@[\w\.-]+\.\w+$')]
     [string]$gitUserEmail = "",
+
+    [ValidatePattern('^HKLM:\\')]
     [string]$intelliJRegistryPath = "HKLM:\SOFTWARE\JetBrains\*"
 )
 
-# Parameterprüfung
-function Validate-Parameters {
-    param (
-        [string]$paramName,
-        [string]$paramValue
-    )
+$ErrorActionPreference = "Stop"
+$outputFile = Join-Path -Path $homeDir -ChildPath "data_suite\system_check_results.txt"
+$totalSteps = 5
 
-    if (-not $paramValue) {
-        Write-Host "Fehlender Parameter: $paramName" -ForegroundColor Red
-        exit 1
-    }
-
-    if ($paramName -eq "proxyCertPath" -and -not (Test-Path $paramValue)) {
-        Write-Host "Ungültiger Pfad für $paramName: $paramValue" -ForegroundColor Red
-        exit 1
-    }
-
-    if ($paramName -eq "homeDir" -and (-not ($paramValue -match "^[a-zA-Z]:\\.*")) ) {
-        Write-Host "Ungültiges Verzeichnisformat für $paramName: $paramValue" -ForegroundColor Red
-        exit 1
-    }
-}
-
-# Parameter validieren
-Validate-Parameters -paramName "homeDir" -paramValue $homeDir
-Validate-Parameters -paramName "proxyCertPath" -paramValue $proxyCertPath
-
-# Optional: Git-Parameter validieren
-if ($gitUserName) {
-    Validate-Parameters -paramName "gitUserName" -paramValue $gitUserName
-}
-
-if ($gitUserEmail) {
-    Validate-Parameters -paramName "gitUserEmail" -paramValue $gitUserEmail
-}
-
-$outputFile = "${homeDir}data_suite\system_check_results.txt"
-$totalSteps = 12 # Anzahl der Prüfungen für den Fortschrittsbalken
-
-# Funktion zur Ausgabe von Ergebnissen
 function Write-Result {
-    param ($message)
+    param ([string]$message)
     $message | Out-File -FilePath $outputFile -Append
     Write-Host $message
+    Write-Verbose $message
 }
 
-# Funktion zur Anzeige des Fortschritts
 function Show-Progress {
     param (
         [string]$currentTask,
@@ -1554,182 +1516,187 @@ function Show-Progress {
     )
     $percentage = ($currentStep / $totalSteps) * 100
     Write-Progress -Activity "Systemcheck läuft..." -Status $currentTask -PercentComplete $percentage
+    Write-Verbose "Fortschritt: $currentTask ($($percentage)% abgeschlossen)"
 }
 
-# Funktion zur Überprüfung der Git-Installation und Konfiguration
+function Check-Path {
+    param (
+        [string]$path,
+        [string]$description,
+        [switch]$isFile
+    )
+    try {
+        $pathType = if ($isFile) { "Leaf" } else { "Container" }
+        if (Test-Path -Path $path -PathType $pathType) {
+            Write-Result "$description existiert."
+        } else {
+            Write-Result "$description existiert nicht."
+        }
+    } catch {
+        Write-Result "Fehler bei der Überprüfung von $description: $_"
+        Write-Verbose "Details: $($_.Exception.Message)"
+    }
+}
+
+function Check-FileExists {
+    param (
+        [string]$directory,
+        [string]$fileName,
+        [string]$description
+    )
+    try {
+        $filePath = Join-Path -Path $directory -ChildPath $fileName
+        if (Test-Path $filePath -PathType Leaf) {
+            Write-Result "$description ist vorhanden."
+        } else {
+            Write-Result "$description fehlt."
+        }
+    } catch {
+        Write-Result "Fehler bei der Überprüfung von $description: $_"
+        Write-Verbose "Details: $($_.Exception.Message)"
+    }
+}
+
 function Check-GitInstallation {
     Show-Progress -currentTask "Überprüfung der Git-Installation" -currentStep 1
     Write-Result "Überprüfung der Git-Installation und Konfiguration:"
     Write-Result "-------------------------------------------"
+
     try {
         $gitVersion = git --version 
         Write-Result "Git Version: $gitVersion"
-    } catch {
-        Write-Result "Fehler bei der Überprüfung der Git-Version: $_"
-    }
-    try {
-        if (-not $gitUserName) {
-            $gitUserName = git config --global user.name
+        
+        $gitConfig = @{
+            "Benutzername" = if ($gitUserName) { $gitUserName } else { git config --global user.name }
+            "E-Mail" = if ($gitUserEmail) { $gitUserEmail } else { git config --global user.email }
         }
-        Write-Result "Git Benutzername: $gitUserName"
-    } catch {
-        Write-Result "Fehler beim Abrufen des Git-Benutzernamens: $_"
-    }
-    try {
-        if (-not $gitUserEmail) {
-            $gitUserEmail = git config --global user.email
+
+        foreach ($key in $gitConfig.Keys) {
+            Write-Result "Git $key: $($gitConfig[$key])"
         }
-        Write-Result "Git Benutzer E-Mail: $gitUserEmail"
-    } catch {
-        Write-Result "Fehler beim Abrufen der Git-Benutzer-E-Mail: $_"
+    }
+    catch [System.Management.Automation.CommandNotFoundException] {
+        Write-Result "Fehler: Git ist nicht installiert oder nicht im PATH."
+        Write-Result "Bitte installieren Sie Git oder fügen Sie es zum PATH hinzu."
+    }
+    catch {
+        Write-Result "Unerwarteter Fehler bei der Git-Überprüfung: $_"
+        Write-Verbose "Details: $($_.Exception.Message)"
     }
 }
 
-# Funktion zur Überprüfung der Verzeichnisse und bestehenden Git-Repositories
 function Check-DirectoriesAndGitRepos {
     Show-Progress -currentTask "Überprüfung der Verzeichnisse und Git-Repositories" -currentStep 2
     Write-Result "`nÜberprüfung der Verzeichnisse und bestehenden Git-Repositories:"
     Write-Result "-------------------------------------------"
-    if (Test-Path "${homeDir}data_suite") {
-        Write-Result "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
-    } else {
-        Write-Result "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
+
+    $paths = @{
+        "Data Suite Verzeichnis" = Join-Path -Path $homeDir -ChildPath "data_suite"
+        "Git Repository" = Join-Path -Path $homeDir -ChildPath "data_suite\.git"
     }
-    if (Test-Path "${homeDir}data_suite\.git") {
-        Write-Result "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
-    } else {
-        Write-Result "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
+
+    foreach ($path in $paths.GetEnumerator()) {
+        Check-Path -path $path.Value -description $path.Key
     }
 }
 
-# Funktion zur Überprüfung relevanter Applikationen und Verzeichnisse
 function Check-ApplicationsAndDirectories {
     Show-Progress -currentTask "Überprüfung relevanter Applikationen und Verzeichnisse" -currentStep 3
     Write-Result "`nÜberprüfung relevanter Applikationen und Verzeichnisse:"
     Write-Result "-------------------------------------------"
-    if (Test-Path "${homeDir}data_suite\venv") {
-        Write-Result "Das Verzeichnis 'venv' existiert bereits."
-    } else {
-        Write-Result "Das Verzeichnis 'venv' existiert nicht. Es muss erstellt werden."
+
+    $paths = @{
+        "venv" = Join-Path -Path $homeDir -ChildPath "data_suite\venv"
+        "OCR Manager" = Join-Path -Path $homeDir -ChildPath "data_suite\ocr_enricher\src"
+        "Zulu JDK" = Join-Path -Path $homeDir -ChildPath "data_suite\zulu"
+        "npm Abhängigkeiten" = Join-Path -Path $homeDir -ChildPath "data_suite\venv\node_modules"
     }
 
-    if (Get-Module -ListAvailable -Name chardet) {
-        Write-Result "Die 'chardet' Bibliothek ist installiert."
-    } else {
-        Write-Result "Die 'chardet' Bibliothek ist nicht installiert. Bitte installieren."
+    foreach ($path in $paths.GetEnumerator()) {
+        Check-Path -path $path.Value -description $path.Key
     }
 
-    $ocrDir = "${homeDir}data_suite\ocr_enricher\src"
-    if (Test-Path $ocrDir) {
-        Write-Result "Das Verzeichnis '$ocrDir' existiert."
-        if (Test-Path "$ocrDir\OCR_Enricher.ps1" -and Test-Path "$ocrDir\pdf_utils.py") {
-            Write-Result "Die erforderlichen Dateien im OCR-Manager-Verzeichnis sind vorhanden."
+    try {
+        if (Get-Module -ListAvailable -Name chardet) {
+            Write-Result "Die 'chardet' Bibliothek ist installiert."
         } else {
-            Write-Result "Eine oder mehrere erforderliche Dateien im OCR-Manager-Verzeichnis fehlen."
+            Write-Result "Die 'chardet' Bibliothek ist nicht installiert. Bitte installieren Sie sie mit 'pip install chardet'."
         }
-    } else {
-        Write-Result "Das Verzeichnis '$ocrDir' existiert nicht."
+    } catch {
+        Write-Result "Fehler bei der Überprüfung der 'chardet' Bibliothek: $_"
+        Write-Verbose "Details: $($_.Exception.Message)"
+    }
+
+    $ocrFiles = @("OCR_Enricher.ps1", "pdf_utils.py")
+    foreach ($file in $ocrFiles) {
+        Check-FileExists -directory $paths["OCR Manager"] -fileName $file -description "OCR Manager Datei '$file'"
     }
 
     $submodules = @("ocr_enricher", "template_center", "text_anonymizer", "html_b2b_form")
     foreach ($module in $submodules) {
-        $filePath = "${homeDir}data_suite\$module\requirements.txt"
-        if (Test-Path $filePath) {
-            Write-Result "Die Datei 'requirements.txt' ist im Submodul '$module' vorhanden."
-        } else {
-            Write-Result "Die Datei 'requirements.txt' fehlt im Submodul '$module'."
-        }
-    }
+        $modulePath = Join-Path -Path $homeDir -ChildPath "data_suite\$module"
+        Check-FileExists -directory $modulePath -fileName "requirements.txt" -description "requirements.txt im
 
-    $zuluDir = "${homeDir}data_suite\zulu"
-    if (Test-Path $zuluDir) {
-        Write-Result "Das Verzeichnis '$zuluDir' existiert."
-    } else {
-        Write-Result "Das Verzeichnis '$zuluDir' existiert nicht. Das Zulu JDK muss installiert werden."
-    }
-
-    $npmDir = "${homeDir}data_suite\venv\node_modules"
-    if (Test-Path $npmDir) {
-        Write-Result "Die npm-Abhängigkeiten sind in der virtuellen Umgebung installiert."
-    } else {
-        Write-Result "Die npm-Abhängigkeiten sind nicht installiert. Bitte npm-Abhängigkeiten installieren."
+ Submodul '$module'"
     }
 }
 
-# Funktion zur Überprüfung zusätzlicher Systeminformationen
 function Check-AdditionalSystemInfo {
     Show-Progress -currentTask "Überprüfung zusätzlicher Systeminformationen" -currentStep 4
     Write-Result "`nZusätzliche Systemüberprüfungen:"
     Write-Result "-------------------------------------------"
 
-    # Überprüfung des Windows-Betriebssystems
-    Write-Result "Windows-Betriebssystem:"
-    $osVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption
-    Write-Result $osVersion
-
-    # Überprüfung der IntelliJ IDEA Installation (über Registry)
-    Write-Result "IntelliJ IDEA Version:"
     try {
-        $intelliJPath = Get-ItemProperty -Path $intelliJRegistryPath -ErrorAction SilentlyContinue
+        $osVersion = (Get-CimInstance -ClassName Win32_OperatingSystem -ErrorAction Stop).Caption
+        Write-Result "Windows-Betriebssystem: $osVersion"
+    } catch {
+        Write-Result "Fehler beim Abrufen der Betriebssystemversion: $_"
+        Write-Verbose "Details: $($_.Exception.Message)"
+    }
+
+    try {
+        $intelliJPath = Get-ItemProperty -Path $intelliJRegistryPath -ErrorAction Stop
         if ($intelliJPath) {
             Write-Result "Gefundene JetBrains Produkte:"
             $intelliJPath | ForEach-Object {
-                Write-Result "Produkt: $($_.DisplayName) Version: $
-
-($_.DisplayVersion)"
+                Write-Result "Produkt: $($_.DisplayName) Version: $($_.DisplayVersion)"
             }
         } else {
-            Write-Result "Keine JetBrains Produkte gefunden."
+            Write-Result "Keine JetBrains Produkte gefunden. Bitte installieren Sie IntelliJ IDEA."
         }
+    } catch [System.Management.Automation.ItemNotFoundException] {
+        Write-Result "JetBrains Registry-Pfad nicht gefunden. IntelliJ IDEA ist möglicherweise nicht installiert."
     } catch {
         Write-Result "Fehler beim Zugriff auf die JetBrains-Registry: $_"
+        Write-Verbose "Details: $($_.Exception.Message)"
     }
 
-    # Unternehmens-Proxy Zertifikat
-    Write-Result "Unternehmens-Proxy Zertifikat:"
-    if (Test-Path $proxyCertPath) {
-        Write-Result "Das Unternehmens-Proxy Zertifikat ist vorhanden: $proxyCertPath"
-    } else {
-        Write-Result "Das Unternehmens-Proxy Zertifikat fehlt."
-    }
+    Check-Path -path $proxyCertPath -description "Unternehmens-Proxy Zertifikat" -isFile
 
-    # Überprüfung der SSH-Schlüssel für GitHub
-    Write-Result "SSH-Schlüssel für GitHub:"
-    if (Test-Path "$env:USERPROFILE\.ssh\id_rsa.pub") {
-        Write-Result "SSH-Schlüssel ist vorhanden."
-    } else {
-        Write-Result "SSH-Schlüssel fehlt."
-    }
+    $sshKeyPath = Join-Path -Path $env:USERPROFILE -ChildPath ".ssh\id_rsa.pub"
+    Check-Path -path $sshKeyPath -description "SSH-Schlüssel" -isFile
 
-    # Überprüfung, ob SSH-Agent läuft (über Prozessliste)
-    Write-Result "SSH-Agent Status:"
-    if (Get-Process ssh-agent -ErrorAction SilentlyContinue) {
-        Write-Result "SSH-Agent ist gestartet."
-    } else {
-        Write-Result "SSH-Agent läuft nicht."
-    }
-
-    # Überprüfung der .gitconfig-Einträge
-    Write-Result "Überprüfung der .gitconfig-Einträge:"
-    if (Test-Path "$env:USERPROFILE\.gitconfig") {
-        Get-Content "$env:USERPROFILE\.gitconfig" | Out-File -FilePath $outputFile -Append
-    } else {
-        Write-Result ".gitconfig Datei fehlt."
-    }
-
-    # Überprüfung der Konfigurationsdateien im .idea-Verzeichnis
-    Write-Result "Überprüfung der Konfigurationsdateien im .idea-Verzeichnis:"
-    $ideaFiles = @("misc.xml", "modules.xml", "workspace.xml")
-    foreach ($file in $ideaFiles) {
-        if (Test-Path "${homeDir}data_suite\.idea\$file") {
-            Write-Result "$file ist vorhanden."
+    try {
+        if (Get-Process ssh-agent -ErrorAction SilentlyContinue) {
+            Write-Result "SSH-Agent ist gestartet."
         } else {
-            Write-Result "$file fehlt."
+            Write-Result "SSH-Agent läuft nicht. Starten Sie ihn mit 'Start-Service ssh-agent'."
         }
+    } catch {
+        Write-Result "Fehler bei der Überprüfung des SSH-Agent Status: $_"
+        Write-Verbose "Details: $($_.Exception.Message)"
+    }
+
+    $gitConfigPath = Join-Path -Path $env:USERPROFILE -ChildPath ".gitconfig"
+    Check-FileExists -directory $env:USERPROFILE -fileName ".gitconfig" -description ".gitconfig Datei"
+
+    $ideaFiles = @("misc.xml", "modules.xml", "workspace.xml")
+    $ideaPath = Join-Path -Path $homeDir -ChildPath "data_suite\.idea"
+    foreach ($file in $ideaFiles) {
+        Check-FileExists -directory $ideaPath -fileName $file -description ".idea Konfigurationsdatei '$file'"
     }
 }
 
-# Funktion zur Überprüfung des Netzzugriffs
 function Check-NetworkAccess {
     Show-Progress -currentTask "Überprüfung des Netzzugriffs" -currentStep 5
     Write-Result "`nÜberprüfung des Netzzugriffs:"
@@ -1748,21 +1715,80 @@ function Check-NetworkAccess {
         try {
             $response = Invoke-WebRequest -Uri $url -UseBasicParsing -ErrorAction Stop
             Write-Result "Zugriff auf $url erfolgreich. Statuscode: $($response.StatusCode)"
+        } catch [System.Net.WebException] {
+            Write-Result "Netzwerkfehler beim Zugriff auf $url: $_"
+            Write-Result "Überprüfen Sie Ihre Internetverbindung oder Proxy-Einstellungen."
         } catch {
-            Write-Result "Fehler beim Zugriff auf $url: $_"
+            Write-Result "Unerwarteter Fehler beim Zugriff auf $url: $_"
+            Write-Verbose "Details: $($_.Exception.Message)"
         }
     }
 }
 
-# Hauptskript ausführen
-Check-GitInstallation
-Check-DirectoriesAndGitRepos
-Check-ApplicationsAndDirectories
-Check-AdditionalSystemInfo
-Check-NetworkAccess
-
-Write-Result "`nSystemcheck abgeschlossen."
+try {
+    Write-Verbose "Starte Systemcheck..."
+    Check-GitInstallation
+    Check-DirectoriesAndGitRepos
+    Check-ApplicationsAndDirectories
+    Check-AdditionalSystemInfo
+    Check-NetworkAccess
+    Write-Result "`nSystemcheck erfolgreich abgeschlossen."
+} catch {
+    Write-Result "Ein kritischer Fehler ist während des Systemchecks aufgetreten: $_"
+    Write-Verbose "Details: $($_.Exception.Message)"
+} finally {
+    Write-Progress -Activity "Systemcheck läuft..." -Completed
+}
 ```
+```powershell
+<#
+.SYNOPSIS
+    Dieses Skript überprüft die Installation und Konfiguration verschiedener Komponenten,
+    die für die Entwicklung mit IntelliJ IDEA benötigt werden.
+
+.DESCRIPTION
+    Dieses Skript enthält Anweisungen zur Signierung des Skripts, um die Integrität und Authentizität
+    in gut gesicherten Unternehmensumgebungen sicherzustellen. 
+
+.EXAMPLE
+    .\intelliJ_system_check.ps1 -homeDir "C:\Users\TestUser\" -proxyCertPath "C:\Path\To\ProxyCert.cer" -gitUserName "JohnDoe" -gitUserEmail "john.doe@example.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*"
+
+.EXAMPLE
+    .\intelliJ_system_check.ps1 -homeDir "D:\Projects\MyProject\" -proxyCertPath "D:\Certs\CompanyProxy.cer" -gitUserName "JaneDoe" -gitUserEmail "jane.doe@example.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*" -Verbose -Debug
+
+# --------------------------------------------
+# Schritt-für-Schritt Anleitung zur Signierung
+# --------------------------------------------
+
+# 1. Erstellen eines selbstsignierten Zertifikats (Erst-Signatur):
+# Erstellen Sie ein selbstsigniertes Zertifikat, das für die Signierung der Skripte verwendet wird.
+$cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=PSScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
+
+# 2. Exportieren des Zertifikats (Erst-Signatur):
+# Exportieren Sie das Zertifikat, um es in den vertrauenswürdigen Zertifikatspeicher des Systems zu importieren.
+Export-Certificate -Cert $cert -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer"
+
+# 3. Importieren des Zertifikats in vertrauenswürdige Speicher (Erst-Signatur):
+# Importieren Sie das Zertifikat, damit es vom System als vertrauenswürdig anerkannt wird.
+Import-Certificate -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+Import-Certificate -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+
+# 4. Ermitteln des Thumbprints (Erst-Signatur & Update-Signatur):
+# Der Thumbprint des Zertifikats wird benötigt, um das Skript zu signieren.
+$thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=PSScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint).Trim()
+
+# 5. Signieren des Skripts (Erst-Signatur & Update-Signatur):
+# Signieren Sie das Skript. Dieser Schritt muss nach jeder Änderung am Skript wiederholt werden.
+Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+
+# 6. Ausführungsrichtlinie setzen (optional) (Erst-Signatur & Update-Signatur):
+# Setzen Sie die Ausführungsrichtlinie auf 'RemoteSigned', um sicherzustellen, dass nur vertrauenswürdige Skripte ausgeführt werden.
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+# Hinweis: Nach jeder Änderung am Skript muss die Signatur aktualisiert werden, indem die Schritte 4 bis 6 erneut ausgeführt werden.
+##
+```
+ 
 
 #### Step-by-Step Liste zur Installation und Konfiguration
 
