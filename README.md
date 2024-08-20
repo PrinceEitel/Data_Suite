@@ -1533,8 +1533,9 @@ function Check-Path {
             Write-Result "$description existiert nicht."
         }
     } catch {
-        Write-Result "Fehler bei der Überprüfung von $description: $_"
-        Write-Verbose "Details: $($_.Exception.Message)"
+        $errorMessage = $_.Exception.Message
+        Write-Result "Fehler bei der Überprüfung von $description: " + $errorMessage
+        Write-Verbose "Details: " + $errorMessage
     }
 }
 
@@ -1552,10 +1553,12 @@ function Check-FileExists {
             Write-Result "$description fehlt."
         }
     } catch {
-        Write-Result "Fehler bei der Überprüfung von $description: $_"
-        Write-Verbose "Details: $($_.Exception.Message)"
+        $errorMessage = $_.Exception.Message
+        Write-Result "Fehler bei der Überprüfung von $description: " + $errorMessage
+        Write-Verbose "Details: " + $errorMessage
     }
 }
+
 
 function Check-GitInstallation {
     Show-Progress -currentTask "Überprüfung der Git-Installation" -currentStep 1
@@ -1739,7 +1742,13 @@ try {
 } finally {
     Write-Progress -Activity "Systemcheck läuft..." -Completed
 }
+# SIG # Begin signature block
+# MIIFeQYJKoZIhvcNAQcCoIIFajCCBWYCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
+# diverse
+# fAWpyVYGTx19w7UalA==
+# SIG # End signature block
 ```
+
 ```powershell
 <#
 .SYNOPSIS
