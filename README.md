@@ -1821,43 +1821,39 @@ try {
    - Bei großen Projekten oder langsamen Netzwerkverbindungen kann die Ausführung des Skripts längere Zeit in Anspruch nehmen. Es wird empfohlen, das Skript in einem isolierten Umfeld oder während der weniger betriebsamen Zeiten auszuführen.
 . 
 
-**2. Schritt-für-Schritt Anleitung zur Signierung:**
-# --------------------------------------------
-# Schritt-für-Schritt Anleitung zur Signierung
-# --------------------------------------------
-
-# 1. Erstellen eines selbstsignierten Zertifikats (Erst-Signatur):
-# Erstellen Sie ein selbstsigniertes Zertifikat, das für die Signierung der Skripte verwendet wird.
+**2. Step-by-Step  Anleitung zur Signierung:**
+ --------------------------------------------
+#### 1. Erstellen eines selbstsignierten Zertifikats (Erst-Signatur):
+#### Erstellen Sie ein selbstsigniertes Zertifikat, das für die Signierung der Skripte verwendet wird.
 $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subject "CN=PSScriptSigningCert" -KeyUsage DigitalSignature -Type CodeSigningCert
 
-# 2. Exportieren des Zertifikats (Erst-Signatur):
-# Exportieren Sie das Zertifikat, um es in den vertrauenswürdigen Zertifikatspeicher des Systems zu importieren.
+#### 2. Exportieren des Zertifikats (Erst-Signatur):
+#### Exportieren Sie das Zertifikat, um es in den vertrauenswürdigen Zertifikatspeicher des Systems zu importieren.
 Export-Certificate -Cert $cert -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer"
 
-# 3. Importieren des Zertifikats in vertrauenswürdige Speicher (Erst-Signatur):
-# Importieren Sie das Zertifikat, damit es vom System als vertrauenswürdig anerkannt wird.
+#### 3. Importieren des Zertifikats in vertrauenswürdige Speicher (Erst-Signatur):
+#### Importieren Sie das Zertifikat, damit es vom System als vertrauenswürdig anerkannt wird.
 Import-Certificate -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
 Import-Certificate -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
 
-# 4. Ermitteln des Thumbprints (Erst-Signatur & Update-Signatur):
-# Der Thumbprint des Zertifikats wird benötigt, um das Skript zu signieren.
+#### 4. Ermitteln des Thumbprints (Erst-Signatur & Update-Signatur):
+#### Der Thumbprint des Zertifikats wird benötigt, um das Skript zu signieren.
 $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subject -eq "CN=PSScriptSigningCert"} | Select-Object -ExpandProperty Thumbprint).Trim()
 
-# 5. Signieren des Skripts (Erst-Signatur & Update-Signatur):
-# Signieren Sie das Skript. Dieser Schritt muss nach jeder Änderung am Skript wiederholt werden.
+#### 5. Signieren des Skripts (Erst-Signatur & Update-Signatur):
+#### Signieren Sie das Skript. Dieser Schritt muss nach jeder Änderung am Skript wiederholt werden.
 Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
 
-# 6. Ausführungsrichtlinie setzen (optional) (Erst-Signatur & Update-Signatur):
-# Setzen Sie die Ausführungsrichtlinie auf 'RemoteSigned', um sicherzustellen, dass nur vertrauenswürdige Skripte ausgeführt werden.
+#### 6. Ausführungsrichtlinie setzen (optional) (Erst-Signatur & Update-Signatur):
+#### Setzen Sie die Ausführungsrichtlinie auf 'RemoteSigned', um sicherzustellen, dass nur vertrauenswürdige Skripte ausgeführt werden.
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
-# Hinweis: Nach jeder Änderung am Skript muss die Signatur aktualisiert werden, indem die Schritte 4 bis 6 erneut ausgeführt werden.
-##
-```
- 
+#### Hinweis: Nach jeder Änderung am Skript muss die Signatur aktualisiert werden, indem die Schritte 4 bis 6 erneut ausgeführt werden.
+  
+--- 
 
 #### Step-by-Step Liste zur Installation und Konfiguration
-
+----------------------------------------
 #### 1. **Systemvoraussetzungen prüfen**
    - Überprüfen des Betriebssystems (Windows 10 Enterprise Version 22H2)
    - Sicherstellen, dass lokale Administratorrechte vorhanden sind
