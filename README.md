@@ -1475,51 +1475,91 @@ Dieser Abschnitt bietet weiterführende Informationen und Ressourcen, die für d
 <a name="intellij-checkup"></a>
 - **IntelliJ System-Check Powershell Script:**  
 ### PowerShell-Skript: `intelliJ_system_check.ps1`
-```powershell 
+
+```powershell
+#region Parameterdefinition und Skript-Setup
 [CmdletBinding()]
 param (
+    # Überprüfen des Home-Verzeichnisses
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [ValidatePattern('^[a-zA-Z]:\\')]
+    [ValidateScript({Test-Path -Path $_ -PathType Container})]
     [string]$homeDir,
 
+    # Überprüfen des Pfads zum Proxy-Zertifikat
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [ValidatePattern('\.cer$')]
+    [ValidateScript({Test-Path -Path $_ -PathType Leaf})]
     [string]$proxyCertPath,
 
+    # Optionaler Git-Benutzername
     [ValidateNotNullOrEmpty()]
     [string]$gitUserName = "",
 
+    # Optionaler Git-Benutzer-E-Mail
     [ValidatePattern('^[\w\.-]+@[\w\.-]+\.\w+$')]
     [string]$gitUserEmail = "",
 
+    # Überprüfen des Registry-Pfads für IntelliJ IDEA
     [ValidatePattern('^HKLM:\\')]
+    [ValidateNotNullOrEmpty()]
     [string]$intelliJRegistryPath = "HKLM:\SOFTWARE\JetBrains\*"
 )
 
+# Festlegen der Fehleraktionseinstellung auf "Stop", um Fehler sofort zu stoppen
 $ErrorActionPreference = "Stop"
+
+# Definition des Ausgabeprotokolls
 $outputFile = Join-Path -Path $homeDir -ChildPath "data_suite\system_check_results.txt"
 $totalSteps = 5
+#endregion
 
+#region Hilfsfunktionen
+
+# Funktion zur Ausgabe von Ergebnissen und zur Protokollierung
 function Write-Result {
+    <#
+    .SYNOPSIS
+        Schreibt eine Nachricht in die Konsole und in eine Datei.
+    .PARAMETER message
+        Die Nachricht, die geschrieben werden soll.
+    #>
     param ([string]$message)
     $message | Out-File -FilePath $outputFile -Append
-    Write-Host $message
-    Write-Verbose $message
+    Write-Information $message -InformationAction Continue
 }
 
+# Funktion zur Anzeige des Fortschritts des Systemchecks
 function Show-Progress {
+    <#
+    .SYNOPSIS
+        Zeigt den Fortschritt des Skripts an.
+    .PARAMETER currentTask
+        Die aktuelle Aufgabe.
+    .PARAMETER currentStep
+        Der aktuelle Schritt.
+    #>
     param (
         [string]$currentTask,
         [int]$currentStep
     )
     $percentage = ($currentStep / $totalSteps) * 100
     Write-Progress -Activity "Systemcheck läuft..." -Status $currentTask -PercentComplete $percentage
-    Write-Verbose "Fortschritt: $currentTask ($($percentage)% abgeschlossen)"
+    Write-Information "Fortschritt: $currentTask ($($percentage)% abgeschlossen)"
 }
 
+# Funktion zur Überprüfung von Pfaden
 function Check-Path {
+    <#
+    .SYNOPSIS
+        Überprüft, ob ein Pfad existiert.
+    .PARAMETER path
+        Der zu überprüfende Pfad.
+    .PARAMETER description
+        Eine Beschreibung des Pfades.
+    .PARAMETER isFile
+        Gibt an, ob es sich bei dem Pfad um eine Datei handelt.
+    #>
     param (
         [string]$path,
         [string]$description,
@@ -1533,13 +1573,22 @@ function Check-Path {
             Write-Result "$description existiert nicht."
         }
     } catch {
-        $errorMessage = $_.Exception.Message
-        Write-Result "Fehler bei der Überprüfung von $description: " + $errorMessage
-        Write-Verbose "Details: " + $errorMessage
+        Write-Error "Fehler bei der Überprüfung von $description: $($_.Exception.Message)"
     }
 }
 
+# Funktion zur Überprüfung, ob eine Datei existiert
 function Check-FileExists {
+    <#
+    .SYNOPSIS
+        Überprüft, ob eine Datei existiert.
+    .PARAMETER directory
+        Das Verzeichnis, in dem sich die Datei befinden soll.
+    .PARAMETER fileName
+        Der Name der Datei.
+    .PARAMETER description
+        Eine Beschreibung der Datei.
+    #>
     param (
         [string]$directory,
         [string]$fileName,
@@ -1553,20 +1602,21 @@ function Check-FileExists {
             Write-Result "$description fehlt."
         }
     } catch {
-        $errorMessage = $_.Exception.Message
-        Write-Result "Fehler bei der Überprüfung von $description: " + $errorMessage
-        Write-Verbose "Details: " + $errorMessage
+        Write-Error "Fehler bei der Überprüfung von $description: $($_.Exception.Message)"
     }
 }
+#endregion
 
+#region Systemcheck-Funktionen
 
+# Überprüfung der Git-Installation und -Konfiguration
 function Check-GitInstallation {
     Show-Progress -currentTask "Überprüfung der Git-Installation" -currentStep 1
     Write-Result "Überprüfung der Git-Installation und Konfiguration:"
     Write-Result "-------------------------------------------"
 
     try {
-        $gitVersion = git --version 
+        $gitVersion = git --version
         Write-Result "Git Version: $gitVersion"
         
         $gitConfig = @{
@@ -1579,30 +1629,28 @@ function Check-GitInstallation {
         }
     }
     catch [System.Management.Automation.CommandNotFoundException] {
-        Write-Result "Fehler: Git ist nicht installiert oder nicht im PATH."
-        Write-Result "Bitte installieren Sie Git oder fügen Sie es zum PATH hinzu."
+        Write-Error "Fehler: Git ist nicht installiert oder nicht im PATH. Bitte installieren Sie Git oder fügen Sie es zum PATH hinzu."
     }
     catch {
-        Write-Result "Unerwarteter Fehler bei der Git-Überprüfung: $_"
-        Write-Verbose "Details: $($_.Exception.Message)"
+        Write-Error "Unerwarteter Fehler bei der Git-Überprüfung: $($_.Exception.Message)"
     }
 }
 
+# Überprüfung der Verzeichnisse und Git-Repositories
 function Check-DirectoriesAndGitRepos {
     Show-Progress -currentTask "Überprüfung der Verzeichnisse und Git-Repositories" -currentStep 2
     Write-Result "`nÜberprüfung der Verzeichnisse und bestehenden Git-Repositories:"
     Write-Result "-------------------------------------------"
 
-    $paths = @{
+    @{
         "Data Suite Verzeichnis" = Join-Path -Path $homeDir -ChildPath "data_suite"
         "Git Repository" = Join-Path -Path $homeDir -ChildPath "data_suite\.git"
-    }
-
-    foreach ($path in $paths.GetEnumerator()) {
-        Check-Path -path $path.Value -description $path.Key
+    }.GetEnumerator() | ForEach-Object {
+        Check-Path -path $_.Value -description $_.Key
     }
 }
 
+# Überprüfung der Anwendungen und relevanten Verzeichnisse
 function Check-ApplicationsAndDirectories {
     Show-Progress -currentTask "Überprüfung relevanter Applikationen und Verzeichnisse" -currentStep 3
     Write-Result "`nÜberprüfung relevanter Applikationen und Verzeichnisse:"
@@ -1615,35 +1663,31 @@ function Check-ApplicationsAndDirectories {
         "npm Abhängigkeiten" = Join-Path -Path $homeDir -ChildPath "data_suite\venv\node_modules"
     }
 
-    foreach ($path in $paths.GetEnumerator()) {
-        Check-Path -path $path.Value -description $path.Key
+    $paths.GetEnumerator() | ForEach-Object {
+        Check-Path -path $_.Value -description $_.Key
     }
 
     try {
         if (Get-Module -ListAvailable -Name chardet) {
             Write-Result "Die 'chardet' Bibliothek ist installiert."
         } else {
-            Write-Result "Die 'chardet' Bibliothek ist nicht installiert. Bitte installieren Sie sie mit 'pip install chardet'."
+            Write-Error "Die 'chardet' Bibliothek ist nicht installiert. Bitte installieren Sie sie mit 'pip install chardet'."
         }
     } catch {
-        Write-Result "Fehler bei der Überprüfung der 'chardet' Bibliothek: $_"
-        Write-Verbose "Details: $($_.Exception.Message)"
+        Write-Error "Fehler bei der Überprüfung der 'chardet' Bibliothek: $($_.Exception.Message)"
     }
 
-    $ocrFiles = @("OCR_Enricher.ps1", "pdf_utils.py")
-    foreach ($file in $ocrFiles) {
-        Check-FileExists -directory $paths["OCR Manager"] -fileName $file -description "OCR Manager Datei '$file'"
+    "OCR_Enricher.ps1", "pdf_utils.py" | ForEach-Object {
+        Check-FileExists -directory $paths["OCR Manager"] -fileName $_ -description "OCR Manager Datei '$_'"
     }
 
-    $submodules = @("ocr_enricher", "template_center", "text_anonymizer", "html_b2b_form")
-    foreach ($module in $submodules) {
-        $modulePath = Join-Path -Path $homeDir -ChildPath "data_suite\$module"
-        Check-FileExists -directory $modulePath -fileName "requirements.txt" -description "requirements.txt im
-
- Submodul '$module'"
+    "ocr_enricher", "template_center", "text_anonymizer", "html_b2b_form" | ForEach-Object {
+        $modulePath = Join-Path -Path $homeDir -ChildPath "data_suite\$_"
+        Check-FileExists -directory $modulePath -fileName "requirements.txt" -description "requirements.txt im Submodul '$_'"
     }
 }
 
+# Überprüfung zusätzlicher Systeminformationen
 function Check-AdditionalSystemInfo {
     Show-Progress -currentTask "Überprüfung zusätzlicher Systeminformationen" -currentStep 4
     Write-Result "`nZusätzliche Systemüberprüfungen:"
@@ -1653,8 +1697,9 @@ function Check-AdditionalSystemInfo {
         $osVersion = (Get-CimInstance -ClassName Win32_OperatingSystem -ErrorAction Stop).Caption
         Write-Result "Windows-Betriebssystem: $osVersion"
     } catch {
-        Write-Result "Fehler beim Abrufen der Betriebssystemversion: $_"
-        Write-Verbose "Details: $($_.Exception.Message)"
+        Write-Error "Fehler beim Abrufen der Betriebssystemversion
+
+: $($_.Exception.Message)"
     }
 
     try {
@@ -1668,10 +1713,9 @@ function Check-AdditionalSystemInfo {
             Write-Result "Keine JetBrains Produkte gefunden. Bitte installieren Sie IntelliJ IDEA."
         }
     } catch [System.Management.Automation.ItemNotFoundException] {
-        Write-Result "JetBrains Registry-Pfad nicht gefunden. IntelliJ IDEA ist möglicherweise nicht installiert."
+        Write-Error "JetBrains Registry-Pfad nicht gefunden. IntelliJ IDEA ist möglicherweise nicht installiert."
     } catch {
-        Write-Result "Fehler beim Zugriff auf die JetBrains-Registry: $_"
-        Write-Verbose "Details: $($_.Exception.Message)"
+        Write-Error "Fehler beim Zugriff auf die JetBrains-Registry: $($_.Exception.Message)"
     }
 
     Check-Path -path $proxyCertPath -description "Unternehmens-Proxy Zertifikat" -isFile
@@ -1683,53 +1727,50 @@ function Check-AdditionalSystemInfo {
         if (Get-Process ssh-agent -ErrorAction SilentlyContinue) {
             Write-Result "SSH-Agent ist gestartet."
         } else {
-            Write-Result "SSH-Agent läuft nicht. Starten Sie ihn mit 'Start-Service ssh-agent'."
+            Write-Error "SSH-Agent läuft nicht. Starten Sie ihn mit 'Start-Service ssh-agent'."
         }
     } catch {
-        Write-Result "Fehler bei der Überprüfung des SSH-Agent Status: $_"
-        Write-Verbose "Details: $($_.Exception.Message)"
+        Write-Error "Fehler bei der Überprüfung des SSH-Agent Status: $($_.Exception.Message)"
     }
 
     $gitConfigPath = Join-Path -Path $env:USERPROFILE -ChildPath ".gitconfig"
     Check-FileExists -directory $env:USERPROFILE -fileName ".gitconfig" -description ".gitconfig Datei"
 
-    $ideaFiles = @("misc.xml", "modules.xml", "workspace.xml")
-    $ideaPath = Join-Path -Path $homeDir -ChildPath "data_suite\.idea"
-    foreach ($file in $ideaFiles) {
-        Check-FileExists -directory $ideaPath -fileName $file -description ".idea Konfigurationsdatei '$file'"
+    "misc.xml", "modules.xml", "workspace.xml" | ForEach-Object {
+        $ideaPath = Join-Path -Path $homeDir -ChildPath "data_suite\.idea"
+        Check-FileExists -directory $ideaPath -fileName $_ -description ".idea Konfigurationsdatei '$_'"
     }
 }
 
+# Überprüfung des Netzzugriffs
 function Check-NetworkAccess {
     Show-Progress -currentTask "Überprüfung des Netzzugriffs" -currentStep 5
     Write-Result "`nÜberprüfung des Netzzugriffs:"
     Write-Result "-------------------------------------------"
 
-    $urls = @(
-        "https://www.jetbrains.com",
-        "https://www.npmjs.com",
-        "https://www.azul.com",
-        "https://www.github.com",
-        "https://webpack.js.org",
-        "https://pypi.org"
-    )
-
-    foreach ($url in $urls) {
+    "https://www.jetbrains.com",
+    "https://www.npmjs.com",
+    "https://www.azul.com",
+    "https://www.github.com",
+    "https://webpack.js.org",
+    "https://pypi.org" | ForEach-Object {
         try {
-            $response = Invoke-WebRequest -Uri $url -UseBasicParsing -ErrorAction Stop
-            Write-Result "Zugriff auf $url erfolgreich. Statuscode: $($response.StatusCode)"
-        } catch [System.Net.WebException] {
-            Write-Result "Netzwerkfehler beim Zugriff auf $url: $_"
-            Write-Result "Überprüfen Sie Ihre Internetverbindung oder Proxy-Einstellungen."
+            $testConnection = Test-Connection -ComputerName $_ -BufferSize 32 -Count 1 -Quiet -ErrorAction Stop
+            if ($testConnection) {
+                Write-Result "Netzwerkverbindung zu $_ erfolgreich."
+            } else {
+                Write-Result "Netzwerkverbindung zu $_ fehlgeschlagen."
+            }
         } catch {
-            Write-Result "Unerwarteter Fehler beim Zugriff auf $url: $_"
-            Write-Verbose "Details: $($_.Exception.Message)"
+            Write-Error "Netzwerkfehler beim Zugriff auf $_: $($_.Exception.Message). Überprüfen Sie Ihre Internetverbindung oder Proxy-Einstellungen."
         }
     }
 }
+#endregion
 
+#region Hauptskriptausführung
 try {
-    Write-Verbose "Starte Systemcheck..."
+    Write-Information "Starte Systemcheck..."
     Check-GitInstallation
     Check-DirectoriesAndGitRepos
     Check-ApplicationsAndDirectories
@@ -1737,11 +1778,11 @@ try {
     Check-NetworkAccess
     Write-Result "`nSystemcheck erfolgreich abgeschlossen."
 } catch {
-    Write-Result "Ein kritischer Fehler ist während des Systemchecks aufgetreten: $_"
-    Write-Verbose "Details: $($_.Exception.Message)"
+    Write-Error "Ein kritischer Fehler ist während des Systemchecks aufgetreten: $($_.Exception.Message)"
 } finally {
     Write-Progress -Activity "Systemcheck läuft..." -Completed
 }
+#endregion 
 # SIG # Begin signature block
 # MIIFeQYJKoZIhvcNAQcCoIIFajCCBWYCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # diverse
@@ -1760,11 +1801,27 @@ try {
     in gut gesicherten Unternehmensumgebungen sicherzustellen. 
 
 .EXAMPLE
-    .\intelliJ_system_check.ps1 -homeDir "C:\Users\TestUser\" -proxyCertPath "C:\Path\To\ProxyCert.cer" -gitUserName "JohnDoe" -gitUserEmail "john.doe@example.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*"
+```powershell
+.\intelliJ_system_check.ps1 -homeDir "C:\Users\TestUser\" -proxyCertPath "C:\Path\To\ProxyCert.cer" -gitUserName "JohnDoe" -gitUserEmail "john.doe@example.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*"
+```
+**2. Bericht: Wichtige Hinweise zur Ausführung:**
+1. **Zugriffsrechte**:
+   - Stellen Sie sicher, dass das PowerShell-Skript mit ausreichenden Rechten ausgeführt wird, insbesondere wenn auf Registryschlüssel oder Systempfade zugegriffen wird.
 
-.EXAMPLE
-    .\intelliJ_system_check.ps1 -homeDir "D:\Projects\MyProject\" -proxyCertPath "D:\Certs\CompanyProxy.cer" -gitUserName "JaneDoe" -gitUserEmail "jane.doe@example.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*" -Verbose -Debug
+2. **Pfadvalidierung**:
+   - Die Skriptparameter, insbesondere `$homeDir` und `$proxyCertPath`, müssen auf gültige Verzeichnisse bzw. Dateien verweisen. Eine unzureichende Validierung kann dazu führen, dass das Skript fehlschlägt.
 
+3. **Netzwerkverbindungen**:
+   - Das Skript führt Netzwerktests durch, die möglicherweise durch Firewall-Einstellungen oder Proxy-Konfigurationen blockiert werden. Stellen Sie sicher, dass die entsprechenden URLs erreichbar sind.
+
+4. **Abhängigkeiten**:
+   - Einige Tests im Skript erfordern, dass bestimmte Module wie `git` oder `chardet` installiert und konfiguriert sind. Stellen Sie sicher, dass diese vorhanden sind, um fehlerfreie Ausführungen zu gewährleisten.
+
+5. **Performance-Hinweise**:
+   - Bei großen Projekten oder langsamen Netzwerkverbindungen kann die Ausführung des Skripts längere Zeit in Anspruch nehmen. Es wird empfohlen, das Skript in einem isolierten Umfeld oder während der weniger betriebsamen Zeiten auszuführen.
+. 
+
+**2. Schritt-für-Schritt Anleitung zur Signierung:**
 # --------------------------------------------
 # Schritt-für-Schritt Anleitung zur Signierung
 # --------------------------------------------
