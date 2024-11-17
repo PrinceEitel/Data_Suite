@@ -1,0 +1,15 @@
+[submodule "ocr_enricher"]
+	path = ocr_enricher
+	url = https://github.com/PrinceEitel/OCR_Manager_Suite.git
+[submodule "template_center"]
+	path = template_center
+	url = https://github.com/PrinceEitel/Template_Center.git
+[submodule "text_anonymizer"]
+	path = text_anonymizer
+	url = https://github.com/PrinceEitel/Text_Anonymizer.git
+[submodule "html_b2b_form"]
+	path = html_b2b_form
+	url = https://github.com/PrinceEitel/html_b2b_form.git
+[submodule "Movie_Stream_Library"]
+	path = Movie_Stream_Library
+	url = https://github.com/PrinceEitel/Movie_Stream_Library.git
