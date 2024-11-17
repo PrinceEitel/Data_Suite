@@ -4,7 +4,7 @@
 #### Projektbeschreibung
 Das Projekt "Data_Suite" ist ein umfassendes Softwarepaket, das aus mehreren Submodulen besteht, darunter OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form. Diese Module bieten eine breite Palette von Funktionen zur Datenverarbeitung, Dokumentenanalyse und Textanonymisierung. 
 Ziel des Projekts ist es, eine modulare und flexible Lösung bereitzustellen, die Unternehmen dabei unterstützt, ihre Datenverarbeitungs- und Anonymisierungsprozesse effizient zu gestalten. 
-Da viele Projektkomponenten über das Internet abgerufen werden, ist die korrekte Konfiguration eines Proxy-Dienstes essenziell, insbesondere wenn hinter einer Unternehmens-Firewall gearbeitet wird. 
+Da viele Projektkomponenten über das Internet abgerufen werden, ist die korrekte Konfiguration eines Proxys essenziell, insbesondere wenn hinter einer Unternehmens-Firewall gearbeitet wird. 
 Durch die Nutzung dieser Suite können Unternehmen ihre Arbeitsabläufe automatisieren, die Datenqualität verbessern und sicherstellen, dass vertrauliche Informationen geschützt bleiben.
 
 #### Zielgruppe
@@ -29,16 +29,19 @@ Inhalte sind in folgende Hauptabschnitte gegliedert:
 Data_Suite/
 ├── venv/                       # Virtuelle Umgebung für Python 
 │   ├── Scripts/
+│   │   ├── activate            # Aktivierungsskript für die virtuelle Umgebung
+│   │   ├── deactivate.bat      # Deaktivierungsskript für Windows
 │   ├── Lib/
 │   │   ├── site-packages/
-│   │   │   ├── chardet/       # chardet Bibliothek
+│   │   │   ├── chardet/        # Python-Bibliothek "chardet"
+│   │   │   ├── numpy/          # Beispiel für eine Python-Bibliothek
 │   │   │   └── ...
-│   └── ...
+│   └── pyvenv.cfg              # Konfigurationsdatei für die virtuelle Umgebung
 ├── ocr_enricher/               # Submodul für OCR-Manager
 │   ├── .git/                   # Git-Verzeichnis für das Submodul
 │   ├── logs/
-│   │   ├── error_log.txt       # Fehler-Datei
-│   │   ├── result_log.txt      # Ergebnis-Datei
+│   │   ├── error_log.txt       # Fehler-Logdatei
+│   │   ├── result_log.txt      # Ergebnis-Logdatei
 │   ├── src/
 │   │   ├── OCR_Enricher.ps1    # Benötigt ocrmypdf Installation
 │   │   ├── pdf_utils.py        # Verwendet PyPDF2
@@ -46,19 +49,19 @@ Data_Suite/
 │   └── ...
 ├── template_center/            # Submodul für Template Center
 │   ├── .git/                   # Git-Verzeichnis für das Submodul
-│   ├── __init__.py
-│   ├── template_handler.py
+│   ├── __init__.py             # Initialisierungsdatei für Python-Paket
+│   ├── template_handler.py     # Skript zur Verwaltung von Templates
 │   ├── requirements.txt        # Python-Abhängigkeiten für Template_Center
 │   └── ...
 ├── text_anonymizer/            # Submodul für Text-Anonymisierung
 │   ├── .git/                   # Git-Verzeichnis für das Submodul
-│   ├── __init__.py 
+│   ├── __init__.py             # Initialisierungsdatei für Python-Paket
 │   ├── anonymizer/
-│   │   ├── __init__.py         
-│   │   ├── cli.py              # Command Line Ausführung
-│   │   ├── config.py           # File-Struktur 
-│   │   ├── loader.py           # Inkl. Chardet 
-│   │   ├── processor.py        # Inkl. re  
+│   │   ├── __init__.py         # Initialisierungsdatei für das anonymizer-Paket
+│   │   ├── cli.py              # Kommandozeilenschnittstelle für den Anonymizer
+│   │   ├── config.py           # Konfigurationsdateien für den Anonymizer
+│   │   ├── loader.py           # Loader-Modul für die Anonymisierung
+│   │   ├── processor.py        # Hauptprozessor für die Text-Anonymisierung
 │   ├── flat_files/
 │   │   ├── map/                # Map Files 
 │   │   │   ├── ../             # Diverse CSV
@@ -143,35 +146,22 @@ Data_Suite/
 5. **Python virtuelle Umgebungen:**
    - Details im Abschnitt 6 Step 4 ["Virtuelle Umgebung einrichten"](#venv-setup)
    - zur Isolation und Verwaltung von Python-Abhängigkeiten innerhalb des Projekts.
-7. **Unternehmens-Proxy-Zertifikat:**
-   - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird in die px.ini integriert, wodurch alle Proxy-Anfragen automatisch das Zertifikat verwenden.
-   - Das Zertifikat muss lokal in die Zertifikatsverwaltung importiert werden, um die Kommunikation über den Proxy zu ermöglichen.
-   - Vorgehensweise zur Zertifikatsintegration in px.exe wird im Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup) beschrieben.
-   - [Proxy-Dienst](#pxexe-proxy-dienst)
 
 #### Komponenten und Berechtigungen
 1. **Lokale Administratorrechte:** zur Installation lokaler Software und die Konfiguration des lokalen Systems.
 
-2. **GitHub-Repositories (PrinceEitel, privater Account):**
-   - **Main:** https://github.com/PrinceEitel/Data_Suite (alias data_suite) - Sichtbarkeit: Public
+2. **GitHub-Repositories ([github_user], privater Account):**
+   - **Main:** https://github.com/[github_user]/Data_Suite (alias data_suite) - Sichtbarkeit: Public
    - **Submodule:**
-     - OCR_Manager_Suite: https://github.com/PrinceEitel/OCR_Manager_Suite - Sichtbarkeit: Public
-     - Template_Center: https://github.com/PrinceEitel/Template_Center - Sichtbarkeit: Private
-     - Text_Anonymizer: https://github.com/PrinceEitel/Text_Anonymizer - Sichtbarkeit: Private
-     - html_b2b_form: https://github.com/PrinceEitel/html_b2b_form - Sichtbarkeit: Private
+     - OCR_Manager_Suite: https://github.com/[github_user]/OCR_Manager_Suite - Sichtbarkeit: Public
+     - Template_Center: https://github.com/[github_user]/Template_Center - Sichtbarkeit: Private
+     - Text_Anonymizer: https://github.com/[github_user]/Text_Anonymizer - Sichtbarkeit: Private
+     - html_b2b_form: https://github.com/[github_user]/html_b2b_form - Sichtbarkeit: Private
    - **Links:**
      - [git-repository](#git-repository).
      - [Submodule](#submodule)
      - [branch](#branch)
-
-3. **Proxy zur Überbrückung von Firewall-Einschränkungen:**
-   - **Verwendung von px.exe als zentraler Proxy-Dienst:**
-     - Statt HTTP_PROXY und HTTPS_PROXY separat zu konfigurieren, wird px.exe als lokaler Proxy-Dienst verwendet, der alle Proxy-Anfragen zentral über einen Port weiterleitet.
-     - Die Konfiguration der px.ini-Datei ermöglicht eine einheitliche Verwaltung und Verwendung der Proxy-Einstellungen für alle relevanten Anwendungen (z.B. IntelliJ, Git).
-     - Die Nutzung von Windows-Authentifizierung ist automatisch, sodass keine Speicherung von Anmeldedaten erforderlich ist.
-     - Weitere Details zur Einrichtung und Konfiguration von px.exe finden sich im Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup).
-     -[Proxy-Dienst](#pxexe-proxy-dienst).	
-  
+    
        
 #### Netzwerk- und Ausführungsrechte
 
@@ -184,7 +174,6 @@ Data_Suite/
      - https://webpack.js.org => webpack.js (extensible and configurable static module bundler for JavaScript applications)
      - https://pypi.org/project/pdf-utils => pdf_utils.py (verwendet PyPDF2)
      - https://pypi.org/project/chardet   => Chardet (Universal Character Encoding Detector)
-   - Weitere Details zur Proxy-Konfiguration und benötigten Berechtigungen finden sich in Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup).
 
 **Quellen:**
 - [Setting Up Git Behind a Proxy](https://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server-fails-with-request-timed-out)
@@ -281,8 +270,6 @@ Data_Suite/
 ### 3.4 **CA-Zertifikate hinzufügen:**
    - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird über px.exe zentral verwaltet, was die manuelle Integration in einzelne Anwendungen überflüssig macht.
    - Stelle sicher, dass das Zertifikat in die lokale Zertifikatsverwaltung importiert wird, damit es von px.exe genutzt werden kann.
-   - detaillierte Vorgehensweise zur Zertifikatsintegration in px.exe ist im Abschnitt [„Proxy-Dienst einrichten“](#proxy-setup) beschrieben.
-   - [Proxy-Dienst](#pxexe-proxy-dienst)
 
 ### 4. GIT Setup Main
 
@@ -291,7 +278,7 @@ Data_Suite/
 **Schritte zur Erstellung des GitHub-Repositorys für `Data_Suite`:**
 
 1. **Erstellen des GitHub-Repositorys:**
-   - Auf [GitHub](https://github.com) mit dem privaten Account (PrinceEitel) anmelden.
+   - Auf [GitHub](https://github.com) mit dem privaten Account ([github_user]) anmelden.
    - Das Plus-Symbol (+) in der oberen rechten Ecke anklicken und "New repository" wählen.
    - Den Namen `Data_Suite` eingeben.
    - Die gewünschte Sichtbarkeit (Public oder Private) auswählen.
@@ -302,7 +289,7 @@ Data_Suite/
    - Die Eingabeaufforderung (Cmd) oder PowerShell öffnen.
    - Zum gewünschten Verzeichnis navigieren, in dem das Projekt erstellt werden soll:
    ```console
-   cd U:\data_suite
+   cd `C:\Users\[windows_user]\git\data_suite`
    ```
    - Ein neues Git-Repository im aktuellen Verzeichnis initialisieren:
    ```console
@@ -322,7 +309,7 @@ Data_Suite/
 4. **Verbindung zum Remote-Repository herstellen:**
    - Das Remote-Repository hinzufügen, um das lokale Repository mit GitHub zu verbinden:
    ```console
-   git remote add origin https://github.com/PrinceEitel/Data_Suite.git
+   git remote add origin https://github.com/[github_user]/Data_Suite.git
    ```
    - Die Verbindung zum Remote-Repository überprüfen, um sicherzustellen, dass die URLs für `fetch` und `push` korrekt sind:
    ```console
@@ -333,7 +320,7 @@ Data_Suite/
 5. **Überprüfung der Verzeichnisse und bestehenden Git-Repositories:**
    - Überprüfen, ob das `data_suite`-Verzeichnis bereits existiert:
    ```powershell
-   if (Test-Path "U:\data_suite") {
+   if (Test-Path `C:\Users\[windows_user]\git\data_suite`) {
        Write-Host "Verzeichnis existiert bereits. Bitte ein anderes Verzeichnis wählen oder das bestehende löschen."
    } else {
        Write-Host "Verzeichnis existiert nicht. Fortfahren mit Erstellung."
@@ -341,7 +328,7 @@ Data_Suite/
    ```
    - Sicherstellen, dass keine bestehenden Git-Repositories im Zielverzeichnis vorhanden sind:
    ```powershell
-   if (Test-Path "U:\data_suite\.git") {
+   if (Test-Path `C:\Users\[windows_user]\git\data_suite\.git`) {
        Write-Host "Ein Git-Repository existiert bereits in diesem Verzeichnis. Bitte löschen oder ein anderes Verzeichnis wählen."
    } else {
        Write-Host "Kein Git-Repository gefunden. Fortfahren mit Erstellung."
@@ -363,14 +350,14 @@ Data_Suite/
         required = true                    # LFS ist für dieses Repository erforderlich
 
     [user]
-        name = VX                          # Name des Benutzers für Commits
-        email = vx@company.com             # E-Mail-Adresse des Benutzers für Commits
+        name = [github_user]                # Name des Benutzers für Commits
+        email = [github_user_mail_address]  # E-Mail-Adresse des Benutzers für Commits
 
     [safe]
-        directory = U:/data_suite/text_anonymizer     # Sichere Verzeichnisse für Git-Operationen
-        directory = U:/data_suite/template_center
-        directory = U:/data_suite/OCR_Enricher
-        directory = U:/data_suite/html_b2b_form
+        directory = C:\Users\[windows_user]\git\data_suite\text_anonymizer     # Sichere Verzeichnisse für Git-Operationen
+        directory = C:\Users\[windows_user]\git\data_suite\template_center
+        directory = C:\Users\[windows_user]\git\data_suite\OCR_Enricher
+        directory = C:\Users\[windows_user]\git\data_suite\html_b2b_form
 
     [core]
         autocrlf = true                     # Konvertiert Zeilenenden automatisch (Windows <-> Unix)
@@ -393,11 +380,11 @@ Data_Suite/
 
 #### 5.2 Zugriffsrechte konfigurieren
 
-- **Einladen des VX-Accounts zu den privaten Repositories:**
+- **Einladen des [github_user] -Accounts zu den privaten Repositories:**
 
     `1`. Navigiere zu den Repository-Einstellungen der privaten Repositories (z.B. `OCR_Manager_Suite`, `Template_Center`, `Text_Anonymizer` und `html_b2b_form`).
     `2`. Gehe zu `Settings -> Manage access`.
-    `3`. Klicke auf `Invite a collaborator` und gebe den VX-Account (z.B. `vx@company.com`) ein.
+    `3`. Klicke auf `Invite a collaborator` und gebe den [github_user_mail_address]-Account (z.B. `vx@company.com`) ein.
     `4`. Weise den entsprechenden Zugriff zu (z.B. `Write` oder `Admin`).
 
 #### 5.3 Vorab-Check der GIT Konfigurationen (Submodule-Ebene)
@@ -410,24 +397,31 @@ Data_Suite/
     git --version
     ```
 
-    `2`. Git-Konfiguration überprüfen:
+    `2`. Git-Konfiguration überprüfen oder erstelle automatisch eine neue `.gitconfig` mit den Konfigurationsbefehlen:
 
     ```powershell
-    git config --global user.name
-    git config --global user.email
+   git config --global user.name "[github_user]"
+   git config --global user.email "[github_user_mail_address]"
     ```
+    
+    `3`. Git-Konfiguration überprüfen um sicherzustellen, dass die Benutzerkonfiguration korrekt gespeichert wurde:
+
+    ```powershell
+  git config --list
+    ```
+    
 
 #### 5.4 Submodule hinzufügen und konfigurieren
 
 - **Hinzufügen der Submodule:**
 
     ```powershell
-    git submodule add [https://github.com/PrinceEitel/OCR_Manager_Suite.git](https://github.com/PrinceEitel/OCR_Manager_Suite.git) ocr_enricher
-    git submodule add [https://github.com/PrinceEitel/Template_Center.git](https://github.com/PrinceEitel/Template_Center.git) template_center
-    git submodule add [https://github.com/PrinceEitel/Text_Anonymizer.git](https://github.com/PrinceEitel/Text_Anonymizer.git) text_anonymizer
-    git submodule add [https://github.com/PrinceEitel/html_b2b_form.git](https://github.com/PrinceEitel/html_b2b_form.git) html_b2b_form
-    git submodule init          # Initialisiert die Submodule
-    git submodule update        # Aktualisiert die Submodule auf den neuesten Stand
+   git submodule add https://github.com/github_user/OCR_Manager_Suite.git ocr_enricher
+   git submodule add https://github.com/github_user/Template_Center.git template_center
+   git submodule add https://github.com/github_user/Text_Anonymizer.git text_anonymizer
+   git submodule add https://github.com/github_user/html_b2b_form.git html_b2b_form    
+   git submodule init          # Initialisiert die Submodule (darf auch später hinzugefügt werden, da ein bereits initialisiertes Submodul ignoriert wird
+   git submodule update        # Aktualisiert die Submodule auf den neuesten Stand
     ```
 
 - **Stagen und committen der Submodule:**
@@ -437,7 +431,22 @@ Data_Suite/
     git commit -m "Submodule OCR_Manager_Suite, Template_Center, Text_Anonymizer und html_b2b_form hinzugefügt"
     git push origin main        # Änderungen ins Remote-Repository übertragen
     ``` 
+---
+#### 5.5 Synchronisieren des Hauptmoduls und der Submodule
 
+##### Automatischer Sync aller Module
+1. **Ziehe die neuesten Änderungen für das Hauptmodul:**
+   ```powershell
+   git pull
+   ```
+2. **Submodule aktualisieren:**
+   ```powershell
+   git submodule update --init --recursive
+   ```
+3. **Optional: Pull für jedes Submodul ausführen:**
+   ```powershell
+   git submodule foreach git pull origin main
+   
 ### 6. IntelliJ Setup
 
 #### 6.1 Vorab-Checks
@@ -457,7 +466,7 @@ Zwei Möglichkeiten stehen zur Verfügung, um die Installation und Konfiguration
    - Vor der Ausführung muss das Skript signiert werden (siehe ["Signieren von PowerShell-Skripten im IntelliJ Terminal"](#script-sign-setup)).
    - Ausführung des Skripts im Terminal (PowerShell) oder direkt unter Windows:
      ```powershell
-     .\intelliJ_system_check.ps1 -homeDir "U:\"
+     .\intelliJ_system_check.ps1 -homeDir "C:\Users\[windows_user]\"
      ```
 
 ##### 6.1.2 Manuelle Überprüfung
@@ -529,8 +538,8 @@ Export-Certificate -Cert $cert -FilePath "C:\Users\<DeinBenutzername>\MyScriptSi
 Damit das Zertifikat vom System als vertrauenswürdig anerkannt wird, muss es in die entsprechenden Zertifikatspeicher importiert werden.
 
 ```powershell
-Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "C:\Users\VX\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+Import-Certificate -FilePath "C:\Users\[windows_user]\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+Import-Certificate -FilePath "C:\Users\[windows_user]\cert\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
 ```
 
 ##### 6.3.1.4 Ermitteln des Thumbprints (Erst-Signatur & Update-Signatur)
@@ -546,7 +555,7 @@ $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subje
 Nachdem das Zertifikat eingerichtet ist, kann das Skript signiert werden. **Dieser Schritt muss nach jeder Änderung am Skript wiederholt werden.**
 
 ```powershell
-Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+Set-AuthenticodeSignature -FilePath ""C:\Users\[windows_user]\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
 ```
 
 ##### 6.3.1.6 Ausführungsrichtlinie setzen (optional) (Erst-Signatur & Update-Signatur)
@@ -603,7 +612,7 @@ Zum Einrichten einer Python-Umgebung und zur Verwaltung von Abhängigkeiten (sie
 
 - **Virtuelle Umgebung erstellen:**
    ```console
-   cd U:\data_suite
+   cd `C:\Users\[windows_user]\git\data_suite`
    mkdir venv
    ```
 
@@ -664,7 +673,7 @@ Zum Importieren des Projekts `Data_Suite` in IntelliJ IDEA:
 
 1. **Projekt importieren:**
    - IntelliJ IDEA öffnen und zu `File` -> `New` -> `Project from Existing Sources...` navigieren.
-   - Das Verzeichnis `U:\data_suite` auswählen und den Anweisungen folgen.
+   - Das Verzeichnis `C:\Users\[windows_user]\git\data_suite` auswählen und den Anweisungen folgen.
 
 2. **Submodule konfigurieren:**
    - `File` -> `Settings` -> `Version Control` -> `Git`.
@@ -679,7 +688,7 @@ Zur Konfiguration des Python Interpreters:
 
 2. **Interpreter hinzufügen:**
    - Auf das Zahnrad-Symbol klicken und `Add...` auswählen.
-   - `Existing environment` wählen und zum Python-Interpreter in der virtuellen Umgebung navigieren (`U:\data_suite\venv\Scripts\python.exe`).
+   - `Existing environment` wählen und zum Python-Interpreter in der virtuellen Umgebung navigieren (`C:\Users\[windows_user]\git\data_suite\venv\Scripts\python.exe`).
 
 #### 6.8 Quellverzeichnisse konfigurieren
 
@@ -711,43 +720,6 @@ Zur Überprüfung und Konfiguration der Git-Integration in IntelliJ IDEA:
    git submodule init
    git submodule update
    ```
-<a name="proxy-setup"></a>
-#### 6.10 Proxy-Dienst einrichten
-
-**1. Installation von px.exe:**
-   - Laden Sie px.exe von [GitHub](https://github.com/genotrance/px/releases) herunter.
-   - Entpacken Sie die Datei und speichern Sie sie im Verzeichnis `C:\Program Files\px-pxy`.
-   - Führen  `px.exe --install` aus, um den Proxy-Dienst zu installieren.
-   - [Proxy-Dienst](#pxexe-proxy-dienst)
-
-**2. Konfiguration der px.ini:**
-   - Erstellen Sie eine `px.ini` im Installationsverzeichnis mit folgenden Inhalten:
-     ```ini
-     [proxy]
-     server = proxy.company.com:8080
-     listen = 3128
-     ntlm = yes
-     user = DOMAIN\Username
-     [certificates]
-     cert = C:\path\to\corporate-proxy-cert.pem
-     ```
-   - Dieser Abschnitt konfiguriert den Proxy-Server, den Port und integriert das Unternehmens-Proxy-Zertifikat.
-
-**3. Windows-Authentifizierung aktivieren:**
-   - px.exe nutzt automatisch die Windows-Anmeldedaten, sodass keine weiteren Konfigurationen für die Authentifizierung notwendig sind.
-
-**4. Konfiguration der Anwendungen (Git, IntelliJ):**
-   - Stelle sicher, dass sowohl Git als auch IntelliJ auf px.exe als Proxy-Agent zugreifen. Dies geschieht durch die Standard-Proxy-Einstellung, die über px.exe geleitet wird.
-     - In Git kann dies durch Entfernen aller manuell gesetzten Proxy-Einstellungen sichergestellt werden.
-     - In IntelliJ verwende die Proxy-Einstellungen unter `File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy`, um auf den lokalen px.exe Proxy (z.B. `localhost:3128`) zu verweisen.
-
-**5. Testen der Proxy-Konfiguration:**
-   - Überprüfen Sie die Funktionalität, indem Sie eine Verbindung zu GitHub oder einer anderen externen Ressource herstellen. Alle Anfragen sollten über px.exe geleitet werden.
-   - Verwenden Sie dazu Befehle wie:
-     ```console
-     git clone https://github.com/YourRepo/YourProject.git
-     curl -x http://localhost:3128 https://www.github.com
-     ```
 
 ### 7. Entwicklung
 
@@ -1056,7 +1028,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
     - Überprüft die Eignung des Zertifikats für die Code-Signatur.
   4. **Skripte erneut signieren und das Vertrauen bestätigen:**
      ```powershell
-     Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate $cert
+     Set-AuthenticodeSignature -FilePath "C:\Users\[windows_user]\script.ps1" -Certificate $cert
      ```
     - Signiert das Skript mit dem entsprechenden Zertifikat.
   5. **Aktualisieren der PowerShell-Ausführungsrichtlinie:**
@@ -1078,14 +1050,14 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
     - [„PowerShell Signatur einrichten“](#script-sign-setup)
   2. **Exportieren und Importieren des Zertifikats:**
      ```powershell
-     Export-Certificate -Cert $cert -FilePath "C:\Users\VX\MyScriptSigningCert.cer"
-     Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-     Import-Certificate -FilePath "C:\Users\VX\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     Export-Certificate -Cert $cert -FilePath "C:\Users\[windows_user]\MyScriptSigningCert.cer"
+     Import-Certificate -FilePath "C:\Users\[windows_user]\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+     Import-Certificate -FilePath "C:\Users\[windows_user]\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
      ```
     - Exportiert und importiert das Zertifikat, um es für die Signatur zu verwenden.
   3. **Signieren des Skripts:**
      ```powershell
-     Set-AuthenticodeSignature -FilePath "U:\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
+     Set-AuthenticodeSignature -FilePath "C:\Users\[windows_user]\script.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\<Thumbprint>)
      ```
     - Signiert das Skript mit dem erstellten Zertifikat.
 
@@ -1114,29 +1086,6 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        ```console
        File -> Settings -> Appearance & Behavior -> System Settings -> HTTP Proxy
        ```
-    - Stellt sicher, dass IntelliJ IDEA den Proxy korrekt verwendet.
-    - Wenn Probleme beim Zugriff auf externe Ressourcen auftreten, die Proxy-Einstellungen gemäß den Anweisungen in Abschnitt 6,[„Proxy-Dienst einrichten“](#proxy-setup), überprüfen.
-
-##### 9.2.2 Probleme bei der Nutzung von px.exe
-
-**1. Fehler: Proxy-Dienst nicht verfügbar**
-   - **Ursache:** px.exe ist möglicherweise nicht gestartet oder der Dienst wurde nicht korrekt installiert.
-   - **Lösung:** Überprüfen Sie, ob der Dienst läuft, und starten Sie ihn gegebenenfalls neu:
-     ```powershell
-     Start-Process -FilePath "C:\Program Files\px-pxy\px.exe"
-     ```
-
-**2. Fehler: Zertifikatsfehler bei der Proxy-Nutzung**
-   - **Ursache:** Das Unternehmens-Proxy-Zertifikat wurde nicht korrekt in px.exe integriert.
-   - **Lösung:** Stellen Sie sicher, dass das Zertifikat korrekt in der `px.ini` konfiguriert ist und lokal importiert wurde:
-     ```powershell
-     Import-Certificate -FilePath "C:\path\to\corporate-proxy-cert.pem" -CertStoreLocation Cert:\LocalMachine\Root
-     ```
-
-**3. Fehler: Keine Verbindung zu GitHub oder IntelliJ**
-   - **Ursache:** px.exe könnte nicht korrekt konfiguriert sein oder es gibt Konflikte mit anderen Proxy-Einstellungen.
-   - **Lösung:** Stelle sicher, dass keine anderen Proxy-Einstellungen (z.B. in Umgebungsvariablen) px.exe überschreiben. Überprüfe die Konfiguration und führen Sie einen Neustart des Systems durch, um sicherzustellen, dass alle Änderungen übernommen wurden.
-
      
 ### 10. Glossar
 <a name="git-repository"></a>
@@ -1234,27 +1183,6 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
 - **Vorteile der venv-Nutzung:** Die Verwendung von `venv` ist in einem Enterprise-Umfeld besonders sinnvoll, da sie eine konsistente und reproduzierbare Entwicklungsumgebung sicherstellt. Trotz des zusätzlichen Verwaltungsaufwands überwiegen die Vorteile, insbesondere durch die Vermeidung von Versionskonflikten und die Flexibilität bei der Handhabung von Abhängigkeiten. Für ein komplexes Projekt mit mehreren Submodulen ist die sorgfältige Verwaltung der virtuellen Umgebungen unerlässlich, um eine reibungslose Entwicklung und Integration zu gewährleisten.
 
 - **Best Practices:** Es ist ratsam, für jedes Submodul entweder separate virtuelle Umgebungen zu verwenden oder sicherzustellen, dass alle Submodule kompatible Abhängigkeiten nutzen, die in einer gemeinsamen virtuellen Umgebung verwaltet werden. Regelmäßige Aktualisierung der `requirements.txt`-Dateien und deren Verwaltung im Versionskontrollsystem sind essenziell, um sicherzustellen, dass alle Entwickler mit den gleichen Versionen der Abhängigkeiten arbeiten. Dies unterstützt eine konsistente und problemfreie Entwicklung.
-
-<a name="pxexe-proxy-dienst"></a>
-**px.exe (Proxy-Dienst)**
-- **Definition:** px.exe ist ein lokaler Proxy-Dienst für Windows, der HTTP- und HTTPS-Anfragen von Anwendungen entgegennimmt und sie an einen definierten Unternehmens-Proxy-Server weiterleitet. Der Dienst ermöglicht die Nutzung von Unternehmensnetzwerken, die eine Authentifizierung über einen Proxy erfordern, ohne dass Benutzer ihre Anmeldedaten manuell eingeben müssen.
-
-- **Funktionsweise:** px.exe arbeitet als lokaler Vermittler zwischen Anwendungen und dem Unternehmens-Proxy. Es fungiert als zentraler Proxy-Agent, der automatisch die im Windows-System gespeicherten Anmeldedaten verwendet (Windows-Authentifizierung). Dadurch wird die manuelle Konfiguration von Proxy-Einstellungen in jeder einzelnen Anwendung überflüssig. px.exe nimmt Anfragen auf einem konfigurierten Port (standardmäßig 3128) entgegen, authentifiziert sich automatisch am Unternehmens-Proxy und leitet die Anfragen weiter.
-
-- **Einsatz im Projekt:** In einem Projekt wie "Data_Suite", bei dem mehrere Anwendungen wie Git und IntelliJ IDEA auf externe Ressourcen zugreifen müssen, stellt px.exe eine einfache und konsistente Lösung für die Proxy-Konfiguration dar. Durch die zentrale Verwaltung der Proxy-Einstellungen über px.exe wird sichergestellt, dass alle Anwendungen einheitlich über den Unternehmens-Proxy kommunizieren, ohne dass individuelle Konfigurationen nötig sind.
-
-- **Konfiguration:** px.exe wird über eine Konfigurationsdatei namens `px.ini` gesteuert, in der die Parameter für den Proxy-Server, die Authentifizierung und den lokalen Port festgelegt werden. Diese Datei kann bei Bedarf angepasst werden, um spezielle Anforderungen zu erfüllen, wie z. B. die Nutzung bestimmter Zertifikate oder die Anpassung von Timeout-Werten. px.exe kann bei Systemstart automatisch ausgeführt werden, um sicherzustellen, dass alle Anfragen abgedeckt sind.
-
-- **Vorteile:** 
-  - **Automatisierte Authentifizierung:** px.exe nutzt die gespeicherten Windows-Anmeldedaten, wodurch die manuelle Eingabe von Benutzername und Passwort entfällt.
-  - **Zentrale Verwaltung:** Alle Proxy-bezogenen Einstellungen können zentral in px.exe verwaltet werden, was die Einrichtung und Pflege von Entwicklungsumgebungen vereinfacht.
-  - **Kompatibilität:** px.exe kann mit jeder Anwendung verwendet werden, die HTTP- oder HTTPS-Anfragen stellt, und ist besonders nützlich in Unternehmensumgebungen mit strikten Netzwerksicherheitsrichtlinien.
-
-- **Nachteile:** 
-  - **Initiale Konfiguration:** Die Einrichtung von px.exe erfordert ein gewisses Maß an technischer Kenntnis, insbesondere bei der Anpassung der `px.ini`-Datei für spezifische Unternehmensanforderungen.
-  - **Fehlende Transparenz:** Da px.exe automatisch Anmeldedaten verwendet und im Hintergrund arbeitet, können Fehler bei der Authentifizierung oder Netzwerkprobleme schwerer zu diagnostizieren sein.
-
-- **Best Practices:** Es wird empfohlen, die `px.ini`-Konfigurationsdatei regelmäßig zu überprüfen und anzupassen, insbesondere wenn sich die Proxy-Umgebung des Unternehmens ändert. Zusätzlich sollten alle Anwendungen, die auf externe Ressourcen zugreifen, so konfiguriert werden, dass sie den lokalen px.exe-Proxy verwenden, um sicherzustellen, dass alle Verbindungen konsistent und sicher sind.
 
 <a name="jinja2"></a>
 **Jinja2**
@@ -1770,16 +1698,16 @@ try {
 
 ## Example of Invocation via Windows PowerShell Console
  
-#.\intelliJ_system_check.ps1 -homeDir "D:\data_suite\" -proxyCertPath "C:\Users\vx\cert\CompanyProxy.cer" -gitUserName "Eitel" -gitUserEmail "sepp@msn.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*" -outputDir "D:\data_suite\logs" -Verbose -Debug
+#.\intelliJ_system_check.ps1 -homeDir "C:\Users\[windows_user]\git\data_suite\" -proxyCertPath "C:\Users\[windows_user]\cert\CompanyProxy.cer" -gitUserName "Eitel" -gitUserEmail "sepp@msn.com" -intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*" -outputDir "C:\Users\[windows_user]\git\data_suite\logs" -Verbose -Debug
 
 ### Explanation of the Example:
 
-#- **`-homeDir "D:\data_suite\"`**: Specifies the home directory where the data suite is located.
-#- **`-proxyCertPath "C:\Users\vx\cert\CompanyProxy.cer"`**: Specifies the path to the proxy certificate.
+#- **`-homeDir "C:\Users\[windows_user]\git\data_suite\"`**: Specifies the home directory where the data suite is located.
+#- **`-proxyCertPath "C:\Users\[windows_user]\cert\CompanyProxy.cer"`**: Specifies the path to the proxy certificate.
 #- **`-gitUserName "Eitel"`**: Optional parameter for the Git username.
 #- **`-gitUserEmail "sepp@msn.com"`**: Optional parameter for the Git user email.
 #- **`-intelliJRegistryPath "HKLM:\SOFTWARE\JetBrains\*"`**: Specifies the registry path for IntelliJ.
-#- **`-outputDir "D:\data_suite\logs"`**: Specifies the directory where the `system_check_results.txt` file will be saved.
+#- **`-outputDir "C:\Users\[windows_user]\git\data_suite\logs"`**: Specifies the directory where the `system_check_results.txt` file will be saved.
 #- **`-Verbose -Debug`**: Enables verbose and debug output to provide detailed information during script execution.
 ```
 
@@ -1822,12 +1750,12 @@ $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subje
 
 #### 2. Exportieren des Zertifikats (Erst-Signatur):
 #### Exportieren Sie das Zertifikat, um es in den vertrauenswürdigen Zertifikatspeicher des Systems zu importieren.
-Export-Certificate -Cert $cert -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer"
+Export-Certificate -Cert $cert -FilePath "C:\Users\[windows_user]\cert\PSScriptSigningCert.cer"
 
 #### 3. Importieren des Zertifikats in vertrauenswürdige Speicher (Erst-Signatur):
 #### Importieren Sie das Zertifikat, damit es vom System als vertrauenswürdig anerkannt wird.
-Import-Certificate -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "C:\Users\VX\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+Import-Certificate -FilePath "C:\Users\[windows_user]\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\Root
+Import-Certificate -FilePath "C:\Users\[windows_user]\cert\PSScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
 
 #### 4. Ermitteln des Thumbprints (Erst-Signatur & Update-Signatur):
 #### Der Thumbprint des Zertifikats wird benötigt, um das Skript zu signieren.
@@ -1835,7 +1763,7 @@ $thumbprint = (Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object {$_.Subje
 
 #### 5. Signieren des Skripts (Erst-Signatur & Update-Signatur):
 #### Signieren Sie das Skript. Dieser Schritt muss nach jeder Änderung am Skript wiederholt werden.
-Set-AuthenticodeSignature -FilePath "U:\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
+Set-AuthenticodeSignature -FilePath "C:\Users\[windows_user]\intelliJ_system_check.ps1" -Certificate (Get-Item -Path Cert:\CurrentUser\My\$thumbprint)
 
 #### 6. Ausführungsrichtlinie setzen (optional) (Erst-Signatur & Update-Signatur):
 #### Setzen Sie die Ausführungsrichtlinie auf 'RemoteSigned', um sicherzustellen, dass nur vertrauenswürdige Skripte ausgeführt werden.
@@ -1899,11 +1827,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
    - Relevante Verzeichnisse als Quellverzeichnisse markieren
    - Git-Integration in IntelliJ IDEA überprüfen und konfigurieren
 
-#### 12. **Proxy-Dienst mit px.exe einrichten**
-   - px.exe herunterladen, installieren und konfigurieren
-   - Proxy-Einstellungen in IntelliJ IDEA und Git anpassen
-
-#### 13. **Automatisierte Validierung der Konfiguration**
+#### 12. **Automatisierte Validierung der Konfiguration**
    - Ein Skript zur Systemüberprüfung ausführen, um die Konfiguration zu validieren
    - Überprüfen der Installation und Konfiguration aller relevanten Komponenten
      
