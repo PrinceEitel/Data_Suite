@@ -104,6 +104,18 @@ Data_Suite/
 │   ├── site.webmanifest
 │   ├── requirements.txt        # Abhängigkeiten für HTML_B2B_Form
 │   └── ...
+├── Movie_Stream_Library/       # Submodul für Verwaltung digitaler Filmsammlungen diverser Quellen (iTunes, Amazon Prime,..).
+│   ├── .git/                   # Git-Verzeichnis für das Submodul Movie_Stream_Library
+│   ├── __init__.py             # Initialisierungsdatei fürs Movie_Stream_Library-Paket
+│   ├── venv/                   # Virtuelle Umgebung für Python
+│   │   ├── Scripts/
+│   │   │   ├── activate/       # Aktivierungsskript für die virtuelle Umgebung
+│   │   │   ├── deactivate.bat  # Deaktivierungsskript für Windows
+│   │   │   └── ...
+│   ├── ........
+│   ├── ........           
+│   ├── Movie_Stream_Library.log # Movie_Stream_Library Log für text_anonymizer 
+│   └── ...
 ├── .git/                       # Git-Verzeichnis für das Hauptprojekt
 ├── .idea/                      # IntelliJ IDEA Projektdateien
 │   ├── misc.xml
