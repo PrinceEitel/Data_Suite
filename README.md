@@ -184,92 +184,86 @@ Data_Suite/
 ### 3.1 Git-Installation und Konfiguration
 
 1. **Installation von Git for Windows:**
-   - Git for Windows kann von der offiziellen Git-Website [git-scm.com](https://git-scm.com) heruntergeladen werden.
-   - Installiere Git mit den Standardeinstellungen.
+- **Git for Windows herunterlade:**  kann von der offiziellen Git-Website [git-scm.com](https://git-scm.com) heruntergeladen werden.
+- **Standardeinstellungen:** Installiere Git mit den Standardeinstellungen.
 
 2. **Überprüfung der Git-Installation:**
-   - Nach der Installation kann die erfolgreiche Einrichtung von Git mit folgendem Befehl überprüft werden:
    ```console
    git --version
+   
+   #Beispielausgabe: `git version 2.x.x`.
    ```
-   - Beispielausgabe: `git version 2.x.x`.
+
 
 3. **Konfiguration von Git:**
-   - Nach der Installation sollte Git konfiguriert werden, um den Benutzer für alle zukünftigen Git-Aktionen zu identifizieren.
-   - Konfiguriere den Benutzernamen:
+- **Konfiguriere den [windows_user]:**
    ```console
-   git config --global user.name "Benutzername"
+   git config --global user.name "[github_user]"
    ```
-   - Konfiguriere die E-Mail-Adresse:
+- **Konfiguriere  die E-Mail-Adresse:**   
    ```console
-   git config --global user.email "email@example.com"
+   git config --global user.email "[github_user_mail_address]"
    ```
-   - Überprüfe die Konfiguration:
+- **Überprüfe die Konfiguration:**     
    ```console
    git config --global --list
    ```
    
 4. **Proxy-Einstellungen für Git (falls erforderlich):**
-   - Bei Verwendung eines Proxy-Servers können die Proxy-Einstellungen manuell in der gitconfig konfiguriert werden:
    ```console
    git config --global http.proxy http://username:password@proxy-server:port
    git config --global https.proxy https://username:password@proxy-server:port
    ```
 5. **Überprüfung der Proxy-Konfiguration und Erreichbarkeit von GitHub:**
-   - Um sicherzustellen, dass GitHub über den konfigurierten Proxy erreichbar ist, verwende `curl`:
+- **GitHub Verbindung via proxy mit `curl` testen:**      
    ```console
    curl -x http://<proxy-server>:<port> -I https://github.com
-   ```
-   - sendet eine HTTP-Anfrage an GitHub über den konfigurierten Proxy. Eine erfolgreiche Antwort zeigt, dass die Proxy-Konfiguration korrekt ist und GitHub erreichbar ist.
-   - `curl` berücksichtigt die Proxy-Einstellungen und simuliert die tatsächliche Kommunikation, wie sie auch bei der Verwendung von Git oder IntelliJ stattfinden würde.
-   - `nslookup` und `Test-NetConnection` könnten Eindruck erwecken, dass GitHub erreichbar ist, obwohl dies durch den Proxy blockiert werden könnte. `curl` vermeidet dies.
 
+   #sendet HTTP-Anfrage an GitHub über konfigurierten Proxy. erfolgreiche Antwort zeigt, dass Proxy-Konfiguration korrekt und GitHub erreichbar ist.
+   #`curl` berücksichtigt die Proxy-Einstellungen und simuliert tatsächliche Kommunikation, wie auch bei der Verwendung von Git oder IntelliJ.
+   #`nslookup` und `Test-NetConnection` könnten Eindruck erwecken, dass GitHub erreichbar ist, obwohl durch Proxy blockiert werden könnte, was `curl` vermeidet
+   ```
 ### 3.2 IntelliJ IDEA Installation
 
 1. **Download und Installation von IntelliJ IDEA Ultimate:**
-   - IntelliJ IDEA Ultimate 2024.1 kann von der JetBrains-Website [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download) heruntergeladen werden.
-   - Installiere die Software mit den Standardeinstellungen.
+- **IntelliJ IDEA Ultimate herunterladen:** kann von der JetBrains-Website [jetbrains.com/idea/download](https://www.jetbrains.com/idea/download) heruntergeladen werden.
 
 ### 3.3 SSH-Schlüssel erstellen und konfigurieren
 
 1. **Erstellung eines neuen SSH-Schlüssels:**
-   - Einen neuen SSH-Schlüssel generieren:
    ```console
    ssh-keygen -t rsa -b 4096 -C "email@example.com"
+   #Standardspeicherort (`C:\Users\[windows_user]\.ssh\id_rsa`) durch Drücken von Enter akzeptieren. Optional kann Passwort festgelegt werden.
+   #[ssh-shell](#ssh-secure-shell)
    ```
-   - Den Standardspeicherort (`C:\Users\Benutzername\.ssh\id_rsa`) durch Drücken von Enter akzeptieren. Optional kann ein Passwort festgelegt werden.
-   - [ssh-shell](#ssh-secure-shell)
-
 2. **Starten des SSH-Agents und Hinzufügen des Schlüssels:**
-   - Start des SSH-Agents:
    ```console
    Start-Service ssh-agent
+   #[Info ssh-agent](#ssh-agent)
    ```
-   - [Info ssh-agent](#ssh-agent)
-   - Hinzufügen des privaten Schlüssels zum Agenten:
+   
    ```console
+   #Hinzufügen des privaten Schlüssels zum Agenten:   
    ssh-add ~/.ssh/id_rsa
    ```
 
 3. **Kopieren des öffentlichen Schlüssels:**
-   - Der öffentliche Schlüssel kann wie folgt kopiert werden:
    ```console
    Get-Content ~/.ssh/id_rsa.pub | Set-Clipboard
    ```
 
 4. **Hinzufügen des SSH-Schlüssels zu GitHub:**
-   - Anmelden bei GitHub, dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
-   - Den kopierten Schlüssel einfügen und speichern.
+  - **Anmelden bei GitHub:** dann zu **Settings** -> **SSH and GPG keys** -> **New SSH key** navigieren.
+  - **Kopie des Schlüssels einfügen und speichern**  
 
-5. **Überprüfung der SSH-Verbindung zu GitHub:**
-   - Die Verbindung zu GitHub kann mit folgendem Befehl getestet werden:
+6. **Überprüfung der SSH-Verbindung zu GitHub:**
    ```console
+   #Verbindung zu GitHub kann mit folgendem Befehl getestet werden:      
    ssh -T git@github.com
    ```
 
 ### 3.4 **CA-Zertifikate hinzufügen:**
-   - **Integration über px.exe:** Das Unternehmens-Proxy-Zertifikat wird über px.exe zentral verwaltet, was die manuelle Integration in einzelne Anwendungen überflüssig macht.
-   - Stelle sicher, dass das Zertifikat in die lokale Zertifikatsverwaltung importiert wird, damit es von px.exe genutzt werden kann.
+  - **lokale Zertifikatsverwaltung import sicherstellen**
 
 ### 4. GIT Setup Main
 
@@ -372,7 +366,7 @@ Data_Suite/
     **Erklärungen:**
 
     - `[filter "lfs"]`: Einstellungen für Git Large File Storage (LFS), um große Dateien effizient zu verwalten.
-    - `[user]`: Benutzername und E-Mail-Adresse für Git-Commits.
+    - `[user]`: [windows_user] und E-Mail-Adresse für Git-Commits.
     - `[safe]`: Sichere Verzeichnisse, in denen Git-Befehle ausgeführt werden dürfen.
     - `[core]`: Core-Einstellungen wie `autocrlf`, das sicherstellt, dass Zeilenendungen korrekt zwischen Windows und Unix-Systemen umgewandelt werden.
     - `[merge]`: Merge-Tool, das für Konfliktlösungen verwendet wird (hier: `meld`).
@@ -530,7 +524,7 @@ $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -Subje
 Das erstellte Zertifikat muss nun exportiert werden, um es in den vertrauenswürdigen Zertifikatspeicher des Systems zu importieren.
 
 ```powershell
-Export-Certificate -Cert $cert -FilePath "C:\Users\<DeinBenutzername>\MyScriptSigningCert.cer"
+Export-Certificate -Cert $cert -FilePath "C:\Users\<Dein[windows_user]>\MyScriptSigningCert.cer"
 ```
 
 ##### 6.3.1.3 Importieren des Zertifikats in vertrauenswürdige Speicher (Erst-Signatur)
@@ -932,7 +926,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
        git config --global user.name "your_username"
        git config --global user.email "your_email@example.com"
        ```
-    - Befehle überprüfen und setzen den Git-Benutzernamen und die E-Mail-Adresse.
+    - Befehle überprüfen und setzen den Git-[windows_user] und die E-Mail-Adresse.
       
 3. **Fehler beim Mergen: `CONFLICT (content): Merge conflict in file.txt`**
    - **Ursache:** Änderungen in der gleichen Datei widersprechen sich.
@@ -1017,7 +1011,7 @@ Beispiel für eine Terminal-Konfiguration in `workspace.xml`:
     - Überprüft, ob das Zertifikat im Stammzertifikatspeicher vorhanden ist.
   2. **Hinzufügen des Zertifikats zu den vertrauenswürdigen Herausgebern:**
      ```powershell
-     Import-Certificate -FilePath "C:\Users\<IhrBenutzername>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
+     Import-Certificate -FilePath "C:\Users\<Ihr[windows_user]>\MyScriptSigningCert.cer" -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
      ```
     - Fügt das Zertifikat zu den vertrauenswürdigen Herausgebern hinzu.
   3. **Überprüfen, ob das Zertifikat für die Code-Signatur geeignet ist:**
@@ -1785,7 +1779,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
    - Installation mit den Standardeinstellungen abschließen
 
 #### 3. **Git konfigurieren**
-   - Benutzername und E-Mail-Adresse konfigurieren
+   - [windows_user] und E-Mail-Adresse konfigurieren
    - Optional: Proxy-Einstellungen für Git konfigurieren, falls notwendig
    - Sicherstellen, dass Git korrekt installiert ist (`git --version`)
 
