@@ -1,0 +1,676 @@
+Hallo Chatbot, 
+
+Erstelle eine systematische Übersicht dieser nachfolgenden Files basierend auf den am Ende des Prompts zusammgetragenen Informationen. 
+Diese Übersicht soll im Anschluss dazu dienen die bisher autonomen Files zu konsoliieren, zu entzerren, redundanzen zu redudizieren, systematisch für unterschiedliche Verwendungen besser zu differenzieren
+
+01 b2b_data_feed_it_architecture.md
+
+02 b2b_data_feed_product_content_ger.md
+
+03 b2b_data_feed_tasks_support-b2b.md
+
+04 b2b_data_feed_roles_and_processes_ger.md
+ 
+05 b2b_data_feed_tasks_support-mft.md
+ 
+06 b2b_data_feed_tasks_support-vai.md  
+ 
+07 b2b_data_feed_faq_sftp_routing.md
+
+08 b2b_data_feed_faq_powercenter_ger.md
+
+09 b2b_data_model_and_content.md
+
+10 b2b_data_feed_setup_configurator.md
+
+11 b2b_data_feed_config_solver.md  
+
+12 b2b_data_feed_csv_content_ger.md 
+
+13 b2b_data_feed_ai_playbook_ger.md
+  
+14 b2b_data_feed_response_library_ger.md
+  
+----
+
+# File-Profil 01: `b2b_data_feed_it_architecture.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+E2E-Architekturhandbuch mit Leitplanken, Komponentenrollen (DWH/UC4, VAI/NextGen, Axway), Datenprodukte (CSV/E-Docs/SWIFT), Betriebs- und Change-Prozessen. Zielgruppe: alle B2B-Stakeholder (Support-B2B, Support-MFT, Support-VAI, WM-Service Hub, RM), mit Fokus auf **Kontext & Verantwortlichkeiten**. &#x20;
+
+**Scope & Nicht-Scope.**
+Beschreibt **Rollen/Funktionen** inkl. UC4-Masterjob und NextGen JSON als IaC; keine Feldspezifikation (CSV) und keine Axway-Betriebsdetails. &#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. Architektur & Systemübersicht (Exec Summary, Kontext, Leitplanken, Tech-Stack)
+* 2. Datenprodukte & Formate (CSV/E-Docs/SWIFT)
+* 3. E2E-Prozesse (Onboarding, Betrieb, Change, Historie)
+* 4. Appian-Orchestrierung …
+     (Gliederungstiefe: **≥4 Ebenen** → Score **2**).&#x20;
+
+**Kapitel-Tabelle (Mapping auf Taxonomie).**
+
+| Kapitel (Auszug)                | Taxonomie-Mapping              | Abdeckung | Detailgrad | Tiefe | Artefakte                        | RACI-Bezug                       |
+| ------------------------------- | ------------------------------ | --------: | ---------: | ----: | -------------------------------- | -------------------------------- |
+| 1.1–1.4 Architektur/Leitplanken | Architektur & Systemkontext    |         3 |          2 |     2 | Rollen/Stack                     | B2B/VAI/MFT Rollen klar benannt  |
+| 2. Datenprodukte                | Produktumfang & Dateitypen     |         3 |          2 |     1 | CSV/E-Docs/SWIFT-Katalog         | Multi-Owner (Core/OMS/B2B)       |
+| 3.2 Täglicher Betrieb           | ETL/Scheduling; Transport      |         2 |          2 |     1 | UC4-Masterjob, Push/Provide      | B2B (UC4) → VAI → MFT            |
+| UC4-Masterjob Abschnitt         | ETL & Scheduling               |         2 |          2 |     0 | `…B2B_FILE_LIEFERUNGEN_NEU.JOBP` | Support-B2B (UC4)                |
+| VAI/NextGen Abschnitt           | Transport intern (VAI/NextGen) |         2 |          2 |     0 | NextGen JSON (IaC)               | Support-B2B & Support-VAI        |
+| MFT Abschnitt                   | MFT/SFTP                       |         2 |          1 |     0 | Axway-Rolle                      | Support-MFT (Axway)              |
+
+**Stärken/Schwächen (kurz).**
+
+* Sehr gut für **Kontext, Rollen und E2E-Flüsse**; nennt konkrete UC4-Artefakte und IaC-Prinzipien.
+  − Kein Feldkatalog; detaillierte Betriebs-How-Tos gehören in MFT/VAI-Dokumente.
+
+**Empfohlene Rolle.**
+**Champion** für: *Architektur & Rollen/E2E*. **Support** für: *Produktübersicht*. **Pointer** zu CSV-Inhalten/MFT/VAI-Betrieb. &#x20;
+
+---
+# File-Profil 02: `b2b_data_feed_product_content_ger.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Produkt-/Inhaltsübersicht der **B2B-Datenprodukte** (CSV, E-Docs, SWIFT/camt) inkl. Quelle, Trigger, Parallelversand-Hinweis, Roadmap-Status. Zielgruppe: WM Hub, RM, Support-B2B/MFT/VAI. &#x20;
+
+**Scope & Nicht-Scope.**
+Klarer Fokus auf **Was liefern wir?** (Inhalte, Auslöser, Verfügbarkeit/Limitierungen), **Wer betreibt was?** Keine ETL/MFT-How-tos. &#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 2.1 CSV (DWH/PC; Batch; parallel möglich)
+* 2.2 E-Docs (OMS; CRM-gesteuert; Parallelversand möglich; Ownership IT.OMS)
+* 2.3 SWIFT/camt (Avaloq; MT-Typen; camt.053/054 Roadmap, nicht Standard)
+  (Gliederungstiefe: **≤2 Ebenen** → Score **0–1**).&#x20;
+
+**Kapitel-Tabelle (Auszug).**
+
+| Kapitel          | Taxonomie                     | Abdeckung | Detailgrad | Tiefe | Artefakte                       | RACI                           |
+| ---------------- | ----------------------------- | --------: | ---------: | ----: | ------------------------------- | ------------------------------ |
+| 2.1 CSV          | Produktumfang/Dateitypen      |         3 |          1 |     0 | Vergleichstabelle Pipelines     | Support-B2B (Inhalt)           |
+| 2.2 E-Docs (OMS) | Produktumfang; Rollen/Prozess |         3 |          2 |     1 | **Orchestrierung ONB-04/05/07** | IT.OMS; B2B/MFT/HUB für Setup  |
+| 2.3 SWIFT/camt   | Produktumfang; Roadmap        |         2 |          1 |     0 | Hinweis camt.\* Projektphase    | Core Banking (Erzeugung)       |
+
+**Stärken/Schwächen.**
+
+* Verdichtet **Produkt & Ownership** (gute RM/WM-Referenz).
+  − Keine CSV-Felddetails; verweist implizit auf CSV-Spezifikation.
+
+**Empfohlene Rolle.**
+**Champion**: *Produkt-/Angebotsübersicht*. Pointer zu CSV-Spezifikation, Architektur, FAQ SFTP.
+
+---
+
+# File-Profil 03: `b2b_data_feed_tasks_support-b2b.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Zentrales, technisches Referenzdokument für das Support-B2B-Team über Architektur, DB-Objekte, ETL/UC4, Betriebsprozesse, Troubleshooting und Change-Durchführung. Primäre Zielgruppe sind Entwickler/Application Manager im Support-B2B sowie angrenzende Teams (MFT, VAI, Core/OMS, CRM/Appian). &#x20;
+
+**Scope & Nicht-Scope.**
+Deckt B2B CSV-Domain end-to-end ab (Datenmodell, ETL, Orchestrierung, Tagesproduktion, Changes). Kein Detailhandbuch für Axway-Konfigurationen (Support-MFT-Scope) oder VAI-Betrieb (Support-VAI).  &#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+Auszug aus TOC (stark gekürzt):
+
+* 1. Einführung & Übersicht (Zweck, Zielgruppe, Schnellstart)
+* 2. Systemarchitektur (2.1–2.4; Tech-Stack, Netz, Umgebungen)
+* 3. Oracle Datenbank-Strukturen (Schema, Tabellen, Views, Packages)
+* 4. ETL-Prozesse (PowerCenter)
+* … 19. Glossar & Referenzen, 20. Änderungshistorie
+  (Gliederungstiefe: **≥4 Ebenen** → Score **2**).  &#x20;
+
+**Kapitel-Tabelle (Mapping auf Taxonomie).**
+
+| Kapitel (Auszug)            | Taxonomie-Mapping                                  | Abdeckung | Detailgrad | Tiefe | Artefakte                     | RACI-Bezug                       |
+| --------------------------- | -------------------------------------------------- | --------: | ---------: | ----: | ----------------------------- | -------------------------------- |
+| 1. Einführung/Zielgruppe    | Rollen, Prozesse & RACI                            |         1 |          1 |     1 | Zweck/Zielgruppe              | Support-B2B primär               |
+| 2. Systemarchitektur        | Architektur & Systemkontext                        |         2 |          2 |     2 | Arch-/Datenfluss-Hinweise     | Abgrenzung zu MFT/VAI (Pointer)  |
+| 3. DB-Strukturen            | Datenmodell (DB/Views/Packages)                    |         3 |          3 |     2 | Objektlisten, Namenskonv.     | Support-B2B                      |
+| 4. ETL (PowerCenter)        | ETL & Scheduling                                   |         3 |          3 |     2 | Folder/Mappings/Workflows     | Support-B2B                      |
+| (Kap. B2B_STEUER_TABELLE) | Config-Solver & Entscheidungslogik / CSV-Selektion |         2 |          2 |     1 | Selektions-/Flags             | Support-B2B (DB)                 |
+| (Kap. Transfer-Anstoss)     | Transport intern (VAI/NextGen) & Skripte           |         2 |          2 |     1 | Verweis `filetransfer_dyn.sh` | Support-B2B→VAI/MFT Handover     |
+
+**Stärken/Schwächen (kurz).**
+
+* Stark in **DB/ETL/Operative Details**; eignet sich als **Champion** für Datenmodell & PowerCenter.
+  − MFT/VAI nur als Pointer; Response-Playbooks/Kommunikation nicht enthalten.
+
+**Empfohlene Rolle.**
+**Champion** für: *Datenmodell*, *ETL/UC4*, *Selektionslogik*. **Support** für: *Architektur-Überblick*. **Nicht-Zuständig** für: *Axway/VAI Betrieb*. &#x20;
+
+---
+
+# Profil 04 – **b2b_data_feed_roles_and_processes_ger.md**
+
+**Grundintention & Zielgruppe**
+Single Source of Truth für **Rolle von Support-B2B**, **Prozessübersicht** über den gesamten Lebenszyklus inkl. **granularer RACI**. Zielgruppe: alle beteiligten Teams (B2B, MFT, VAI, OMS, IT.Core, RM/WM Hub).&#x20;
+
+**Scope & Nicht-Scope**
+Scope: In-/Out-of-Scope des Support-B2B, vollständige RACI-Matrix, Phasenmodell, interne Workflows. Nicht-Scope: technische Tiefen (CSV-Felder, Skriptdetails).&#x20;
+
+**Strukturkarte (Ebenentiefe: 3)**
+
+1. Rolle & Kernkompetenzen (Position, Hauptaufgabe, Direkte Zuständigkeiten)&#x20;
+   1.3 Abgrenzung der Zuständigkeiten (Out-of-Scope: SWIFT=IT.Core, EDOC=OMS, SFTP-Setup=MFT, CRM/Changes/Historicals via RM/Hub)&#x20;
+2. Prozessübersicht & Verantwortlichkeiten (RACI) — Phasen 2.1…2.11 (E2E Lebenszyklus)&#x20;
+3. Interne Workflows & Ansprechpartner (Kommunikationswege, QA, Key Contacts)&#x20;
+
+**Kapitel-Tabelle (Auszug)**
+
+| Kapitel                  | Taxonomie-Mapping                       | Abdeckung | Detailgrad | Gliederung | Besondere Artefakte                                          | RACI-Bezug                               |
+| ------------------------ | --------------------------------------- | --------: | ---------: | ---------: | ------------------------------------------------------------ | ---------------------------------------- |
+| 1. Rolle/Kernkompetenzen | Rollen/Prozesse & RACI                  |         3 |          1 |          1 | Scope des Support-B2B klar                                   | B2B als Owner CSV E2E                    |
+| 1.3 Abgrenzung           | Operatives Playbook (Triage/Delegation) |         3 |          2 |          1 | **Deutliches Out-of-Scope** (SWIFT/EDOC/SFTP-Setup/CRM/Hist) | Delegation an RM/Hub, IT.Core, OMS, MFT  |
+| 2. RACI-Übersicht        | Rollen, Prozesse & RACI                 |         3 |          2 |          1 | Lebenszyklus-RACI als SoT                                    | Vollständige Phasenabdeckung             |
+| 3. Workflows/Contacts    | Kommunikations-Playbook                 |         2 |          1 |          0 | Kommunikationswege, QA                                       | Owner je Kanal/Team                      |
+
+**Stärken**
+
+* **Harte RACI-Klarheit** inkl. Out-of-Scope-Liste (vermeidet Fehltriage).&#x20;
+* E2E-Phasenstruktur, gut anschlussfähig an Onboarding/Change.
+
+**Schwächen / Gaps**
+
+* Kein operatives Troubleshooting (z. B. SFTP-Fehlerbilder) — verweist implizit auf FAQ-Dokumente.
+* Keine konkreten Mail-Formulierungen (gehört in Response-Library).
+
+**Empfohlene Rolle**
+**Champion** für „Rollen, Prozesse & RACI“.
+
+--- 
+# File-Profil 05: `b2b_data_feed_tasks_support-mft.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Technische Aufgabenbeschreibung **Support-MFT** (Axway SecureTransport): Accounts, Subscriptions, Routes, **Transfer Sites (Push)**, Keys, Firewall/JIRA, Onboarding inkl. PORT-Spezialfall. Zielgruppe: Support-MFT, Schnittstellen B2B/VAI, WM B2B Service Hub.&#x20;
+
+**Scope & Nicht-Scope.**
+Beschreibt **Axway-Objektmodell**, Onboarding-Workflow (Appian, PSSA, Firewall), Konfig-Schablonen, Retention/PCD/Sperren. Keine CSV-Feldinhalte; VAI-Details nur soweit für Übergabe nötig.&#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. Einführung/Zielgruppe/Rolle
+* 2. MFT in der Architektur (Hub)
+* 3. Kern-Use-Cases (**Provide/Push/Download/Receive**)
+* 4. Onboarding (Appian, Keys, Firewall, **PORT**)
+* 5. Technische Bausteine (**Account, Certificate, Transfer Site, Route, Subscription**)
+     (Gliederungstiefe: **≥3 Ebenen** → Score **1**). &#x20;
+
+**Kapitel-Tabelle.**
+
+| Kapitel          | Taxonomie-Mapping           | Abdeckung | Detailgrad | Tiefe | Artefakte                                                | RACI-Bezug                     |
+| ---------------- | --------------------------- | --------: | ---------: | ----: | -------------------------------------------------------- | ------------------------------ |
+| 2. Rolle/Hub     | Architektur & Systemkontext |         2 |          1 |     1 | Einordnung MFT                                           | Support-MFT                    |
+| 3. Use-Cases     | MFT/SFTP Muster             |         3 |          2 |     1 | **Provide/Push/Receive/Download**                        | Support-MFT; Policy siehe FAQ  |
+| 4. Onboarding    | Onboarding/Change/Setup     |         3 |          2 |     1 | Appian, Keys, Firewall, **PORT**                         | Support-MFT / RM               |
+| 5. Bausteine     | MFT/SFTP & Security         |         3 |        2–3 |     1 | **Account/Certificate/Transfer Site/Route/Subscription** | Support-MFT                    |
+| Konfig-Schablone | MFT/SFTP (Push)             |         2 |          2 |     0 | Beispiel **Transfer Site**                               | Support-MFT                    |
+
+**Stärken/Schwächen.**
+
+* **Operativ konkret** (Objektmodell, Onboarding, PORT-Sonderfall).
+  − Absichtliche Abgrenzung zu CSV/ETL.
+
+**Empfohlene Rolle.**
+**Champion**: *MFT/SFTP (Accounts, Routes, Push/Provide), Onboarding*. **Pointer**: CSV-Inhalt/ETL. &#x20;
+
+---
+# File-Profil 06: `b2b_data_feed_tasks_support-vai.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Middleware-Sicht **VAI/.info (NextGen/Aisphere)**: interner Transport-Hub, JSON-IaC für Outbound, Deployment/Monitoring (Traffic Monitor), Sicherheitsaspekte. Zielgruppe: Support-VAI, Support-B2B, Support-MFT.&#x20;
+
+**Scope & Nicht-Scope.**
+Definiert **File Transfer Client (`filetransfer.sh`)**, **NextGen-JSON** (Profiles PROD=`sftp` / Non-Prod=`nirvana`), Header-Pflichten, Fehlercodes, Aisphere-Rolle. Kein Axway-Objektbetrieb, keine CSV-Feldkataloge. &#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. Einführung/Zielbild/Rolle
+* 2. Architekturrolle (VAI als interner Hub)
+* 3. Kernaufgaben (Service, Pipelines)
+* 4. Onboarding/Beauftragung
+* 5. Technik: **`filetransfer.sh`**, **NextGen-JSON** (Source/Tasks/Headers), **Aisphere**
+* 6. Operativ: **Traffic Monitor**, JSON-Deployment
+* 7. Sicherheit/Compliance
+     (Gliederungstiefe: **≥3 Ebenen** → Score **1**).&#x20;
+
+**Kapitel-Tabelle.**
+
+| Kapitel               | Taxonomie-Mapping                              | Abdeckung | Detailgrad | Tiefe | Artefakte                                        | RACI-Bezug                                            |
+| --------------------- | ---------------------------------------------- | --------: | ---------: | ----: | ------------------------------------------------ | ----------------------------------------------------- |
+| 2. VAI als Hub        | Transport intern (VAI/NextGen)                 |         3 |          2 |     1 | Architektur/Decoupling                           | Support-VAI                                           |
+| 5.1 `filetransfer.sh` | Transport intern & Skripte                     |         3 |          2 |     1 | CLI-Parameter, RC-Semantik                       | Support-VAI                                           |
+| 5.2 NextGen-JSON      | Config-Solver & Entscheidungslogik (technisch) |         3 |          3 |     1 | **Pflicht-Header**, `path=B2B_ADDRESS`, Profiles | Support-B2B (Outbound Owner) / Support-VAI (Betrieb)  |
+| 5.3 Aisphere          | Transport intern & Setup                       |         2 |          2 |     1 | Registrierung, Env-Mapping (**TEST→DEVT**)       | Support-VAI                                           |
+| 6. Traffic Monitor    | Operatives Playbook & Triage                   |         2 |          2 |     1 | Monitoring-Pfad Non-Prod vs. Prod                | Support-VAI; Eskalation zu MFT bei Gap                |
+| 7. Sicherheit         | Security/Compliance (intern)                   |         1 |          1 |     0 | Zugriff/Integrität                               | Support-VAI                                           |
+
+**Stärken/Schwächen.**
+
+* Klare **IaC-Leitplanken** (Headers-Pflicht, `path`-Semantik **= B2B_ADDRESS**), **Profiles** (nirvana vs. sftp), **Fehlercodes**.
+  − MFT-Objekte bewusst out-of-scope.
+
+**Empfohlene Rolle.**
+**Champion**: *VAI/NextGen (IaC, JSON, `filetransfer.sh`, Traffic Monitor)*. **Pointer**: MFT-Betrieb/CSV-Felder. &#x20;
+
+---
+
+# File-Profil 07: `b2b_data_feed_faq_sftp_routing.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Technisches **FAQ** zu **Transfer-Mustern**, **B2B_ADDRESS-Regel**, **Rollen** und **Onboarding-Policies** (Provide/Push/Receive/Download). Zielgruppe: Support-B2B, Support-MFT, Support-VAI, WM Hub.&#x20;
+
+**Scope & Nicht-Scope.**
+Definiert **Policy: Standard=Provide, Push=Ausnahme**, Integritätsregel **1:1** zwischen UC4/JSON/MFT/CRM, JSON-Header-Format (Array von `key=value`). Kein CSV-Feldkatalog.  &#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. Grundlagen (SFTP vs. MFT vs. VAI; Transfer-Muster; B2B_ADDRESS & Mapping)
+* 2. Rollen/Prozess & Onboarding (ONB-Tasks, Appian Checklist)
+* 3. VAI & NextGen (filetransfer\* Clients; JSON; Setup)
+* 4. Security & Zugriff (Keys, IP, Host Key, SFTP-only)
+     (Gliederungstiefe: **≥3 Ebenen** → Score **1**). &#x20;
+
+**Kapitel-Tabelle (Auszug).**
+
+| Kapitel                        | Taxonomie                     | Abdeckung | Detailgrad | Tiefe | Artefakte                                   | RACI                                        |
+| ------------------------------ | ----------------------------- | --------: | ---------: | ----: | ------------------------------------------- | ------------------------------------------- |
+| 1.2 Transfer-Muster & Policy   | MFT/SFTP; Operatives Playbook |         3 |          2 |     1 | **If–Then-Baum**, Muster-Tabelle            | Support-MFT (Betrieb) / B2B/VAI (Übergabe)  |
+| 1.3 B2B_ADDRESS & Routing     | Transport intern; MFT/SFTP    |         3 |          3 |     1 | **Integritätsregel 1:1**, **Mapping Axway** | B2B (Schlüssel), MFT (Folder)               |
+| JSON Beispiele (Prod/Non-Prod) | Transport intern (VAI)        |         3 |          3 |     0 | **headers\[]**-Array; `type:sftp/nirvana`   | Support-VAI (IaC) / B2B (Service-Name)      |
+
+**Stärken/Schwächen.**
+
+* **Policy-klar** (Provide vs. Push), **Header-Format** verbindlich, **End-to-End**-Nomenklatur.
+  − Operative Schritt-für-Schritt-Guides stehen in Tasks-Docs.
+
+**Empfohlene Rolle.**
+**Champion**: *SFTP/MFT/VAI-Policy & Routing-Regeln*. Ergänzt Architektur (Kontext) und Tasks (Ausführung).&#x20;
+
+---
+# File-Profil 08: `b2b_data_feed_faq_powercenter_ger.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+FAQ zu **ETL/PowerCenter-Übergabe an VAI/MFT** inkl. **Skripte/Parameter**, **NextGen-JSON-Beispiele**, **Troubleshooting (RC-Semantik)** und **Rollenmodell**. Zielgruppe: Support-B2B (ETL), Support-VAI, Support-MFT. &#x20;
+
+**Scope & Nicht-Scope.**
+Konkretisiert **`filetransfer_dyn.*` → `filetransfer.sh`**, JSON-Pflichten (headers\[]), Prod/Non-Prod-Adapter, Troubleshooting (RC/Service-Name). Keine CSV-Felder, keine Axway-Objektdefinitionen. &#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 7.2 Dateiübergabe an VAI (Schnittstelle)
+* NextGen-JSON Beispiele Non-Prod/Prod
+* 7.3 Externer Versand via MFT – Rollen/Adapter
+* Troubleshooting Kurzliste
+  (Gliederungstiefe **≤2–3** → Score **1**).&#x20;
+
+**Kapitel-Tabelle (Auszug).**
+
+| Kapitel             | Taxonomie                  | Abdeckung | Detailgrad | Tiefe | Artefakte                                     | RACI                   |
+| ------------------- | -------------------------- | --------: | ---------: | ----: | --------------------------------------------- | ---------------------- |
+| 7.2 Übergabe an VAI | Transport intern & Skripte |         3 |          3 |     1 | **CLI-Beispiele**, Param-Doku, **Exit-Codes** | Support-B2B/VAI        |
+| JSON Prod/Non-Prod  | Transport intern (VAI)     |         3 |          3 |     0 | **`type:"sftp"`/`"nirvana"`**, **headers\[]** | Support-VAI (IaC)      |
+| RC/Fehlerbilder | Operatives Playbook        |         2 |          2 |     0 | RC/If-Then                   | B2B First-Level                  |
+| MFT-Versand     | MFT/SFTP & RACI            |         2 |          2 |     1 | Adapter/Route Hinweis        | MFT Owner (Details in MFT-Tasks) |
+
+**Stärken/Schwächen.**
+
+* Sehr **implementierungsnah** (CLI/JSON/RC).
+  − MFT-Objekte high-level (Details in `tasks_support-mft.md`).
+
+**Empfohlene Rolle.**
+**Champion**: *ETL→VAI Übergabe & Troubleshooting*. Pointer: MFT-Objektbetrieb, CSV-Felder.&#x20;
+
+---
+
+## Matrix-Update (neue Dateien)
+
+| Thema                                    | response_library | faq_sftp_routing | product_content | faq_powercenter |
+| ---------------------------------------- | ----------------: | -----------------: | ---------------: | ---------------: |
+| Architektur & Systemkontext              |               0/0 |                2/1 |              2/1 |              1/1 |
+| Produktumfang & Dateitypen               |               1/1 |                1/1 |          **3/1** |              0/0 |
+| CSV-Inhalt & Spezifikation               |             1/1\* |                0/0 |              1/0 |              0/0 |
+| Datenmodell (DB/Views/Packages)          |               0/0 |                0/0 |              0/0 |              0/0 |
+| ETL (PowerCenter) & UC4                  |               0/0 |                0/0 |              0/0 |          **3/3** |
+| Transport intern (VAI/NextGen) & Skripte |               0/0 |            **3/3** |              0/0 |          **3/3** |
+| MFT/SFTP (Accounts/Routes/Security)      |               0/0 |            **3/2** |              1/1 |              2/2 |
+| Rollen, Prozesse & RACI                  |               2/1 |                2/1 |              2/1 |              2/1 |
+| Operatives Playbook & Störungen          |           **3/2** |                2/2 |              1/1 |              2/2 |
+| Onboarding/Change/Setup                  |           **3/2** |                2/2 |              2/1 |              1/1 |
+| Testfälle & Abnahmekriterien             |               0/0 |                0/0 |              0/0 |              1/1 |
+| Kommunikations-Playbooks                 |           **3/2** |                0/0 |              0/0 |              0/0 |
+| AI-Leitplanken & AI-Tasks                |               0/0 |                0/0 |              0/0 |              0/0 |
+| Config-Solver & Entscheidungslogik       |               0/0 |       1/1 (Policy) |              0/0 | 1/1 (RC/If-Then) |
+| Setup-Konfigurator                       |               0/0 |                0/0 |              0/0 |              0/0 |
+| Spezielle FAQs (PowerCenter/SFTP)        |               0/0 |            **3/3** |              0/0 |          **3/3** |
+| Skripte (bash) – Sicherheit/Parameter    |               0/0 |                1/1 |              0/0 |          **3/3** |
+
+\* via erklärende Textstellen/Dateiverweise in Templates (kein Feldkatalog).&#x20;
+
+---
+
+## Mini-Konflikt-/Kohärenz-Check (bezogen auf diese Profile)
+
+* **Provide vs. Push Policy**: Konsistent zwischen **FAQ SFTP/Routing** und **IT-Architecture** (Standard=Provide, Push=Ausnahme). &#x20;
+* **B2B_ADDRESS 1:1-Integrität**: FAQ SFTP/Routing (verbindlich) bestätigt die **E2E-Regel** inkl. JSON **headers\[]**-Array; ältere Objekt-Notation ist **deprecated**. &#x20;
+* **camt.053/054 Status**: **Product Content**/Architektur weist **Projektphase (nicht Standard)** aus; Response-Library verweist konsistent auf CSV/MT940 als heute gängige Lieferung. &#x20;
+
+--- 
+
+# File-Profil 09: `b2b_data_model_and_content.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Technische Spezifikation des **DWH-/B2B-Schemas** (Oracle 21c) inkl. Schichtenmodell, Tages-Schnittlogik, Flashback/Audit und Objektkatalog (B2B_STEUER_TABELLE, B2B_BASIS_*, V_B2B_AKTDAY_SEL_*). Zielgruppe: Support-B2B-Entwickler/DBAs. &#x20;
+
+**Scope & Nicht-Scope.**
+Schwerpunkt **DB-Design/Constraints/Prozessanker** (pc_ladelauf_aktuell, Flashback 24.02.2017, Trigger/Audit). Kein MFT/VAI-Betrieb, keine Kommunikations-Templates.&#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. Überblick & Zweck (Geltungsbereich/Namenskonventionen, Metadaten)
+* 2. Architektur & Datenmodell (Schichten, Beziehungen, E2E UC4→PC→MFT)
+* 3. Designprinzipien/Constraints (Zeit-Slice, Partitionierung, RI/Indizes, Flashback, FX-Checks)
+* 4. Objektkatalog (Steuerung/Basis/Portfolio/… inkl. B2B_STEUER_TABELLE)
+     (Gliederungstiefe: **≥3 Ebenen** → Score **1–2**). &#x20;
+
+**Kapitel-Tabelle (Mapping auf Taxonomie).**
+
+| Kapitel (Auszug)     | Taxonomie-Mapping             | Abdeckung | Detailgrad | Tiefe | Artefakte                                     | RACI-Bezug   |
+| -------------------- | ----------------------------- | --------: | ---------: | ----: | --------------------------------------------- | ------------ |
+| 2.2 Schichtenmodell  | Architektur (DB-Sicht)        |         1 |          2 |     1 | Steuerung→Basis→EoD→History                   | Support-B2B  |
+| 3.x Designprinzipien | Datenmodell / Qualitätsregeln |         3 |          3 |     1 | pc_ladelauf_aktuell, Partitionen            | Support-B2B  |
+| 4.1 Steuerung/Basis  | Datenmodell (Kernobjekte)     |         3 |          3 |     1 | B2B_STEUER_TABELLE, V_B2B_AKTDAY_SEL_\* | Support-B2B  |
+| 2.4 E2E (UC4→PC→MFT) | ETL & Scheduling              |         1 |          1 |     0 | Prozesspfad (High-Level)                      | Support-B2B  |
+
+**Stärken/Schwächen (kurz).**
+
+* **Champion** für DB-Architektur, Zeitscheiben, Audit/Flashback, Objektkatalog.
+  − Kein CSV-Feldkatalog (liegt in `b2b_data_feed_csv_content_ger.md`), keine MFT/VAI-Betriebsdetails.&#x20;
+
+**Empfohlene Rolle.**
+**Champion** für: *Datenmodell & Qualitätsanker*. **Support** für: *ETL-Kontext*. **Pointer** zu CSV-Inhalt/MFT.
+
+---
+
+# Erste Matrix-Version (Themen × 3 Files)
+
+Interaktive Tabelle ist eingeblendet; CSV liegt hier:
+[Download: matrix_topics_x_files.csv](sandbox:/mnt/data/matrix_topics_x_files.csv)
+
+**Legende:** *Wert = Abdeckung/Detailgrad* (0–3 / 0–3)
+
+| Thema                                    | it_architecture | tasks_support-b2b | data_model_and_content |
+| ---------------------------------------- | ---------------- | ------------------ | ------------------------- |
+| Architektur & Systemkontext              | 3/2              | 2/2                | 1/2                       |
+| Produktumfang & Dateitypen               | 3/2              | 2/1                | 0/0                       |
+| CSV-Inhalt & Spezifikation               | 1/1              | 1/1                | 1/1                       |
+| Datenmodell (DB/Views/Packages)          | 1/0              | 3/3                | 3/3                       |
+| ETL (PowerCenter) & Scheduling (UC4)     | 2/2              | 3/3                | 1/1                       |
+| Transport intern (VAI/NextGen) & Skripte | 2/2              | 2/2                | 1/1                       |
+| MFT/SFTP (Accounts/Routes/Provide/Push)  | 2/1              | 1/1                | 0/0                       |
+| Rollen, Prozesse & RACI                  | 1/1              | 1/1                | 0/0                       |
+| Operatives Playbook & Störungen          | 0/0              | 2/2                | 0/0                       |
+| Onboarding/Change/Setup                  | 1/1              | 2/2                | 0/0                       |
+| Testfälle & Abnahmekriterien             | 0/0              | 1/1                | 0/0                       |
+| Kommunikations-/Mail-Playbooks           | 0/0              | 0/0                | 0/0                       |
+| AI-Leitplanken & AI-Tasks                | 0/0              | 0/0                | 0/0                       |
+| Config-Solver & Entscheidungslogik       | 0/0              | 0/0                | 0/0                       |
+| Setup-Konfigurator                       | 0/0              | 0/0                | 0/0                       |
+| Spezielle FAQs (PowerCenter/SFTP)        | 0/0              | 1/2                | 0/0                       |
+| Skripte (bash) – Sicherheit/Parameter    | 1/1              | 1/1                | 0/0                       |
+
+**Hinweise zur Herleitung (Belege).**
+
+* **UC4-Masterjob & Orchestrierung** in Architektur: `…B2B_FILE_LIEFERUNGEN_NEU.JOBP`, NextGen-JSON (IaC), Axway-Rolle. → Werte 2/2 bei ETL & Transport, 2/1 bei MFT.&#x20;
+* **Datenmodell/Objektkatalog/Flashback**: volle Abdeckung/Implementierungsnähe in `data_model_and_content`. → 3/3.&#x20;
+* **DB/ETL-Details & Operatives** in `tasks_support-b2b` (Schema, Tabellen/Views/Packages, ETL-Workflows, Glossar). → 3/3 und 2/2. &#x20;
+
+---
+# File-Profil 10: `b2b_data_feed_setup_configurator.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Guided-Setup-Matrix für **Onboarding/Change**: sie führt RM/WM Service Hub fachlich durch Zielbild/Endpunkte und Support-B2B technisch durch CSV-Partition, Selektionsweg und Integritätsregeln – inkl. roten Linien. Zielgruppe: **RM/WM Service Hub** (CRM-Sicht) und **Support-B2B** (Produzenten/DWH), mit klaren Bezügen zu MFT/VAI/OMS/Core.&#x20;
+
+**Scope & Nicht-Scope.**
+Scope: Möglichkeitsmatrizen (Ziel/Endpoint-Topologie, CSV-Trennung, Selektionswege, Overlap/Exklusivität, Realtime/Cutover), rollenspezifische **Mini-Checklisten**, technisches **Pipe-Schema** (CSV für RM↔B2B), Begriffslegende. Nicht-Scope: Feldkataloge (CSV), Axway-Objektdetails, Skript-/CLI-Anleitungen.&#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. **Matrix 1**: Ziel & Endpoint-Topologie (1A–1F)
+* 2. **Matrix 2**: CSV-Trennung (VV\_KUERZEL Varianten 2A–2C)
+* 3. **Matrix 3**: Scope-Steuerung (EAM/WMN/BTB/TAB)
+* 4. **Matrix 4**: Exklusivität & Overlaps (CSV/EDOCS/SWIFT)
+* 5. **Matrix 5**: Realtime & Cutover-Regeln
+* 6. **Unzulässige Kombinationen** (rote Linien)
+* 7. **Mini-Checklisten** (A: RM/WM Hub; B: Support-B2B)
+* 8. **Mapping** zur RM-CSV (Pipe-Schema)
+* 9. **Begriffslegende**
+     (Gliederungstiefe: **≤2 Ebenen** → Score **0–1**).&#x20;
+
+**Kapitel-Tabelle (Mapping auf Taxonomie).**
+
+| Kapitel/Block                   | Taxonomie-Mapping                                   | Abdeckung | Detailgrad | Tiefe | Besondere Artefakte                                             | RACI-Bezug                               |             |       |                                             |
+| ------------------------------- | --------------------------------------------------- | --------: | ---------: | ----: | --------------------------------------------------------------- | ---------------------------------------- | ----------- | ----- | ------------------------------------------- |
+| Matrix 1: Ziel & Endpoint       | Onboarding/Change/Setup; Architektur (leicht)       |         3 |          2 |     0 | Varianten 1A–1F (Neu/Migration/Split/Hub)                       | RM/WM Hub (fachlich), B2B/MFT (Routing)  |             |       |                                             |
+| Matrix 2: CSV-Trennung          | CSV-Inhalt & Spezifikation (Naming/Partition)       |         2 |          2 |     0 | **VV\_KUERZEL Regeln; 2B unzulässig**                           | Support-B2B (DWH)                        |             |       |                                             |
+| Matrix 3: Selektionsweg         | Config-Solver & Entscheidungslogik; Rollen/Prozesse |         3 |          2 |     0 | **EAM/WMN/BTB/TAB** inkl. Wirkung je Feed-Typ                   | RM/WM Hub (CRM), B2B (Param)             |             |       |                                             |
+| Matrix 4: Exklusivität/Overlaps | Operatives Playbook; Qualität/Integrität            |         3 |          2 |     0 | CSV disjunkt; EDOCS parallel befristet; SWIFT hart              | B2B (CSV), OMS/Core (EDOCS/SWIFT)        |             |       |                                             |
+| Matrix 5: Realtime & Cutover    | Onboarding/Change/Setup                             |         3 |          2 |     0 | Cutover-Prinzip pro Feed-Typ                                    | OMS/Core/MFT/VAI (kanalbezogen)          |             |       |                                             |
+| Unzulässige Kombinationen       | Spezielle FAQs/Policies                             |         2 |          2 |     0 | Rote Linien (CSV-Mix, CSV-Overlap, SWIFT parallel)              | Alle; Policy-Durchsetzung                |             |       |                                             |
+| Mini-Checklisten A/B            | Rollen/Prozesse & RACI; Onboarding/Setup            |         3 |          2 |     0 | **RM-Fragenkatalog** / **B2B-Technikliste**                     | RM/WM Hub ↔ Support-B2B                  |             |       |                                             |
+| RM-CSV Mapping (Pipe)           | Setup-Konfigurator; Kommunikations-/Handover        |         3 |          2 |     0 | Pipe-Schema: \`REQUEST\_INTENT                                  | ...                                      | VV\_KUERZEL | ...\` | RM liefert CRM-Felder, B2B ergänzt Technik  |
+| Begriffslegende                 | Kommunikation/Terminologie                          |         2 |          1 |     0 | präzise Definitionen (B2B\_ADDRESS, VV\_KUERZEL, Selektionsweg) | Alle                                     |             |       |                                             |
+
+**Stärken/Schwächen (kurz).**
+
+* **Operativ nutzbarer Guided-Setup** mit eindeutigen Varianten und **roten Linien**; klare RM↔B2B-Aufgabentrennung; **Pipe-Schema** beschleunigt Handover.&#x20;
+  − Keine Skript-/Axway-Objektdetails und **kein** CSV-Feldkatalog (muss via Tasks-/CSV-Doku ergänzt werden).&#x20;
+
+**Empfohlene Rolle (Champion/Support).**
+**Champion** für: *Setup-Konfigurator (Guided Setup/Forms)*, *Onboarding-Varianten*, *Selektionswege*, *Integritäts-/Cutover-Regeln*. **Support** für: *Architektur-Kontext* (Verweise auf IT-Architecture/FAQ SFTP).&#x20;
+
+**RACI-Hinweis (implizit aus Checklisten/Mapping).**
+
+* **RM/WM Service Hub**: Zielbild/Adresse/Partner-Rollen/Feed-Typen, EDOCS-Parallel-Dauer, SWIFT-Typen.
+* **Support-B2B**: FTP\_SERVICE/B2B\_ADDRESS finalisieren, `VV_KUERZEL`, `SELEKTION_ART` (+ Listen), SOURCE\_PARTNER\_ID, Overlap-SQL & Doku.
+* **Support-MFT/VAI**: Routing/Endpoint-Betrieb (Ableitung aus Zielbild).
+* **OMS/Core**: Realtime-/SWIFT-Cutover.&#x20;
+
+---
+
+# Profil 11 — **b2b_data_feed_config_solver.md**
+
+**Grundintention & Zielgruppe**
+Framework für **positionsorientierte Triage und Lösungsdesign** bei Änderungen an B2B-Setups (Providerwechsel, Splits, Konsolidierungen). Zielgruppe: **RM/WM Hub**, **Support-B2B**, **Support-MFT**, **OMS/Avaloq-Ops**.&#x20;
+
+**Scope & Nicht-Scope**
+Scope: Entscheidungslogik (Transport/Trennung/Scope/Integrität/Realtime), Ergebnis-Matrix, RACI, Glossar, operative SQL-Snippets. Nicht-Scope: Detail-Spezifikationen einzelner CSV-Felder (verweist implizit auf CSV-Doku).&#x20;
+
+**Strukturkarte (Ebenentiefe: 3)**
+
+1. Grundlagen & Geltungsbereich
+   1.1 Zweck/Zielgruppe/Geltungsbereich
+   1.2 Golden Rules
+   1.3 Begriffe/Leseschlüssel&#x20;
+2. Phase 1: Triage & Anforderungsanalyse (IST/SOLL)
+   2.1 Primärziel
+   2.2 IST/SOLL erfassen (Schnellerfassung/Detailtabellen)
+   2.3 Pflicht-Gating&#x20;
+3. Phase 2: Lösungsdesign (Entscheidungs-Framework)
+   3.1 Transport-Kanal
+   3.2 Daten-Trennung (CSV-Namen)
+   3.3 Daten-Umfang
+   3.4 Integrität (Overlaps)
+   3.5 Realtime (E-Docs/SWIFT)&#x20;
+4. Phase 3: Umsetzungsplanung (Ergebnis-Matrix & Arbeitspakete)
+   4.1 Positionsbasierte Ergebnis-Matrix
+   4.2 Arbeitspakete (RACI je T1–T7)&#x20;
+5. Anhang
+   5.1 Werkzeuge & SQL
+   5.2 RACI (ONB-Tasks, tabellarisch)
+   5.3 Glossar (B2B_ADDRESS/FTP_SERVICE/VV_KUERZEL/SELEKTION_ART)&#x20;
+
+**Kapitel-Tabelle (Auszug)**
+
+| Kapitel               | Taxonomie-Mapping                            | Abdeckung | Detailgrad | Gliederung | Besondere Artefakte                                                | RACI-Bezug                            |
+| --------------------- | -------------------------------------------- | --------: | ---------: | ---------: | ------------------------------------------------------------------ | ------------------------------------- |
+| 1. Grundlagen         | Architektur & Systemkontext; Rollen/Prozesse |         2 |          1 |          1 | Golden Rules (SWIFT Cutover, E-Docs Parallel)                      | Owner-Set (B2B/MFT/OMS/Core)          |
+| 2. Triage             | Onboarding/Change; Config-Solver             |         3 |          2 |          1 | Checklisten (Schnell/Detail)                                       | RM/WM Hub ↔ Support-B2B               |
+| 3. Lösungsdesign      | Config-Solver & Entscheidungslogik           |         3 |          2 |          1 | Entscheidungs­fragen (Transport/Trennung/Scope/Overlap/Realtime)   | Delegationspfade je Kanal             |
+| 4. Ergebnis/Umsetzung | Setup/Tests/Abnahme                          |         3 |          3 |          1 | **Positionsmatrix** (implementierungsnah); **Arbeitspakete T1–T7** | RACI je Task (B2B/MFT/OMS/Avaloq/RM)  |
+| 5. Anhang             | Glossar & RACI-ONB                           |         2 |          2 |          1 | Glossar Kernfelder `B2B_STEUER_TABELLE`; RACI-Tabelle              | ONB-04/05/07 Zuständigkeiten          |
+
+**Stärken**
+
+* Sehr klare **Entscheidungs-/Ergebnis-Matrix** (implementierungsnah).&#x20;
+* **Terminologie sauber** (B2B_ADDRESS = FTP_SERVICE; VV_KUERZEL/SELEKTION_ART erklärt).&#x20;
+
+**Schwächen / Gaps**
+
+* Verweist implizit auf CSV-Spezifika; **keine Feldlisten/Beispiele** (Deckung durch CSV-Doku nötig).
+* SQL-Snippets erwähnt, Details nicht sichtbar im Auszug.
+
+**Empfohlene Rolle**
+**Champion** für „Config-Solver & Entscheidungslogik“; **Support** für RACI-ONB. 
+
+---
+
+# File-Profil 12: `b2b_data_feed_csv_content_ger.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Feldkatalog und Beschreibung der **CSV-Transaktionsdateien** (Struktur, Felder, Datentypen, Beschreibung, Beispiele). Zielgruppe: Support-B2B (fachlich/technisch), externe Empfänger zur Selbstvalidierung.&#x20;
+
+**Scope & Nicht-Scope.**
+Deklariert Inhalt/Spalten und Hinweise zu Vendor-Sonderfällen (z. B. **Bloomberg PORT** = Standard-CSV, Mapping beim Empfänger). Kein MFT/VAI-Betrieb, keine UC4/ETL-Details.&#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. Übersicht CSV-Transaktionsdatei
+* 2. Inhalt/Beschreibung
+* 3. Tabellen: **Spalte | Name | Datentyp | Beschreibung**
+     (Gliederungstiefe: **1–2 Ebenen** → Score **0**).&#x20;
+
+**Kapitel-Tabelle.**
+
+| Kapitel        | Taxonomie-Mapping          | Abdeckung | Detailgrad | Tiefe | Artefakte                               | RACI-Bezug         |
+| -------------- | -------------------------- | --------: | ---------: | ----: | --------------------------------------- | ------------------ |
+| 1. Übersicht   | Produktumfang & Dateitypen |         2 |          1 |     0 | Dateityp „Transaktion“                  | Support-B2B        |
+| 2. Inhalt      | CSV-Inhalt & Spezifikation |         3 |          2 |     0 | Feldgruppen/Story                       | Support-B2B        |
+| 3. Feldtabelle | CSV-Inhalt & Spezifikation |         3 |          3 |     0 | **Feldtabelle** (Name/Typ/Beschreibung) | Support-B2B        |
+| Hinweis PORT   | Produktumfang & Varianten  |         1 |          1 |     0 | Vendor-Hinweis (Standard-CSV)           | RM/EAM (fachlich)  |
+
+**Stärken/Schwächen.**
+
+* **Implementierungsnaher** Feldkatalog (Champion für CSV-Inhalt).
+  − Keine Prozess-/Transportaspekte (MFT/VAI).
+
+**Empfohlene Rolle.**
+**Champion**: *CSV-Inhalt & Spezifikation*. **Pointer**: MFT/VAI/ETL.&#x20;
+
+---
+
+## Querverweise & Konsistenz (für diese drei Profile)
+
+* **Transfer-Muster & Policy**: Standard **Provide**, **Push** Ausnahme; Do/Don’t und B2B_ADDRESS-Konsistenz → **FAQ SFTP/Routing**.&#x20;
+* **B2B_ADDRESS 1:1-Regel**: UC4-Param ↔ JSON-Header ↔ MFT-Subscription-Folder (**Integritätsregel**).&#x20;
+* **Profiles (Prod/Non-Prod)**: `tasks: [{"type":"sftp"}]` (PROD) vs. `{"type":"nirvana"}` (Non-Prod); **Headers als Array von `key=value`**.&#x20;
+* **Fehlercodes/RC**: `filetransfer`/VAI: `-3` = unbekannter Service, `<0` Fehler; 0/ >0 OK/Warnung.&#x20;
+
+---
+
+## Matrix-Update (Auszug, nur neue drei Files)
+
+| Thema                                    | csv_content | tasks_support-mft | tasks_support-vai |
+| ---------------------------------------- | -----------: | -----------------: | -----------------: |
+| Architektur & Systemkontext              |          0/0 |                1/1 |                2/2 |
+| Produktumfang & Dateitypen               |          2/1 |                1/1 |                0/0 |
+| CSV-Inhalt & Spezifikation               |      **3/3** |                0/0 |                0/0 |
+| Datenmodell (DB/Views/Packages)          |          0/0 |                0/0 |                0/0 |
+| ETL (PowerCenter) & UC4                  |          0/0 |                0/0 |                1/1 |
+| Transport intern (VAI/NextGen) & Skripte |          0/0 |                1/1 |            **3/3** |
+| MFT/SFTP (Accounts/Routes/Security)      |          0/0 |            **3/2** |                1/1 |
+| Rollen, Prozesse & RACI                  |          0/0 |                2/1 |                2/1 |
+| Operatives Playbook & Störungen          |          0/0 |                2/2 |                2/2 |
+| Onboarding/Change/Setup                  |          0/0 |            **3/2** |                2/1 |
+| Testfälle & Abnahmekriterien             |          0/0 |                1/1 |                1/1 |
+| Kommunikations-Playbooks                 |          0/0 |                0/0 |                0/0 |
+| AI-Leitplanken & AI-Tasks                |          0/0 |                0/0 |                0/0 |
+| Config-Solver & Entscheidungslogik       |          0/0 |                0/0 |                2/3 |
+| Setup-Konfigurator                       |          0/0 |                0/0 |                0/0 |
+| Spezielle FAQs (PowerCenter/SFTP)        |          0/0 |              2/2\* |              2/2\* |
+| Skripte (bash) – Sicherheit/Parameter    |          0/0 |                1/1 |                2/2 |
+
+\* via Verweise/Policy aus **FAQ SFTP/Routing**; operativ relevant.&#x20;
+
+--- 
+
+# Profil 13 – **b2b_data_feed_ai_playbook_ger.md**
+
+**Grundintention & Zielgruppe**
+Leitplanken für KI-Antworten im Support-B2B: Kommunikationsstandards + STS (Strukturiertes Tagging-System) + Entscheidungsmatrix (direkt bearbeiten vs. delegieren). Primär intern (Support-B2B, aber auch RM/Hub als Referenz).&#x20;
+
+**Scope & Nicht-Scope**
+Scope: Kommunikationsrichtlinien, STS-Definition (5 Dimensionen), Anwendungsschema (YAML), Entscheidungsmatrix, Beispiele. Nicht-Scope: Fachinhalte (CSV-Felder), Prozessdetails (Appian/UC4) – nur referenziert.&#x20;
+
+**Strukturkarte (Baum/Level=2)**
+
+1. Einleitung → 2. Kommunikationsrichtlinien → 3. STS (3.1–3.3) → 4. STS-Entscheidungsmatrix (4.1/4.2) → 5. Beispiele.&#x20;
+
+**Kapitel-Tabelle**
+
+| Kapitel               | Taxonomie-Mapping                                       | Abdeckung | Detailgrad | Gliederung | Artefakte       | RACI-Bezug                            |
+| --------------------- | ------------------------------------------------------- | --------: | ---------: | ---------: | --------------- | ------------------------------------- |
+| 1 Einleitung          | Kommunikations-/Mail-Playbooks                          |         2 |          1 |          0 | Zweckdefinition | Support-B2B                           |
+| 2 Richtlinien         | Kommunikations-/Mail-Playbooks                          |         2 |          1 |          0 | Regeln          | Support-B2B                           |
+| 3 STS (Framework)     | AI-Leitplanken & AI-Aufgaben-Templates                  |         3 |          2 |          1 | YAML-Schema     | Support-B2B                           |
+| 4 Entscheidungsmatrix | Operatives Playbook & Störungen; Rollen/Prozesse & RACI |         3 |          2 |          0 | If/Then-Matrix  | Delegation an MFT/OMS/Core verankert  |
+| 5 Beispiele           | Kommunikations-/Mail-Playbooks                          |         1 |          1 |          0 | Mini-Cases      | Verweise auf Teams/Workflows          |
+
+**Stärken/Schwächen**
+
+* Klarer STS-Standard + konkrete „Do it vs. Delegate“-Matrix. – Keine Tiefeninfos zu CSV/MFT (bewusst out-of-scope).
+
+**Empfohlene Rolle**: **Champion** (AI-Leitplanken & Entscheidungslogik)
+
+---
+
+# File-Profil 14: `b2b_data_feed_response_library_ger.md`
+
+**Grundintention & Zielgruppe (2 Sätze).**
+Playbook mit **standardisierten E-Mail-Vorlagen** (extern/intern) inkl. **STS-Blöcken** zur eindeutigen Template-Auswahl durch den KI-Assistenten. Zielgruppe: Support-B2B (Erstantworten), WM B2B Service Hub (interne/extern gerichtete Kommunikation).&#x20;
+
+**Scope & Nicht-Scope.**
+Deckt **Onboarding/Setup, Aktivierung, Changes, Incidents, Zuständigkeiten** und **Massenmails** ab; einige Templates sind **Platzhalter** (noch ohne Body). Kein Technik-How-to (liegt in Tasks/FAQ).  &#x20;
+
+**Strukturkarte (Baum, Ebenentiefe).**
+
+* 1. Onboarding & Setup
+* 2. Aktivierung & Erstbereitstellung
+* 3. Datenvalidierung/Abklärung
+* 4. Change-Requests
+* 5. Historische Daten
+* 6. CRM/Parallelbetrieb
+* 7. Filetransfer
+* 8. Zuständigkeiten/Koordination
+* 9. Allgemeine Anfragen
+* 10. Compliance
+* 11. Massenmails
+      (Gliederungstiefe: **≤2 Ebenen** → Score **0**).&#x20;
+
+**Kapitel-Tabelle (Auszug).**
+
+| Kapitel/Template                                       | Taxonomie                | Abdeckung | Detailgrad | Tiefe | Artefakte                                                     | RACI                                                  |
+| ------------------------------------------------------ | ------------------------ | --------: | ---------: | ----: | ------------------------------------------------------------- | ----------------------------------------------------- |
+| 1. SFTP_Setup_Erinnerung_Extern                     | Kommunikations-Playbooks |         3 |          2 |     0 | **STS-Block**, Bullet-Liste Key/IP/Kontakt                    | Support-MFT (operativ), Versand durch Support-B2B/WM  |
+| 3. Fehlende_Transaktionsdaten_Zinsberechnung_Extern | Kommunikations-Playbooks |         2 |          2 |     0 | Dateinamen/Beispieldateien **MMAsset/StexAsset** referenziert | Support-B2B (Inhalt), IT-Provider (Analyse)           |
+| 9. B2B_Feed_Allgemeine_Info_Intern                 | Kommunikations-Playbooks |         2 |          1 |     0 | Klarstellung CSV/MT940/camt (Roadmap)                         | Support-B2B / WM Hub                                  |
+
+**Stärken/Schwächen.**
+
+* Sauber **klassifiziert (STS)**, einsatzbereit für KI-Selektion.
+  − **Lücken** bei einzelnen Vorlagen (Platzhalter-Bodies).&#x20;
+
+**Empfohlene Rolle.**
+**Champion**: *Kommunikations-/Mail-Playbooks*. Pointer auf CSV/MFT/VAI-Technikdokumente.
+
+--- 
