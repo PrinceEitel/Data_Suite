@@ -4,3 +4,4 @@ __pycache__/
 *.iml
 # Projekt-spezifische Outputs
 flat_files/trg/
+.idea/
