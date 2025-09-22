@@ -1,0 +1,6 @@
+# Python/IDE
+__pycache__/
+*.pyc
+*.iml
+# Projekt-spezifische Outputs
+flat_files/trg/
