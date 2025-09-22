@@ -3,7 +3,7 @@
 	url = https://github.com/PrinceEitel/OCR_Manager_Suite.git
 [submodule "template_center"]
 	path = template_center
-	url = https://github.com/PrinceEitel/Template_Center.git
+	url = https://github.com/PrinceEitel/template_center.git
 	branch = main
 [submodule "text_anonymizer"]
 	path = text_anonymizer
